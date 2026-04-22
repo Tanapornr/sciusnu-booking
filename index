@@ -1,86 +1,233 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ระบบจองห้องโครงการ วมว.</title>
+  <base target="_top">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
   
-  <script>
-    // *************************************************************
-    // วางลิงก์ Google Apps Script ลงในเครื่องหมายคำพูดด้านล่างนี้
-    // *************************************************************
-    const API_URL = "1IGxYJTYw0GulaBGSqIK7witqrnH-fdPm1I0WAFiQnn8"; 
-  </script>
-
   <style>
-    :root { --primary-color: #0d6efd; --sidebar-bg: #1e293b; --sidebar-text: #f8f9fa; --bg-color: #f3f4f6; --card-radius: 12px; }
-    body { font-family: 'Sarabun', sans-serif; background-color: var(--bg-color); color: #333; overflow-x: hidden; font-size: 16px; }
+    :root { 
+      --primary-color: #0d6efd; 
+      --sidebar-bg: #1e293b;   
+      --sidebar-text: #f8f9fa;
+      --bg-color: #f3f4f6; 
+      --card-radius: 12px; 
+    }
+    
+    body { 
+      font-family: 'Sarabun', sans-serif; 
+      background-color: var(--bg-color); 
+      color: #333; 
+      overflow-x: hidden; 
+      font-size: 16px;
+    }
+
+    /* --- Sidebar Layout --- */
     #wrapper { display: flex; width: 100%; min-height: 100vh; position: relative; }
-    #sidebar-wrapper { min-width: 260px; max-width: 260px; background-color: var(--sidebar-bg); color: var(--sidebar-text); transition: all 0.3s; display: flex; flex-direction: column; }
-    .sidebar-heading { padding: 1.5rem; font-size: 1.2rem; font-weight: bold; text-align: center; background: rgba(0,0,0,0.1); border-bottom: 1px solid rgba(255,255,255,0.1); }
-    .sidebar-logo { width: 100%; height: auto; object-fit: contain; margin-bottom: 15px; background: transparent; padding: 5px; border-radius: 8px; }
-    .list-group-item { background-color: transparent; color: rgba(255,255,255,0.8); border: none; padding: 15px 25px; font-size: 1.05rem; cursor: pointer; transition: 0.2s; }
+    
+    #sidebar-wrapper {
+      min-width: 260px;
+      max-width: 260px;
+      background-color: var(--sidebar-bg);
+      color: var(--sidebar-text);
+      transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-heading {
+      padding: 1.5rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-align: center;
+      background: rgba(0,0,0,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .sidebar-logo {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      margin-bottom: 15px;
+      background: transparent;
+      padding: 5px;
+      border-radius: 8px;
+    }
+
+    .list-group-item {
+      background-color: transparent;
+      color: rgba(255,255,255,0.8);
+      border: none;
+      padding: 15px 25px;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
     .list-group-item:hover { background-color: rgba(255,255,255,0.1); color: #fff; }
     .list-group-item.active { background-color: var(--primary-color); color: #fff; font-weight: 600; border-left: 5px solid white; }
     .list-group-item i { margin-right: 10px; font-size: 1.2rem; }
+
+    /* --- Content Area --- */
     #page-content-wrapper { width: 100%; padding: 20px; }
-    .custom-card { background: white; border: none; border-radius: var(--card-radius); box-shadow: 0 4px 20px rgba(0,0,0,0.05); padding: 30px; margin-bottom: 30px; }
-    .page-title { font-size: 1.5rem; font-weight: 600; color: #1e293b; margin-bottom: 20px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
-    .room-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); transition: transform 0.2s; height: 100%; display: flex; flex-direction: column; }
+    
+    .custom-card { 
+      background: white; 
+      border: none; 
+      border-radius: var(--card-radius); 
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05); 
+      padding: 30px; 
+      margin-bottom: 30px; 
+    }
+    
+    .page-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 10px;
+    }
+
+    /* --- Room Card Style --- */
+    .room-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      overflow: hidden; 
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      transition: transform 0.2s;
+      height: 100%;
+      display: flex;
+      flex-direction: column; 
+    }
     .room-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-    .room-img-grid { display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); gap: 2px; height: 220px; background-color: #f8f9fa; border-bottom: 4px solid var(--primary-color); }
+    
+    .room-img-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 2px;
+      height: 220px; 
+      background-color: #f8f9fa;
+      border-bottom: 4px solid var(--primary-color); 
+    }
     @media (min-width: 768px) { .room-img-grid { height: 300px; } }
-    .room-img-grid div { width: 100%; height: 100%; min-width: 0; min-height: 0; overflow: hidden; }
+    .room-img-grid div { width: 100%; height: 100%; min-width: 0; min-height: 0; overflow: hidden; background: #e9ecef; display:flex; align-items:center; justify-content:center;}
     .room-img-grid img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: pointer; transition: opacity 0.2s; }
     .room-img-grid img:hover { opacity: 0.8; }
+
     .room-card-body { padding: 20px; background-color: #ffffff; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
     .room-card-title { font-weight: 700; color: #1e293b; margin-bottom: 10px; font-size: 1.2rem; }
     .room-card-text { font-size: 0.95rem; color: #555; margin-bottom: 8px; line-height: 1.5; white-space: normal; }
+
+    /* --- Booking Form Elements --- */
     .room-info-container { background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; display: none; margin-bottom: 20px; }
     .room-gallery-img { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 1px solid #ddd; transition: transform 0.2s; }
     .room-gallery-img:hover { transform: scale(1.05); }
+
     .note-box { background-color: #fff8e1; border-left: 5px solid #ffc107; color: #5d4037; padding: 20px; border-radius: 8px; margin-bottom: 25px; font-size: 1rem; line-height: 1.7; }
     .note-box strong { font-size: 1.1rem; color: #b00020; display: block; margin-bottom: 10px; }
+
+    /* --- Responsive Mobile Header --- */
     .mobile-header { display: none; }
     #sidebar-overlay { display: none; }
 
     @media (max-width: 768px) {
-      .mobile-header { display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 65px; background-color: var(--sidebar-bg); color: white; z-index: 1040; align-items: center; justify-content: space-between; padding: 0 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+      .mobile-header {
+        display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 65px;
+        background-color: var(--sidebar-bg); color: white; z-index: 1040;
+        align-items: center; justify-content: space-between; padding: 0 15px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      }
       .mobile-menu-btn { background: transparent; border: none; color: white; font-size: 2rem; cursor: pointer; padding: 0; }
       #sidebar-wrapper { position: fixed; height: 100vh; z-index: 1050; margin-left: -260px; top: 0; left: 0; }
       #wrapper.toggled #sidebar-wrapper { margin-left: 0; }
       #sidebar-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 1045; display: none; backdrop-filter: blur(2px); }
       #wrapper.toggled #sidebar-overlay { display: block; }
       #page-content-wrapper { padding-top: 85px; }
+
+      /* --- แปลงตารางเป็น Card View ในมือถือ (เต็มจอ ไม่ล้น) --- */
       .table-responsive { border: none !important; margin: 0; padding: 0; }
-      .table-responsive table, .table-responsive tbody, .table-responsive tr, .table-responsive td { display: block; width: 100%; border: none; }
-      .table-responsive thead { display: none; } 
-      .table-responsive tr { margin-bottom: 15px; background-color: #fff; border: 1px solid #e2e8f0 !important; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); padding: 5px 0; }
-      .table-responsive td { display: grid !important; grid-template-columns: 105px 1fr; gap: 10px; align-items: start; padding: 12px 15px !important; border-bottom: 1px dashed #f1f5f9 !important; text-align: right; }
+      .table-responsive table, .table-responsive tbody, .table-responsive tr, .table-responsive td {
+        display: block; width: 100%; border: none;
+      }
+      .table-responsive thead { display: none; } /* ซ่อนหัวตารางบนมือถือ */
+      
+      .table-responsive tr {
+        margin-bottom: 15px;
+        background-color: #fff;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        padding: 5px 0;
+      }
+      
+      .table-responsive td {
+        display: grid !important;
+        grid-template-columns: 105px 1fr; /* แบ่งพื้นที่: ฝั่งซ้ายเป็นหัวข้อ ฝั่งขวาเป็นข้อมูล */
+        gap: 10px;
+        align-items: start;
+        padding: 12px 15px !important;
+        border-bottom: 1px dashed #f1f5f9 !important;
+        text-align: right;
+      }
       .table-responsive td:last-child { border-bottom: none !important; }
-      .table-responsive td::before { font-weight: 600; color: #475569; text-align: left; font-size: 0.95rem; }
       
-      #bookingTable td:nth-child(1)::before { content: "วัน/เวลา:"; } #bookingTable td:nth-child(2)::before { content: "ห้อง:"; } #bookingTable td:nth-child(3)::before { content: "หัวข้อ:"; } #bookingTable td:nth-child(4)::before { content: "ผู้จอง:"; } #bookingTable td:nth-child(5)::before { content: "เบอร์ภายใน:"; } #bookingTable td:nth-child(6)::before { content: "สถานะ:"; }
-      #staffTable td:nth-child(1)::before { content: "วัน/เวลา:"; } #staffTable td:nth-child(2)::before { content: "ห้อง:"; } #staffTable td:nth-child(3)::before { content: "หัวข้อ:"; } #staffTable td:nth-child(4)::before { content: "ผู้จอง/เบอร์:"; }
-      #adminTable td:nth-child(1)::before { content: "วัน/เวลา:"; } #adminTable td:nth-child(2)::before { content: "ห้อง:"; } #adminTable td:nth-child(3)::before { content: "ผู้จอง:"; } #adminTable td:nth-child(4)::before { content: "สถานะ:"; } #adminTable td:nth-child(5)::before { content: "จัดการ:"; }
+      /* กำหนดหัวข้อในแต่ละแถว */
+      .table-responsive td::before {
+        font-weight: 600;
+        color: #475569;
+        text-align: left;
+        font-size: 0.95rem;
+      }
       
-      #staffTable tr.table-warning { padding: 12px; background-color: #fff3cd !important; border: none !important; box-shadow: none !important; margin-bottom: 15px; border-radius: 8px; }
+      /* Mapping หัวข้อตาราง 1: ทั่วไป */
+      #bookingTable td:nth-child(1)::before { content: "วัน/เวลา:"; }
+      #bookingTable td:nth-child(2)::before { content: "ห้อง:"; }
+      #bookingTable td:nth-child(3)::before { content: "หัวข้อ:"; }
+      #bookingTable td:nth-child(4)::before { content: "ผู้จอง:"; }
+      #bookingTable td:nth-child(5)::before { content: "เบอร์ภายใน:"; }
+      #bookingTable td:nth-child(6)::before { content: "สถานะ:"; }
+
+      /* Mapping หัวข้อตาราง 2: พนักงาน */
+      #staffTable td:nth-child(1)::before { content: "วัน/เวลา:"; }
+      #staffTable td:nth-child(2)::before { content: "ห้อง:"; }
+      #staffTable td:nth-child(3)::before { content: "หัวข้อ:"; }
+      #staffTable td:nth-child(4)::before { content: "ผู้จอง/เบอร์:"; }
+
+      /* Mapping หัวข้อตาราง 3: แอดมิน */
+      #adminTable td:nth-child(1)::before { content: "วัน/เวลา:"; }
+      #adminTable td:nth-child(2)::before { content: "ห้อง:"; }
+      #adminTable td:nth-child(3)::before { content: "ผู้จอง:"; }
+      #adminTable td:nth-child(4)::before { content: "สถานะ:"; }
+      #adminTable td:nth-child(5)::before { content: "จัดการ:"; }
+      
+      /* แถบแยกเดือนของพนักงาน */
+      #staffTable tr.table-warning {
+        padding: 12px; background-color: #fff3cd !important; border: none !important; box-shadow: none !important; margin-bottom: 15px; border-radius: 8px;
+      }
       #staffTable tr.table-warning td { display: block !important; text-align: center !important; padding: 0 !important; border: none !important; }
       #staffTable tr.table-warning td::before { content: none !important; }
-      .td-content { text-align: right; word-break: break-word; width: 100%; } .td-content div { text-align: right; } .td-content .d-flex { justify-content: flex-end; }
+      
+      /* จัดข้อมูลให้ชิดขวาและขึ้นบรรทัดใหม่ได้ */
+      .td-content { text-align: right; word-break: break-word; width: 100%; }
+      .td-content div { text-align: right; }
+      .td-content .d-flex { justify-content: flex-end; }
     }
 
+    /* --- Modal --- */
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(2px); z-index: 9999; align-items: center; justify-content: center; }
     .modal-box { background: white; width: 90%; max-width: 400px; padding: 30px; border-radius: 16px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: slideUp 0.3s ease; }
     @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     .btn-main { background-color: var(--primary-color); color: white; padding: 12px 30px; border-radius: 30px; font-size: 1.1rem; border: none; width: 100%; transition: 0.2s; }
     .btn-main:hover { background-color: #0b5ed7; transform: translateY(-2px); }
     .status-pill { padding: 5px 12px; border-radius: 20px; font-size: 0.9rem; font-weight: 600; display: inline-block; }
-    .status-ok { background-color: #d1e7dd; color: #0f5132; } .status-wait { background-color: #fff3cd; color: #856404; } .status-no { background-color: #f8d7da; color: #842029; } .status-cancel { background-color: #e2e3e5; color: #41464b; }
+    .status-ok { background-color: #d1e7dd; color: #0f5132; }
+    .status-wait { background-color: #fff3cd; color: #856404; }
+    .status-no { background-color: #f8d7da; color: #842029; }
+    .status-cancel { background-color: #e2e3e5; color: #41464b; }
   </style>
 </head>
 <body>
@@ -90,7 +237,9 @@
     <img src="https://img2.pic.in.th/logo-banner-scius91e6464acbe6a320.png" alt="Logo" style="height:35px; background:white; padding:2px; border-radius:5px; margin-right:10px;" border="0">
     <h5 class="m-0" style="font-weight:600; font-size:1.1rem;">ระบบจองห้อง วมว.</h5>
   </div>
-  <button class="mobile-menu-btn" onclick="document.getElementById('wrapper').classList.add('toggled')"><i class="bi bi-list"></i></button>
+  <button class="mobile-menu-btn" onclick="document.getElementById('wrapper').classList.add('toggled')">
+    <i class="bi bi-list"></i>
+  </button>
 </div>
 
 <div id="wrapper">
@@ -102,16 +251,29 @@
       ระบบจองห้อง<br><span style="font-size:0.8rem; font-weight:400;">โครงการ วมว. มน.</span>
     </div>
     <div class="list-group list-group-flush mt-3">
-      <button class="list-group-item list-group-item-action active" onclick="showSection('schedule', this)"><i class="bi bi-calendar-week"></i> ตารางใช้ห้อง</button>
-      <button class="list-group-item list-group-item-action" onclick="showSection('roominfo', this)"><i class="bi bi-images"></i> ข้อมูลห้องเรียน</button>
-      <button class="list-group-item list-group-item-action" onclick="showSection('booking', this)"><i class="bi bi-pencil-square"></i> จองห้องเรียน</button>
-      <button class="list-group-item list-group-item-action" onclick="showSection('staff', this)"><i class="bi bi-door-open-fill"></i> พนักงานเปิดห้อง</button>
-      <button class="list-group-item list-group-item-action" onclick="showSection('admin', this)"><i class="bi bi-gear-fill"></i> ผู้ดูแลระบบ</button>
+      <button class="list-group-item list-group-item-action active" onclick="showSection('schedule', this)">
+        <i class="bi bi-calendar-week"></i> ตารางใช้ห้อง
+      </button>
+      <button class="list-group-item list-group-item-action" onclick="showSection('roominfo', this)">
+        <i class="bi bi-images"></i> ข้อมูลห้องเรียน
+      </button>
+      <button class="list-group-item list-group-item-action" onclick="showSection('booking', this)">
+        <i class="bi bi-pencil-square"></i> จองห้องเรียน
+      </button>
+      <button class="list-group-item list-group-item-action" onclick="showSection('staff', this)">
+        <i class="bi bi-door-open-fill"></i> พนักงานเปิดห้อง
+      </button>
+      <button class="list-group-item list-group-item-action" onclick="showSection('admin', this)">
+        <i class="bi bi-gear-fill"></i> ผู้ดูแลระบบ
+      </button>
     </div>
-    <div style="margin-top:auto; padding: 20px; text-align:center; font-size:0.8rem; color:rgba(255,255,255,0.5);">พัฒนาโดย:<br>นางสาวธนาภรณ์ รอดฉ่ำ</div>
+    <div style="margin-top:auto; padding: 20px; text-align:center; font-size:0.8rem; color:rgba(255,255,255,0.5);">
+      พัฒนาโดย:<br>นางสาวธนาภรณ์ รอดฉ่ำ
+    </div>
   </div>
 
   <div id="page-content-wrapper">
+
     <div id="section-schedule" class="fade-in">
       <div class="custom-card">
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
@@ -157,7 +319,9 @@
               <li><b>SC1-416:</b> มีเรียน ม.5.8 จันทร์-พุธ (08.00-16.30)</li>
               <li><b>SC1-411:</b> มีเรียน ม.6.7-6.8 พฤหัสบดี (08.00-12.00)</li>
             </ul>
-            <div style="margin-top:10px; color:#d32f2f; font-weight:500;">*หากเลือกเวลาชนกับตารางเรียน ระบบจะแจ้งเตือนและไม่อนุญาตให้จอง</div>
+            <div style="margin-top:10px; color:#d32f2f; font-weight:500;">
+              *หากเลือกเวลาชนกับตารางเรียน ระบบจะแจ้งเตือนและไม่อนุญาตให้จอง
+            </div>
           </div>
           
           <div id="roomInfoDisplay" class="room-info-container">
@@ -275,63 +439,111 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://npmcdn.com/flatpickr/dist/l10n/th.js"></script>
 <script>
-  // *** Room Data ***
+  // *** Room Data อัปเดตรูปภาพใหม่ทั้งหมดแล้ว ***
   const roomData = {
-    "SC1-411": { cap: "60", equip: "Projector Interactive, Computer, Whiteboard, ทุกโต๊ะมีปลั๊กไฟ", imgs: ["https://img1.pic.in.th/images/1ef5111ff9c6c132b.jpg", "https://img2.pic.in.th/271561e214bb6d862.jpg", "https://img1.pic.in.th/images/352498bf4ae00c8a7.jpg", "https://img2.pic.in.th/468058eae97a0792e.jpg"] },
-    "SC1-414": { cap: "30", equip: "จอสัมผัสอัจฉริยะ 86 นิ้ว 4K, Computer, Interactive Whiteboard, รองรับสำหรับการออนไลน์", imgs: ["https://img2.pic.in.th/1ac5142b25995e878.jpg", "https://img2.pic.in.th/264d979864b9dd210.jpg", "https://img1.pic.in.th/images/3736a7232ea844ebc.jpg", "https://img1.pic.in.th/images/4d7d11eec4cec5220.jpg"] },
-    "SC1-415": { cap: "30", equip: "จอสัมผัสอัจฉริยะ 86 นิ้ว 4K, Computer, Interactive Whiteboard", imgs: ["https://img2.pic.in.th/1a3fd394f5659457f.jpg", "https://img1.pic.in.th/images/254d744c30bed76c6.jpg", "https://img1.pic.in.th/images/3ce7c5f39b8fadf61.jpg", "https://img2.pic.in.th/4f8b67faac6755d43.jpg"] },
-    "SC1-416": { cap: "30", equip: "จอสัมผัสอัจฉริยะ 86 นิ้ว 4K, Computer, Interactive Whiteboard", imgs: ["https://img2.pic.in.th/12a748d94e430e2bd.jpg", "https://img1.pic.in.th/images/248841006cef35e39.jpg", "https://img2.pic.in.th/35ab457d5e3c96e5d.jpg", "https://img1.pic.in.th/images/485d3301815d90821.jpg"] },
-    "Student Center (Main)": { cap: "60-80", equip: "-", imgs: ["https://img1.pic.in.th/images/1f3a8417b24b8c826.jpg", "https://img2.pic.in.th/2659e1d80106feb56.jpg", "https://img1.pic.in.th/images/3120dd7eeecb7ed1c.jpg", "https://img2.pic.in.th/494d186d39077b2ce.jpg"] },
-    "Meeting 1": { cap: "7", equip: "TV Display", imgs: ["https://img1.pic.in.th/images/1681748e197bea3da.jpg", "https://img2.pic.in.th/2205b015aff65e32e.jpg", "https://img2.pic.in.th/37f5d959bf9373c35.jpg", "https://img1.pic.in.th/images/405099a64a0e5094b.jpg"] },
-    "Meeting 2": { cap: "5", equip: "-", imgs: ["https://img2.pic.in.th/1dc9278cf92c09bd1.jpg", "https://img1.pic.in.th/images/2079de6c7d4770af4.jpg", "https://img2.pic.in.th/3d1fd660499d87706.jpg", "https://img1.pic.in.th/images/464a55da584b905b8.jpg"] },
-    "Meeting 3": { cap: "5", equip: "-", imgs: ["https://img2.pic.in.th/1c0a66f9bf92c51b8.jpg", "https://img1.pic.in.th/images/27950d7c5c7284b5c.jpg", "https://img1.pic.in.th/images/3734b3ef4cbe995d0.jpg", "https://img2.pic.in.th/41d117a2e3cb013f5.jpg"] }
+    "SC1-411": { 
+      cap: "60", 
+      equip: "Projector Interactive, Computer, Whiteboard, ทุกโต๊ะมีปลั๊กไฟ", 
+      imgs: [
+        "https://img1.pic.in.th/images/1ef5111ff9c6c132b.jpg",
+        "https://img2.pic.in.th/271561e214bb6d862.jpg",
+        "https://img1.pic.in.th/images/352498bf4ae00c8a7.jpg",
+        "https://img2.pic.in.th/468058eae97a0792e.jpg"
+      ] 
+    },
+    "SC1-414": { 
+      cap: "30", 
+      equip: "จอสัมผัสอัจฉริยะ 86 นิ้ว 4K, Computer, Interactive Whiteboard, รองรับสำหรับการออนไลน์", 
+      imgs: [
+        "https://img2.pic.in.th/1ac5142b25995e878.jpg",
+        "https://img2.pic.in.th/264d979864b9dd210.jpg",
+        "https://img1.pic.in.th/images/3736a7232ea844ebc.jpg",
+        "https://img1.pic.in.th/images/4d7d11eec4cec5220.jpg"
+      ] 
+    },
+    "SC1-415": { 
+      cap: "30", 
+      equip: "จอสัมผัสอัจฉริยะ 86 นิ้ว 4K, Computer, Interactive Whiteboard", 
+      imgs: [
+        "https://img2.pic.in.th/1a3fd394f5659457f.jpg",
+        "https://img1.pic.in.th/images/254d744c30bed76c6.jpg",
+        "https://img1.pic.in.th/images/3ce7c5f39b8fadf61.jpg",
+        "https://img2.pic.in.th/4f8b67faac6755d43.jpg"
+      ] 
+    },
+    "SC1-416": { 
+      cap: "30", 
+      equip: "จอสัมผัสอัจฉริยะ 86 นิ้ว 4K, Computer, Interactive Whiteboard", 
+      imgs: [
+        "https://img2.pic.in.th/12a748d94e430e2bd.jpg",
+        "https://img1.pic.in.th/images/248841006cef35e39.jpg",
+        "https://img2.pic.in.th/35ab457d5e3c96e5d.jpg",
+        "https://img1.pic.in.th/images/485d3301815d90821.jpg"
+      ] 
+    },
+    "Student Center (Main)": { 
+      cap: "60-80", 
+      equip: "-", 
+      imgs: [
+        "https://img1.pic.in.th/images/1f3a8417b24b8c826.jpg",
+        "https://img2.pic.in.th/2659e1d80106feb56.jpg",
+        "https://img1.pic.in.th/images/3120dd7eeecb7ed1c.jpg",
+        "https://img2.pic.in.th/494d186d39077b2ce.jpg"
+      ] 
+    },
+    "Meeting 1": { 
+      cap: "7", 
+      equip: "TV Display", 
+      imgs: [
+        "https://img1.pic.in.th/images/1681748e197bea3da.jpg",
+        "https://img2.pic.in.th/2205b015aff65e32e.jpg",
+        "https://img2.pic.in.th/37f5d959bf9373c35.jpg",
+        "https://img1.pic.in.th/images/405099a64a0e5094b.jpg"
+      ] 
+    },
+    "Meeting 2": { 
+      cap: "5", 
+      equip: "-", 
+      imgs: [
+        "https://img2.pic.in.th/1dc9278cf92c09bd1.jpg",
+        "https://img1.pic.in.th/images/2079de6c7d4770af4.jpg",
+        "https://img2.pic.in.th/3d1fd660499d87706.jpg",
+        "https://img1.pic.in.th/images/464a55da584b905b8.jpg"
+      ] 
+    },
+    "Meeting 3": { 
+      cap: "5", 
+      equip: "-", 
+      imgs: [
+        "https://img2.pic.in.th/1c0a66f9bf92c51b8.jpg",
+        "https://img1.pic.in.th/images/27950d7c5c7284b5c.jpg",
+        "https://img1.pic.in.th/images/3734b3ef4cbe995d0.jpg",
+        "https://img2.pic.in.th/41d117a2e3cb013f5.jpg"
+      ] 
+    }
   };
 
-  // *** ระบบส่งคำสั่งไปยังหลังบ้านด้วยการดึง API แทน google.script.run ***
-  // เพื่อเอาไปใส่ Vercel ได้สมบูรณ์
-  function sendRequest(payload, onSuccess) {
-    fetch(API_URL, {
-      method: "POST",
-      body: JSON.stringify(payload)
-    })
-    .then(res => res.text())
-    .then(text => {
-      try {
-        const json = JSON.parse(text);
-        if(onSuccess) onSuccess(json);
-      } catch(e) {
-        if(onSuccess) onSuccess(text);
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      showModal("ข้อผิดพลาด", "ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้", "error");
-    });
-  }
-
-  function fetchGetData(action, onSuccess) {
-    fetch(API_URL + "?action=" + action)
-    .then(res => res.json())
-    .then(data => { if(onSuccess) onSuccess(data); })
-    .catch(err => console.error(err));
-  }
-
-  // *** Navigation ***
+  // *** Navigation ปรับแก้ให้รับค่า `element` (ปุ่มที่ถูกกด) มาอัปเดตสถานะ ***
   function showSection(sectionId, element) {
     ['schedule', 'booking', 'admin', 'staff', 'roominfo'].forEach(id => {
       const el = document.getElementById('section-' + id);
       if(el) el.style.display = 'none';
     });
+    
     document.getElementById('section-' + sectionId).style.display = 'block';
     
     document.querySelectorAll('.list-group-item').forEach(el => el.classList.remove('active'));
-    if(element) element.classList.add('active');
+    if(element) {
+      element.classList.add('active');
+    }
     
+    // โหลดข้อมูลตามหน้าที่เปิด
     if(sectionId === 'schedule') { document.getElementById("bookingTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='6' class='text-center text-muted py-5'><div class='td-content text-center'>กำลังโหลดข้อมูล...</div></td></tr>"; loadPublicData(); }
     if(sectionId === 'admin' && document.getElementById('adminDashboard').style.display === 'block') { document.getElementById("adminTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='5' class='text-center py-4 text-muted'><div class='td-content text-center'>กำลังโหลดข้อมูล...</div></td></tr>"; loadAdminData(); }
     if(sectionId === 'staff' && document.getElementById('staffDashboard').style.display === 'block') { document.getElementById("staffTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='4' class='text-center py-4 text-muted'><div class='td-content text-center'>กำลังโหลดข้อมูล...</div></td></tr>"; loadStaffData(); }
     if(sectionId === 'roominfo') renderAllRooms();
     
+    // พับเมนูมือถือ
     if(window.innerWidth < 768) document.getElementById('wrapper').classList.remove('toggled');
   }
 
@@ -347,7 +559,7 @@
         imagesHtml += `<div><img src="${imgUrl}" onclick="window.open('${imgUrl}', '_blank')"></div>`;
       }
       imagesHtml += '</div>';
-      col.innerHTML = `<div class="room-card h-100">${imagesHtml}<div class="room-card-body"><div><div class="room-card-title">${roomName}</div><div class="room-card-text"><i class="bi bi-people-fill text-muted"></i> ความจุ: ${data.cap} คน</div><div class="room-card-text"><i class="bi bi-tools text-muted"></i> ${data.equip}</div></div><button type="button" class="btn btn-outline-primary w-100 mt-3" onclick="goToBooking('${roomName}')">จองห้องนี้</button></div></div>`;
+      col.innerHTML = `<div class="room-card h-100">${imagesHtml}<div class="room-card-body"><div><div class="room-card-title">${roomName}</div><div class="room-card-text"><i class="bi bi-people-fill text-muted"></i> ความจุ: ${data.cap} คน</div><div class="room-card-text"><i class="bi bi-tools text-muted"></i> ${data.equip}</div></div><button class="btn btn-outline-primary w-100 mt-3" onclick="goToBooking('${roomName}')">จองห้องนี้</button></div></div>`;
       container.appendChild(col);
     }
   }
@@ -363,6 +575,7 @@
     window.scrollTo(0, 0);
   }
 
+  // *** Flatpickr ***
   flatpickr("#bookingDate", { dateFormat: "Y-m-d", locale: "th", minDate: "today" });
   flatpickr("#startTime", { enableTime: true, noCalendar: true, dateFormat: "H:i", time_24hr: true, locale: "th" });
   flatpickr("#endTime", { enableTime: true, noCalendar: true, dateFormat: "H:i", time_24hr: true, locale: "th" });
@@ -370,12 +583,12 @@
   window.onload = function() { 
     loadPublicData(); 
     setInterval(function() {
-      fetchGetData("getPublic", renderPublicTable);
+      google.script.run.withSuccessHandler(renderPublicTable).getPublicBookings();
       if(document.getElementById('staffDashboard').style.display === 'block') {
-        fetchGetData("getStaff", renderStaffTable);
+        google.script.run.withSuccessHandler(renderStaffTable).getStaffBookings();
       }
       if(document.getElementById('adminDashboard').style.display === 'block') {
-        fetchGetData("getAdmin", renderAdminTable);
+        google.script.run.withSuccessHandler(renderAdminTable).getAllBookingsForAdmin();
       }
     }, 15000); 
   };
@@ -399,13 +612,14 @@
     } else { display.style.display = "none"; }
   }
 
-  function loadPublicData() { fetchGetData("getPublic", renderPublicTable); }
+  // *** Public Table ***
+  function loadPublicData() { google.script.run.withSuccessHandler(renderPublicTable).getPublicBookings(); }
   
   function renderPublicTable(data) {
     var tbody = document.getElementById("bookingTable").getElementsByTagName("tbody")[0];
     document.getElementById("lastUpdate").innerText = new Date().toLocaleTimeString('th-TH', {hour: '2-digit', minute:'2-digit'});
     
-    if(!data || data.length === 0) { tbody.innerHTML = "<tr><td colspan='6' class='text-center py-4 text-muted'><div class='td-content text-center'>- ยังไม่มีการจองเร็วๆ นี้ -</div></td></tr>"; return; }
+    if(data.length === 0) { tbody.innerHTML = "<tr><td colspan='6' class='text-center py-4 text-muted'><div class='td-content text-center'>- ยังไม่มีการจองเร็วๆ นี้ -</div></td></tr>"; return; }
     
     let htmlContent = "";
     data.forEach(function(row) {
@@ -435,6 +649,7 @@
     tbody.innerHTML = htmlContent;
   }
 
+  // *** Submit Form ***
   function handleFormSubmit(e) {
     e.preventDefault();
     var btn = document.getElementById("submitBtn");
@@ -456,7 +671,7 @@
       date: date, startTime: start, endTime: end
     };
     
-    sendRequest({ action: "submitBooking", form: formData }, function(res) {
+    google.script.run.withSuccessHandler(function(res) {
       if(res === "Success") {
         var successMsg = `ระบบได้รับคำขอจองของท่านแล้ว<br>สถานะ: <b style="color:#d39e00;">รอการอนุมัติ</b><br><br>ท่านสามารถตรวจสอบสถานะได้ทางหน้าเว็บไซต์<br>และอีเมล <b>${formData.email}</b>`;
         showModal("บันทึกสำเร็จ", successMsg, "success");
@@ -465,12 +680,12 @@
         document.getElementById("bookingTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='6' class='text-center text-muted py-5'><div class='td-content text-center'>กำลังโหลดข้อมูล...</div></td></tr>";
         loadPublicData();
         showSection('schedule');
-      } else if(res && res.startsWith("ClassConflict:")) {
+      } else if(res.startsWith("ClassConflict:")) {
          var msg = res.split("ClassConflict:")[1];
          showModal("ไม่สามารถจองได้", msg, "error");
       } else { showModal("ขออภัย", "ช่วงเวลาดังกล่าวมีผู้จองแล้ว", "error"); }
       btn.disabled = false; btn.innerHTML = '<i class="bi bi-send-fill"></i> ยืนยันการจอง';
-    });
+    }).submitBooking(formData);
   }
 
   function showModal(title, message, type) {
@@ -499,12 +714,12 @@
     document.getElementById("staffPass").value = "";
   }
   
-  function loadStaffData() { fetchGetData("getStaff", renderStaffTable); }
+  function loadStaffData() {
+    google.script.run.withSuccessHandler(renderStaffTable).getStaffBookings();
+  }
   
   function renderStaffTable(data) {
     var tbody = document.getElementById("staffTable").getElementsByTagName("tbody")[0]; 
-    if(!data) return;
-    
     let now = new Date();
     let futureData = data.filter(row => new Date(row.endRaw) >= now);
 
@@ -575,11 +790,12 @@
     document.getElementById("adminUser").value = "";
     document.getElementById("adminPass").value = "";
   }
-  function loadAdminData() { fetchGetData("getAdmin", renderAdminTable); }
-  
+  function loadAdminData() {
+    google.script.run.withSuccessHandler(renderAdminTable).getAllBookingsForAdmin();
+  }
   function renderAdminTable(data) {
     var tbody = document.getElementById("adminTable").getElementsByTagName("tbody")[0]; 
-    if(!data || data.length === 0) { tbody.innerHTML = "<tr><td colspan='5' class='text-center py-4'><div class='td-content text-center'>ไม่มีข้อมูล</div></td></tr>"; return; }
+    if(data.length === 0) { tbody.innerHTML = "<tr><td colspan='5' class='text-center py-4'><div class='td-content text-center'>ไม่มีข้อมูล</div></td></tr>"; return; }
     
     let htmlContent = "";
     data.forEach(function(row) {
@@ -632,10 +848,10 @@
   function executeStatusUpdate() {
     if(pendingRow !== null && pendingStatus !== null) {
       document.getElementById("adminTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='5' class='text-center py-4 text-muted'><div class='td-content text-center'>กำลังอัปเดตข้อมูล...</div></td></tr>";
-      sendRequest({ action: "updateStatus", rowIndex: pendingRow, status: pendingStatus }, function() {
+      google.script.run.withSuccessHandler(function() { 
         loadAdminData(); 
         closeConfirmModal();
-      });
+      }).updateBookingStatus(pendingRow, pendingStatus);
     }
   }
 
