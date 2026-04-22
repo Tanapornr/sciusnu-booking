@@ -10,9 +10,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
   
   <script>
-    // ********* ใส่ URL ของ GOOGLE APPS SCRIPT ตรงนี้ *********
-    const API_URL = "https://script.google.com/macros/s/AKfycbzJvp8g7eDXpor4blpX0GQb3WCHqEyeMQPtsxnJslTjAMdUu_wT2rc4LM8WE5UhtaBC3Q/exec"; 
-    // *******************************************************
+    // *************************************************************
+    // วางลิงก์ Google Apps Script ลงในเครื่องหมายคำพูดด้านล่างนี้
+    // *************************************************************
+    const API_URL = "1IGxYJTYw0GulaBGSqIK7witqrnH-fdPm1I0WAFiQnn8"; 
   </script>
 
   <style>
@@ -33,14 +34,14 @@
     .room-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
     .room-img-grid { display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); gap: 2px; height: 220px; background-color: #f8f9fa; border-bottom: 4px solid var(--primary-color); }
     @media (min-width: 768px) { .room-img-grid { height: 300px; } }
-    .room-img-grid div { width: 100%; height: 100%; min-width: 0; min-height: 0; overflow: hidden; background: #e9ecef; display:flex; align-items:center; justify-content:center;}
+    .room-img-grid div { width: 100%; height: 100%; min-width: 0; min-height: 0; overflow: hidden; }
     .room-img-grid img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: pointer; transition: opacity 0.2s; }
     .room-img-grid img:hover { opacity: 0.8; }
     .room-card-body { padding: 20px; background-color: #ffffff; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
     .room-card-title { font-weight: 700; color: #1e293b; margin-bottom: 10px; font-size: 1.2rem; }
     .room-card-text { font-size: 0.95rem; color: #555; margin-bottom: 8px; line-height: 1.5; white-space: normal; }
     .room-info-container { background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; display: none; margin-bottom: 20px; }
-    .room-gallery-img { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 1px solid #ddd; transition: transform 0.2s; background: #e9ecef; }
+    .room-gallery-img { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 1px solid #ddd; transition: transform 0.2s; }
     .room-gallery-img:hover { transform: scale(1.05); }
     .note-box { background-color: #fff8e1; border-left: 5px solid #ffc107; color: #5d4037; padding: 20px; border-radius: 8px; margin-bottom: 25px; font-size: 1rem; line-height: 1.7; }
     .note-box strong { font-size: 1.1rem; color: #b00020; display: block; margin-bottom: 10px; }
@@ -274,7 +275,7 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://npmcdn.com/flatpickr/dist/l10n/th.js"></script>
 <script>
-  // *** รูปภาพที่แก้ไขให้ตรงตามลิงก์ pic.in.th ล่าสุด ***
+  // *** Room Data ***
   const roomData = {
     "SC1-411": { cap: "60", equip: "Projector Interactive, Computer, Whiteboard, ทุกโต๊ะมีปลั๊กไฟ", imgs: ["https://img1.pic.in.th/images/1ef5111ff9c6c132b.jpg", "https://img2.pic.in.th/271561e214bb6d862.jpg", "https://img1.pic.in.th/images/352498bf4ae00c8a7.jpg", "https://img2.pic.in.th/468058eae97a0792e.jpg"] },
     "SC1-414": { cap: "30", equip: "จอสัมผัสอัจฉริยะ 86 นิ้ว 4K, Computer, Interactive Whiteboard, รองรับสำหรับการออนไลน์", imgs: ["https://img2.pic.in.th/1ac5142b25995e878.jpg", "https://img2.pic.in.th/264d979864b9dd210.jpg", "https://img1.pic.in.th/images/3736a7232ea844ebc.jpg", "https://img1.pic.in.th/images/4d7d11eec4cec5220.jpg"] },
@@ -286,12 +287,33 @@
     "Meeting 3": { cap: "5", equip: "-", imgs: ["https://img2.pic.in.th/1c0a66f9bf92c51b8.jpg", "https://img1.pic.in.th/images/27950d7c5c7284b5c.jpg", "https://img1.pic.in.th/images/3734b3ef4cbe995d0.jpg", "https://img2.pic.in.th/41d117a2e3cb013f5.jpg"] }
   };
 
-  // *** ระบบ Fetch แทน google.script.run สำหรับรันบน Vercel ***
-  function fetchAPI(payload) {
-    return fetch(API_URL, {
-      method: 'POST',
+  // *** ระบบส่งคำสั่งไปยังหลังบ้านด้วยการดึง API แทน google.script.run ***
+  // เพื่อเอาไปใส่ Vercel ได้สมบูรณ์
+  function sendRequest(payload, onSuccess) {
+    fetch(API_URL, {
+      method: "POST",
       body: JSON.stringify(payload)
+    })
+    .then(res => res.text())
+    .then(text => {
+      try {
+        const json = JSON.parse(text);
+        if(onSuccess) onSuccess(json);
+      } catch(e) {
+        if(onSuccess) onSuccess(text);
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      showModal("ข้อผิดพลาด", "ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้", "error");
     });
+  }
+
+  function fetchGetData(action, onSuccess) {
+    fetch(API_URL + "?action=" + action)
+    .then(res => res.json())
+    .then(data => { if(onSuccess) onSuccess(data); })
+    .catch(err => console.error(err));
   }
 
   // *** Navigation ***
@@ -322,7 +344,7 @@
       let imagesHtml = '<div class="room-img-grid">';
       for(let i=0; i<4; i++) {
         let imgUrl = data.imgs[i] ? data.imgs[i] : 'https://via.placeholder.com/300?text=No+Image';
-        imagesHtml += `<div><img src="${imgUrl}" onerror="this.onerror=null; this.src='https://via.placeholder.com/300?text=Image+Error';" onclick="window.open('${imgUrl}', '_blank')"></div>`;
+        imagesHtml += `<div><img src="${imgUrl}" onclick="window.open('${imgUrl}', '_blank')"></div>`;
       }
       imagesHtml += '</div>';
       col.innerHTML = `<div class="room-card h-100">${imagesHtml}<div class="room-card-body"><div><div class="room-card-title">${roomName}</div><div class="room-card-text"><i class="bi bi-people-fill text-muted"></i> ความจุ: ${data.cap} คน</div><div class="room-card-text"><i class="bi bi-tools text-muted"></i> ${data.equip}</div></div><button type="button" class="btn btn-outline-primary w-100 mt-3" onclick="goToBooking('${roomName}')">จองห้องนี้</button></div></div>`;
@@ -348,12 +370,12 @@
   window.onload = function() { 
     loadPublicData(); 
     setInterval(function() {
-      fetch(API_URL + "?action=getPublic").then(res=>res.json()).then(renderPublicTable).catch(()=>{});
+      fetchGetData("getPublic", renderPublicTable);
       if(document.getElementById('staffDashboard').style.display === 'block') {
-        fetch(API_URL + "?action=getStaff").then(res=>res.json()).then(renderStaffTable).catch(()=>{});
+        fetchGetData("getStaff", renderStaffTable);
       }
       if(document.getElementById('adminDashboard').style.display === 'block') {
-        fetch(API_URL + "?action=getAdmin").then(res=>res.json()).then(renderAdminTable).catch(()=>{});
+        fetchGetData("getAdmin", renderAdminTable);
       }
     }, 15000); 
   };
@@ -371,26 +393,19 @@
       gallery.innerHTML = "";
       roomData[room].imgs.forEach(function(imgUrl) {
         var col = document.createElement("div"); col.className = "col-6 col-md-3";
-        col.innerHTML = `<img src="${imgUrl}" class="room-gallery-img" onerror="this.onerror=null; this.src='https://via.placeholder.com/150?text=Error';" onclick="window.open('${imgUrl}','_blank')">`;
+        col.innerHTML = `<img src="${imgUrl}" class="room-gallery-img" onclick="window.open('${imgUrl}','_blank')">`;
         gallery.appendChild(col);
       });
     } else { display.style.display = "none"; }
   }
 
-  function loadPublicData() { 
-    fetch(API_URL + "?action=getPublic")
-      .then(res => res.json())
-      .then(renderPublicTable)
-      .catch(err => {
-        document.getElementById("bookingTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='6' class='text-center py-4 text-danger'><div class='td-content text-center'>ไม่สามารถโหลดข้อมูลได้ กรุณาลองใหม่</div></td></tr>";
-      });
-  }
+  function loadPublicData() { fetchGetData("getPublic", renderPublicTable); }
   
   function renderPublicTable(data) {
     var tbody = document.getElementById("bookingTable").getElementsByTagName("tbody")[0];
     document.getElementById("lastUpdate").innerText = new Date().toLocaleTimeString('th-TH', {hour: '2-digit', minute:'2-digit'});
     
-    if(data.length === 0) { tbody.innerHTML = "<tr><td colspan='6' class='text-center py-4 text-muted'><div class='td-content text-center'>- ยังไม่มีการจองเร็วๆ นี้ -</div></td></tr>"; return; }
+    if(!data || data.length === 0) { tbody.innerHTML = "<tr><td colspan='6' class='text-center py-4 text-muted'><div class='td-content text-center'>- ยังไม่มีการจองเร็วๆ นี้ -</div></td></tr>"; return; }
     
     let htmlContent = "";
     data.forEach(function(row) {
@@ -441,26 +456,21 @@
       date: date, startTime: start, endTime: end
     };
     
-    fetchAPI({ action: "submitBooking", form: formData })
-      .then(res => res.text())
-      .then(res => {
-        if(res === "Success") {
-          var successMsg = `ระบบได้รับคำขอจองของท่านแล้ว<br>สถานะ: <b style="color:#d39e00;">รอการอนุมัติ</b><br><br>ท่านสามารถตรวจสอบสถานะได้ทางหน้าเว็บไซต์<br>และอีเมล <b>${formData.email}</b>`;
-          showModal("บันทึกสำเร็จ", successMsg, "success");
-          document.getElementById("bookingForm").reset();
-          document.getElementById("roomInfoDisplay").style.display = "none";
-          document.getElementById("bookingTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='6' class='text-center text-muted py-5'><div class='td-content text-center'>กำลังโหลดข้อมูล...</div></td></tr>";
-          loadPublicData();
-          showSection('schedule');
-        } else if(res.startsWith("ClassConflict:")) {
-           var msg = res.split("ClassConflict:")[1];
-           showModal("ไม่สามารถจองได้", msg, "error");
-        } else { showModal("ขออภัย", "ช่วงเวลาดังกล่าวมีผู้จองแล้ว", "error"); }
-        btn.disabled = false; btn.innerHTML = '<i class="bi bi-send-fill"></i> ยืนยันการจอง';
-      }).catch(err => {
-        showModal("ข้อผิดพลาด", "ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้", "error");
-        btn.disabled = false; btn.innerHTML = '<i class="bi bi-send-fill"></i> ยืนยันการจอง';
-      });
+    sendRequest({ action: "submitBooking", form: formData }, function(res) {
+      if(res === "Success") {
+        var successMsg = `ระบบได้รับคำขอจองของท่านแล้ว<br>สถานะ: <b style="color:#d39e00;">รอการอนุมัติ</b><br><br>ท่านสามารถตรวจสอบสถานะได้ทางหน้าเว็บไซต์<br>และอีเมล <b>${formData.email}</b>`;
+        showModal("บันทึกสำเร็จ", successMsg, "success");
+        document.getElementById("bookingForm").reset();
+        document.getElementById("roomInfoDisplay").style.display = "none";
+        document.getElementById("bookingTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='6' class='text-center text-muted py-5'><div class='td-content text-center'>กำลังโหลดข้อมูล...</div></td></tr>";
+        loadPublicData();
+        showSection('schedule');
+      } else if(res && res.startsWith("ClassConflict:")) {
+         var msg = res.split("ClassConflict:")[1];
+         showModal("ไม่สามารถจองได้", msg, "error");
+      } else { showModal("ขออภัย", "ช่วงเวลาดังกล่าวมีผู้จองแล้ว", "error"); }
+      btn.disabled = false; btn.innerHTML = '<i class="bi bi-send-fill"></i> ยืนยันการจอง';
+    });
   }
 
   function showModal(title, message, type) {
@@ -489,12 +499,12 @@
     document.getElementById("staffPass").value = "";
   }
   
-  function loadStaffData() {
-    fetch(API_URL + "?action=getStaff").then(res => res.json()).then(renderStaffTable);
-  }
+  function loadStaffData() { fetchGetData("getStaff", renderStaffTable); }
   
   function renderStaffTable(data) {
     var tbody = document.getElementById("staffTable").getElementsByTagName("tbody")[0]; 
+    if(!data) return;
+    
     let now = new Date();
     let futureData = data.filter(row => new Date(row.endRaw) >= now);
 
@@ -565,12 +575,11 @@
     document.getElementById("adminUser").value = "";
     document.getElementById("adminPass").value = "";
   }
-  function loadAdminData() {
-    fetch(API_URL + "?action=getAdmin").then(res => res.json()).then(renderAdminTable);
-  }
+  function loadAdminData() { fetchGetData("getAdmin", renderAdminTable); }
+  
   function renderAdminTable(data) {
     var tbody = document.getElementById("adminTable").getElementsByTagName("tbody")[0]; 
-    if(data.length === 0) { tbody.innerHTML = "<tr><td colspan='5' class='text-center py-4'><div class='td-content text-center'>ไม่มีข้อมูล</div></td></tr>"; return; }
+    if(!data || data.length === 0) { tbody.innerHTML = "<tr><td colspan='5' class='text-center py-4'><div class='td-content text-center'>ไม่มีข้อมูล</div></td></tr>"; return; }
     
     let htmlContent = "";
     data.forEach(function(row) {
@@ -623,11 +632,10 @@
   function executeStatusUpdate() {
     if(pendingRow !== null && pendingStatus !== null) {
       document.getElementById("adminTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='5' class='text-center py-4 text-muted'><div class='td-content text-center'>กำลังอัปเดตข้อมูล...</div></td></tr>";
-      fetchAPI({ action: "updateStatus", rowIndex: pendingRow, status: pendingStatus })
-        .then(() => {
-          loadAdminData(); 
-          closeConfirmModal();
-        });
+      sendRequest({ action: "updateStatus", rowIndex: pendingRow, status: pendingStatus }, function() {
+        loadAdminData(); 
+        closeConfirmModal();
+      });
     }
   }
 
