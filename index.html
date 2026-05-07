@@ -235,7 +235,7 @@
             <input type="text" id="filterDate" class="form-control" placeholder="📅 เลือกวันที่ต้องการดู..." onchange="applyFilters()">
           </div>
           <div class="col-md-2">
-            <button class="btn btn-outline-danger w-100" style="border-radius:14px; height:100%; font-weight:600;" onclick="clearFilters()"><i class="bi bi-eraser-fill"></i> ล้างค่า</button>
+            <button class="btn btn-outline-danger w-100" style="border-radius:14px; height:100%; font-weight:600;" onclick="clearFilters()"><i class="bi bi-eraser-fill"></i> ดูทั้งหมด</button>
           </div>
         </div>
 
@@ -476,7 +476,7 @@
         fetch(API_URL + "?action=getPublic").then(res => res.json()).then(data => {
             if(JSON.stringify(data) !== JSON.stringify(globalPublicData)) { 
                 globalPublicData = data; 
-                applyFilters(); // อัปเดตตารางโดยยึดตาม Filter เดิม
+                applyFilters(); 
             }
         }).catch(()=>{});
       } else if(document.getElementById('adminDashboard').style.display === 'block') {
@@ -560,7 +560,7 @@
   function loadPublicData() { 
     fetch(API_URL + "?action=getPublic").then(res => res.json()).then(data => {
       globalPublicData = data;
-      applyFilters(); // แสดงผลผ่านระบบ Filter ทันที
+      applyFilters(); 
     }).catch(err => {
       document.getElementById("bookingTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='6' class='text-center py-4 text-danger'>ไม่สามารถโหลดข้อมูลได้ กรุณาลองใหม่</td></tr>";
     });
@@ -608,7 +608,6 @@
       document.getElementById("scheduleNote").style.display = "none";
       document.getElementById("roomInfoDisplay").style.display = "none";
       
-      // รีเฟรชข้อมูลหน้าแรกทันที
       document.getElementById("bookingTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='6' class='text-center py-5'><div class='spinner-border text-primary'></div></td></tr>";
       loadPublicData();
       showSection('schedule');
