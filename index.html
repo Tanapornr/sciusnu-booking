@@ -87,9 +87,6 @@
 
     .room-info-container { background: #F2F2F7; border-radius: 16px; padding: 20px; display: none; margin-bottom: 25px; }
 
-    /* ==========================================
-       🔥 ปรับกล่อง Note ให้คลีนเหมือนภาพที่ 1 🔥
-       ========================================== */
     .note-box { 
       background-color: #FCF7D9; border-left: 6px solid #E6C229; color: #5D4037; 
       padding: 18px 22px; border-radius: 14px; margin-bottom: 25px; 
@@ -170,13 +167,11 @@
     .btn-main:active { transform: scale(0.97); } 
     .btn-main:disabled { background-color: #A0C3FF; cursor: not-allowed; transform: none; }
 
-    /* ปรับปรุง Status Pill ให้มีขอบ (Outline) เหมือนภาพที่ 3 */
     .status-pill { padding: 5px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block; background: transparent;}
     .status-ok { border: 1px solid #28a745; color: #28a745; } 
     .status-wait { border: 1px solid #fd7e14; color: #fd7e14; } 
     .status-no { border: 1px solid #dc3545; color: #dc3545; }
     
-    /* สไตล์ปุ่มตารางแอดมิน */
     table td { vertical-align: middle; padding: 1rem 0.75rem; }
   </style>
 </head>
@@ -221,9 +216,32 @@
           <div class="page-title m-0"><i class="bi bi-table me-2"></i>ตารางการใช้ห้อง</div>
           <small class="text-muted d-flex align-items-center"><span class="spinner-grow spinner-grow-sm text-success me-2" style="width: 10px; height: 10px;" role="status"></span>เรียลไทม์</small>
         </div>
+        
+        <div class="row g-2 mb-4 p-3" style="background-color: #F8F9FA; border-radius: 16px; border: 1px solid #E5E5EA;">
+          <div class="col-md-5">
+            <select id="filterRoom" class="form-select" onchange="applyFilters()">
+              <option value="">-- ดูทุกห้อง --</option>
+              <option value="SC1-411">SC1-411</option>
+              <option value="SC1-414">SC1-414</option>
+              <option value="SC1-415">SC1-415</option>
+              <option value="SC1-416">SC1-416</option>
+              <option value="Student Center (Main)">Student Center (ห้องโถงใหญ่)</option>
+              <option value="Meeting 1">Student Center - Meeting 1</option>
+              <option value="Meeting 2">Student Center - Meeting 2</option>
+              <option value="Meeting 3">Student Center - Meeting 3</option>
+            </select>
+          </div>
+          <div class="col-md-5">
+            <input type="text" id="filterDate" class="form-control" placeholder="📅 เลือกวันที่ต้องการดู..." onchange="applyFilters()">
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-outline-danger w-100" style="border-radius:14px; height:100%; font-weight:600;" onclick="clearFilters()"><i class="bi bi-eraser-fill"></i> ล้างค่า</button>
+          </div>
+        </div>
+
         <div class="table-responsive">
           <table class="table table-hover align-middle mb-0" id="bookingTable">
-            <thead class="table-dark"><tr><th>วันเวลา</th><th>ห้อง</th><th>หัวข้อ</th><th>ผู้จอง</th><th>เบอร์</th><th class="text-center">สถานะ</th></tr></thead>
+            <thead class="table-light"><tr><th>วันเวลา</th><th>ห้อง</th><th>หัวข้อ</th><th>ผู้จอง</th><th>เบอร์</th><th class="text-center">สถานะ</th></tr></thead>
             <tbody><tr><td colspan="6" class="text-center py-5"><div class="spinner-border text-primary"></div></td></tr></tbody>
           </table>
         </div>
@@ -301,7 +319,7 @@
             <div class="page-title m-0 text-success">ตารางเตรียมเปิดห้อง</div>
             <button class="btn btn-outline-danger btn-sm rounded-pill" onclick="logoutStaff()">ออกจากระบบ</button>
           </div>
-          <div class="alert alert-success d-flex align-items-center" style="border-radius:12px; border:none; background:#E2F4D9; color:#2E7D32;"><i class="bi bi-info-circle-fill me-2"></i> แสดงเฉพาะที่ "อนุมัติ" แล้ว เรียงตามเวลาใช้งาน (ซ่อนรายการในอดีต)</div>
+          <div class="alert alert-success d-flex align-items-center" style="border-radius:12px; border:none; background:#E2F4D9; color:#2E7D32;"><i class="bi bi-info-circle-fill me-2"></i> แสดงเฉพาะที่ "อนุมัติ" แล้ว เรียงตามเวลาใช้งาน</div>
           <div class="table-responsive">
             <table class="table table-bordered align-middle mb-0" id="staffTable">
               <thead class="table-dark"><tr><th>วันเวลา</th><th>ห้อง</th><th>หัวข้อ</th><th>ผู้จอง (เบอร์ติดต่อ)</th></tr></thead>
@@ -384,6 +402,10 @@
   let globalPublicData = null; 
   let globalStaffData = null;
   let globalAdminData = null;
+  
+  // ตัวแปรสำหรับ Filter
+  let currentFilterRoom = "";
+  let currentFilterDate = "";
 
   const roomData = {
     "SC1-411": { cap: "60", equip: "Projector Interactive, Computer, Whiteboard, ทุกโต๊ะมีปลั๊กไฟ", imgs: ["https://img1.pic.in.th/images/1ef5111ff9c6c132b.jpg", "https://img2.pic.in.th/271561e214bb6d862.jpg", "https://img1.pic.in.th/images/352498bf4ae00c8a7.jpg", "https://img2.pic.in.th/468058eae97a0792e.jpg"] },
@@ -407,7 +429,7 @@
     document.querySelectorAll('.list-group-item').forEach(el => el.classList.remove('active'));
     if(element) element.classList.add('active');
     
-    if(sectionId === 'schedule') { if(!globalPublicData) loadPublicData(); else renderPublicTable(globalPublicData); }
+    if(sectionId === 'schedule') { if(!globalPublicData) loadPublicData(); else applyFilters(); }
     if(sectionId === 'admin' && document.getElementById('adminDashboard').style.display === 'block') { if(!globalAdminData) loadAdminData(); else renderAdminTable(globalAdminData); }
     if(sectionId === 'staff' && document.getElementById('staffDashboard').style.display === 'block') { if(!globalStaffData) loadStaffData(); else renderStaffTable(globalStaffData); }
     if(sectionId === 'roominfo') renderAllRooms();
@@ -443,13 +465,19 @@
   flatpickr("#bookingDate", { mode: "multiple", dateFormat: "Y-m-d", locale: "th", minDate: "today", conjunction: ", " });
   flatpickr("#startTime", { enableTime: true, noCalendar: true, dateFormat: "H:i", time_24hr: true, locale: "th" });
   flatpickr("#endTime", { enableTime: true, noCalendar: true, dateFormat: "H:i", time_24hr: true, locale: "th" });
+  
+  // Flatpickr สำหรับช่อง Filter ค้นหา
+  flatpickr("#filterDate", { dateFormat: "Y-m-d", locale: "th" });
 
   window.onload = function() { 
     loadPublicData(); 
     setInterval(() => {
       if(document.getElementById('section-schedule').style.display === 'block') {
         fetch(API_URL + "?action=getPublic").then(res => res.json()).then(data => {
-            if(JSON.stringify(data) !== JSON.stringify(globalPublicData)) { globalPublicData = data; renderPublicTable(data); }
+            if(JSON.stringify(data) !== JSON.stringify(globalPublicData)) { 
+                globalPublicData = data; 
+                applyFilters(); // อัปเดตตารางโดยยึดตาม Filter เดิม
+            }
         }).catch(()=>{});
       } else if(document.getElementById('adminDashboard').style.display === 'block') {
         fetch(API_URL + "?action=getAdmin").then(res => res.json()).then(data => {
@@ -462,6 +490,37 @@
       }
     }, 8000); 
   };
+
+  // 🔥 ระบบค้นหาและกรอง (Filter) ตาราง 🔥
+  function applyFilters() {
+    if(!globalPublicData) return;
+    currentFilterRoom = document.getElementById('filterRoom').value;
+    currentFilterDate = document.getElementById('filterDate').value;
+    
+    let filtered = globalPublicData;
+    
+    if(currentFilterRoom) {
+      filtered = filtered.filter(item => item.room === currentFilterRoom);
+    }
+    if(currentFilterDate) {
+      filtered = filtered.filter(item => {
+        let d = new Date(item.startRaw);
+        let tzOffset = (new Date()).getTimezoneOffset() * 60000;
+        let localISOTime = (new Date(d - tzOffset)).toISOString().slice(0, -1);
+        let itemDateStr = localISOTime.split('T')[0];
+        return itemDateStr === currentFilterDate;
+      });
+    }
+    renderPublicTable(filtered);
+  }
+
+  function clearFilters() {
+    document.getElementById('filterRoom').value = "";
+    document.getElementById('filterDate')._flatpickr.clear();
+    currentFilterRoom = "";
+    currentFilterDate = "";
+    applyFilters();
+  }
 
   function updateRoomInfo() {
     const room = document.getElementById("roomSelect").value;
@@ -501,7 +560,7 @@
   function loadPublicData() { 
     fetch(API_URL + "?action=getPublic").then(res => res.json()).then(data => {
       globalPublicData = data;
-      renderPublicTable(data);
+      applyFilters(); // แสดงผลผ่านระบบ Filter ทันที
     }).catch(err => {
       document.getElementById("bookingTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='6' class='text-center py-4 text-danger'>ไม่สามารถโหลดข้อมูลได้ กรุณาลองใหม่</td></tr>";
     });
@@ -509,12 +568,12 @@
   
   function renderPublicTable(data) {
     const tbody = document.getElementById("bookingTable").getElementsByTagName("tbody")[0];
-    if(!data || data.length === 0) { tbody.innerHTML = "<tr><td colspan='6' class='text-center py-4 text-muted'>ไม่มีรายการจอง</td></tr>"; return; }
+    if(!data || data.length === 0) { tbody.innerHTML = "<tr><td colspan='6' class='text-center py-4 text-muted'>ไม่มีรายการจอง หรือไม่พบข้อมูลที่ค้นหา</td></tr>"; return; }
     let html = "";
     data.forEach(row => {
       let d = new Date(row.startRaw);
-      let dateT = d.toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric' });
-      let timeT = d.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) + " - " + new Date(row.endRaw).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) + " น.";
+      let dateT = d.toLocaleDateString('th-TH', { month: 'short', day: 'numeric' });
+      let timeT = d.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) + " - " + new Date(row.endRaw).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
       let badge = row.status === "อนุมัติ" ? "status-ok" : (row.status === "รออนุมัติ" ? "status-wait" : "status-no");
       html += `<tr><td><div class="td-content"><b>${dateT}</b><br><small class="text-muted">${timeT}</small></div></td><td><div class="td-content" style="color:var(--primary-color); font-weight:600;">${row.room}</div></td><td><div class="td-content">${row.title}</div></td><td><div class="td-content">${row.name}</div></td><td><div class="td-content">${row.internalPhone}</div></td><td class="text-center align-middle"><span class="status-pill ${badge}">${row.status}</span></td></tr>`;
     });
@@ -548,10 +607,12 @@
       document.getElementById("bookingForm").reset();
       document.getElementById("scheduleNote").style.display = "none";
       document.getElementById("roomInfoDisplay").style.display = "none";
+      
+      // รีเฟรชข้อมูลหน้าแรกทันที
       document.getElementById("bookingTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='6' class='text-center py-5'><div class='spinner-border text-primary'></div></td></tr>";
       loadPublicData();
       showSection('schedule');
-    } else { showModal("ไม่สำเร็จ", "เกิดข้อผิดพลาดในการจอง", "error"); }
+    } else { showModal("ไม่สำเร็จ", "เกิดข้อผิดพลาดในการจอง กรุณาลองใหม่ หรืออาจติดเวลาตารางเรียน", "error"); }
     
     btn.disabled = false; btn.innerHTML = "ยืนยันการจอง";
   }
@@ -598,16 +659,7 @@
     let html = "";
     data.forEach(row => {
       let d = new Date(row.startRaw);
-      let dateText = d.toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric' });
-      let timeText = d.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) + " - " + new Date(row.endRaw).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) + " น.";
-      
-      let phoneStr = String(row.phone).trim(); if(phoneStr && !phoneStr.startsWith('0')) { phoneStr = '0' + phoneStr; }
-      html += `<tr>
-        <td><div class="td-content"><b>${dateText}</b><br><small class="text-muted">${timeText}</small></div></td>
-        <td><div class="td-content"><b style="color:var(--primary-color);">${row.room}</b></div></td>
-        <td><div class="td-content">${row.title}</div></td>
-        <td><div class="td-content">${row.name}<br><small class="text-muted"><i class="bi bi-telephone"></i> ${phoneStr || '-'}</small></div></td>
-      </tr>`;
+      html += `<tr><td><div class="td-content"><b>${d.toLocaleDateString('th-TH')}</b><br><small>${d.toLocaleTimeString('th-TH')} - ${new Date(row.endRaw).toLocaleTimeString('th-TH')}</small></div></td><td><b>${row.room}</b></td><td>${row.title}</td><td>${row.name}</td></tr>`;
     });
     tbody.innerHTML = html;
   }
