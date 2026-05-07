@@ -9,9 +9,9 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   
   <script>
-    // ********* ยืนยัน URL จาก Vercel *********
-    const API_URL = "https://script.google.com/macros/s/AKfycbzBoz_hVh9ShOLCYxjzIXbTrTGnPnkcOrecYp_nZhiAbE7fr8aaLQKcjcfuDk6dDa1Weg/exec"; 
-    // ***************************************
+    // ********* ยืนยัน URL จาก Google Apps Script ล่าสุด *********
+    const API_URL = "https://script.google.com/macros/s/AKfycbwgaT9RAn16U8Vm5EUhqyLtqvVywNg7suLB8opUZ1zeZipoac6n7hBbxYg4JEpJgIKAMw/exec"; 
+    // *********************************************************
   </script>
 
   <style>
@@ -23,7 +23,6 @@
       --card-radius: 20px; 
     }
     
-    /* ปรับ Font เป็นตระกูล Apple / iOS */
     body { 
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Sarabun", "Segoe UI", Roboto, sans-serif;
       background-color: var(--bg-color); 
@@ -88,18 +87,17 @@
     .room-thumbnails { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; }
     .room-thumbnails::-webkit-scrollbar { display: none; }
     .room-thumbnail-img { width: 65px; height: 65px; border-radius: 12px; object-fit: cover; cursor: pointer; flex-shrink: 0; border: 2px solid transparent; transition: 0.2s; background: #E5E5EA; }
-    .room-thumbnail-img:hover { border-color: var(--primary-color); transform: scale(1.05); }
+    .room-thumbnail-img:hover, .room-thumbnail-img.active-thumb { border-color: var(--primary-color); transform: scale(1.05); }
 
     .room-card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
     .room-card-title { font-weight: 700; color: #1C1C1E; margin-bottom: 10px; font-size: 1.3rem; letter-spacing: -0.3px;}
     .room-card-text { font-size: 0.95rem; color: #8E8E93; margin-bottom: 8px; line-height: 1.5; white-space: normal; }
 
-    .room-info-container { background: #F2F2F7; border-radius: 16px; padding: 20px; display: none; margin-bottom: 20px; }
+    .room-info-container { background: #F2F2F7; border-radius: 16px; padding: 20px; display: none; margin-bottom: 25px; }
 
     .note-box { background-color: #FFF9C4; border-left: 5px solid #FFCC00; color: #8D6E63; padding: 20px; border-radius: 12px; margin-bottom: 25px; font-size: 1rem; line-height: 1.7; }
     .note-box strong { font-size: 1.1rem; color: #D32F2F; display: block; margin-bottom: 10px; }
 
-    /* --- Responsive Mobile Header --- */
     .mobile-header { display: none; }
     #sidebar-overlay { display: none; }
 
@@ -122,9 +120,7 @@
       .table-responsive thead { display: none; } 
       
       .table-responsive tr { 
-        margin-bottom: 15px; 
-        background: #FFFFFF;
-        border: 1px solid #E5E5EA !important; 
+        margin-bottom: 15px; background: #FFFFFF; border: 1px solid #E5E5EA !important; 
         border-radius: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); padding: 5px 0; 
       }
       .table-responsive td { display: grid !important; grid-template-columns: 105px 1fr; gap: 10px; align-items: start; padding: 12px 15px !important; border-bottom: 1px solid #F2F2F7 !important; text-align: right; }
@@ -141,15 +137,12 @@
       .td-content { text-align: right; word-break: break-word; width: 100%; } .td-content div { text-align: right; } .td-content .d-flex { justify-content: flex-end; }
     }
 
-    /* --- iOS Style Modal Popups --- */
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 9999; align-items: center; justify-content: center; }
     .modal-box { 
-      background: rgba(255, 255, 255, 0.85); 
-      backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+      background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
       width: 85%; max-width: 320px; padding: 0; border-radius: 20px; text-align: center; 
       box-shadow: 0 10px 40px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.5);
-      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-      overflow: hidden;
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); overflow: hidden;
     }
     @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     
@@ -157,7 +150,6 @@
     #modalTitle { font-weight: 600; font-size: 1.2rem; color: #1C1C1E; margin-bottom: 8px; letter-spacing: -0.5px;}
     #modalMessage, #confirmMessage { color: #3A3A3C; font-size: 1rem; line-height: 1.4; margin: 0; }
     
-    /* Modal Buttons (iOS Alert Style) */
     .modal-btn-area { border-top: 1px solid rgba(60,60,67,0.29); display: flex; width: 100%; }
     .modal-btn-single { width: 100%; padding: 15px; background: transparent; border: none; color: #007AFF; font-size: 1.1rem; font-weight: 600; transition: 0.2s; cursor: pointer;}
     .modal-btn-single:active { background: rgba(0,0,0,0.05); }
@@ -168,7 +160,6 @@
     .modal-btn-split.danger { color: #FF3B30; font-weight: 600; }
     .modal-btn-split:active { background: rgba(0,0,0,0.05); }
 
-    /* Button styles */
     .btn-main { background-color: var(--primary-color); color: white; padding: 12px 30px; border-radius: 12px; font-size: 1.05rem; font-weight: 600; border: none; width: 100%; transition: 0.2s; }
     .btn-main:hover { background-color: #005bb5; }
     .status-pill { padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block; }
@@ -258,8 +249,10 @@
               <div class="col-md-6"><i class="bi bi-people-fill text-muted"></i> <b>ความจุ:</b> <span id="roomCap"></span> คน</div>
               <div class="col-md-6"><i class="bi bi-tools text-muted"></i> <b>อุปกรณ์:</b> <span id="roomEquip"></span></div>
             </div>
-            <label class="form-label small text-muted fw-bold">ภาพบรรยากาศ:</label>
-            <div class="row g-2" id="roomGallery"></div>
+            
+            <label class="form-label small text-muted fw-bold mb-2">ภาพบรรยากาศ:</label>
+            <div id="roomGallery" style="width: 100%;"></div>
+            
           </div>
 
           <div class="mb-3"><label class="form-label text-secondary fw-bold">หัวข้อการประชุม/กิจกรรม</label><input type="text" class="form-control" name="title" required placeholder="ระบุหัวข้อ..."></div>
@@ -440,6 +433,7 @@
     }, 15000); 
   };
 
+  // เปลี่ยนดีไซน์แกลเลอรี่ในฟอร์มจองเป็น รูปใหญ่ + Thumbnails
   function updateRoomInfo() {
     var select = document.getElementById("roomSelect");
     var room = select.value;
@@ -450,12 +444,21 @@
       document.getElementById("roomNameDisplay").innerText = room;
       document.getElementById("roomCap").innerText = roomData[room].cap;
       document.getElementById("roomEquip").innerText = roomData[room].equip;
-      gallery.innerHTML = "";
+      
+      let mainImgUrl = roomData[room].imgs[0] || 'https://via.placeholder.com/600x400';
+      let mainImgId = 'formMainImg';
+      
+      let html = `
+        <div style="width:100%; border-radius:12px; overflow:hidden; margin-bottom:10px; border: 1px solid #E5E5EA;">
+          <img src="${mainImgUrl}" id="${mainImgId}" style="width:100%; height:200px; object-fit:cover; display:block; transition: 0.3s; background:#E5E5EA;" onclick="window.open(this.src,'_blank')">
+        </div>
+        <div style="display:flex; gap:10px; overflow-x:auto; padding-bottom:5px; scrollbar-width: none;">
+      `;
       roomData[room].imgs.forEach(function(imgUrl) {
-        var col = document.createElement("div"); col.className = "col-6 col-md-3";
-        col.innerHTML = `<img src="${imgUrl}" class="room-gallery-img" onclick="window.open('${imgUrl}','_blank')">`;
-        gallery.appendChild(col);
+        html += `<img src="${imgUrl}" style="width:70px; height:70px; object-fit:cover; border-radius:10px; cursor:pointer; border:2px solid transparent; background:#E5E5EA;" onclick="document.getElementById('${mainImgId}').src='${imgUrl}'">`;
       });
+      html += `</div>`;
+      gallery.innerHTML = html;
     } else { display.style.display = "none"; }
   }
 
@@ -533,10 +536,10 @@
       loadPublicData();
       showSection('schedule');
     } else if(successCount > 0) {
-      showModal("สำเร็จบางส่วน", `จองสำเร็จ: ${successCount} วัน<br><br><b>ไม่สามารถจองได้:</b><br><small style="color:red;">${failMsgs.join("<br>")}</small>`, "error");
+      showModal("สำเร็จบางส่วน", `จองสำเร็จ: ${successCount} วัน<br><br><b>ไม่สามารถจองได้:</b><br><small style="color:#FF3B30;">${failMsgs.join("<br>")}</small>`, "error");
       loadPublicData();
     } else {
-      showModal("ไม่สามารถจองได้", `<b>สาเหตุ:</b><br><small style="color:red;">${failMsgs.join("<br>")}</small>`, "error");
+      showModal("ไม่สามารถจองได้", `<b>สาเหตุ:</b><br><small style="color:#FF3B30;">${failMsgs.join("<br>")}</small>`, "error");
     }
     btn.disabled = false; btn.innerHTML = 'ยืนยันการจอง';
   }
@@ -586,7 +589,7 @@
       let startTimeText = dateObj.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
       let endTimeText = new Date(row.endRaw).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
       let phoneStr = String(row.phone).trim(); if(phoneStr && !phoneStr.startsWith('0')) { phoneStr = '0' + phoneStr; }
-      let phoneHtml = phoneStr ? `<a href="tel:${phoneStr}" style="color:#0d6efd; font-weight:600; text-decoration:none;"><i class="bi bi-telephone-fill"></i> ${phoneStr}</a>` : '<span class="text-muted">-</span>';
+      let phoneHtml = phoneStr ? `<a href="tel:${phoneStr}" style="color:#007AFF; font-weight:600; text-decoration:none;"><i class="bi bi-telephone-fill"></i> ${phoneStr}</a>` : '<span class="text-muted">-</span>';
       htmlContent += `<tr><td><div class="td-content"><div class="text-success" style="font-weight:600; font-size:1.05rem;"><i class="bi bi-calendar-event"></i> ${dateText}</div><div class="text-danger mt-1" style="font-size:0.95rem; font-weight:600;"><i class="bi bi-clock"></i> ${startTimeText} - ${endTimeText} น.</div></div></td><td><div class="td-content" style="font-size:1.1rem; font-weight:700; color:var(--primary-color);">${row.room}</div></td><td><div class="td-content">${row.title}</div></td><td><div class="td-content">${row.name}<br><small class="mt-1 d-inline-block">${phoneHtml}</small></div></td></tr>`;
     });
     tbody.innerHTML = htmlContent;
