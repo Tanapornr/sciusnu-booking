@@ -47,12 +47,10 @@
     #sidebar-wrapper::-webkit-scrollbar { display: none; }
 
     .sidebar-heading { padding: 35px 20px 15px; text-align: center; }
-    
     .sidebar-logo { 
       width: 100%; max-width: 220px; height: auto; 
       object-fit: contain; margin-bottom: 15px; background: transparent !important; 
     }
-    
     .sidebar-title-area { text-align: center; width: 100%; }
     .main-title { font-size: 1.2rem; font-weight: 700; color: #fff; margin-bottom: 4px; display: block; }
     .sub-title { font-size: 0.85rem; font-weight: 400; color: rgba(255,255,255,0.5); display: block; }
@@ -104,7 +102,9 @@
     .note-box li { margin-bottom: 5px; }
     .note-box-footer { color: #D32F2F; font-size: 0.9rem; font-weight: 600; }
 
-    /* Mobile Responsive */
+    /* ==========================================
+       Responsive สำหรับมือถือ
+       ========================================== */
     @media (max-width: 768px) {
       .mobile-header { 
         display: flex !important; position: fixed; top: 0; left: 0; width: 100%; height: 70px; 
@@ -130,40 +130,65 @@
       
       #bookingTable td:nth-child(1)::before { content: "วัน/เวลา:"; } #bookingTable td:nth-child(2)::before { content: "ห้อง:"; } #bookingTable td:nth-child(3)::before { content: "หัวข้อ:"; } #bookingTable td:nth-child(4)::before { content: "ผู้จอง:"; } #bookingTable td:nth-child(5)::before { content: "เบอร์ภายใน:"; } #bookingTable td:nth-child(6)::before { content: "สถานะ:"; align-self: center;}
       #staffTable td:nth-child(1)::before { content: "วัน/เวลา:"; } #staffTable td:nth-child(2)::before { content: "ห้อง:"; } #staffTable td:nth-child(3)::before { content: "หัวข้อ:"; } #staffTable td:nth-child(4)::before { content: "ผู้จอง/เบอร์:"; }
+      #adminTable td:nth-child(1)::before { content: "วัน/เวลา:"; } #adminTable td:nth-child(2)::before { content: "ห้อง:"; } #adminTable td:nth-child(3)::before { content: "ผู้จอง/เบอร์:"; } #adminTable td:nth-child(4)::before { content: "สถานะ:"; align-self: center;} #adminTable td:nth-child(5)::before { content: "จัดการ:"; align-self: center;}
       
-      /* อัปเดตตารางแอดมินใหม่สำหรับมือถือ */
-      #adminTable td:nth-child(1)::before { content: "วัน/เวลา:"; } 
-      #adminTable td:nth-child(2)::before { content: "ห้อง:"; } 
-      #adminTable td:nth-child(3)::before { content: "หัวข้อ:"; } 
-      #adminTable td:nth-child(4)::before { content: "ผู้จอง/เบอร์:"; } 
-      #adminTable td:nth-child(5)::before { content: "สถานะ:"; align-self: center;} 
-      #adminTable td:nth-child(6)::before { content: "จัดการ:"; align-self: center;}
-      
-      #staffTable tr.table-warning { padding: 12px; background: #FFF9C4 !important; border: none !important; box-shadow: none !important; margin-bottom: 15px; border-radius: 12px; }
-      #staffTable tr.table-warning td { display: block !important; text-align: center !important; padding: 0 !important; border: none !important; }
-      #staffTable tr.table-warning td::before { content: none !important; }
       .td-content { text-align: right; word-break: break-word; flex-grow: 1; }
     }
 
     /* ==========================================
-       iOS Modal - No English
+       🔥 ดีไซน์ป๊อบอัพใหม่ล่าสุด (ตามภาพที่ส่งมาเป๊ะๆ) 🔥
        ========================================== */
-    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-    .modal-box { background: rgba(255, 255, 255, 0.98); width: 88%; max-width: 320px; padding: 0; border-radius: 22px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.2); animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); overflow: hidden; }
-    @keyframes popIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .modal-overlay { 
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+      background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center; 
+      backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+    }
+    .modal-box { 
+      background: #ffffff; width: 90%; max-width: 340px; padding: 25px; 
+      border-radius: 20px; text-align: center; position: relative; 
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15); 
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    }
+    @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     
-    .modal-content-area { padding: 30px 20px 24px; }
-    #modalIcon, #confirmIcon { font-size: 42px; margin-bottom: 10px; display: block; }
-    #modalTitle, #modalTitleConfirm { font-weight: 700; font-size: 1.2rem; color: #1C1C1E; margin-bottom: 8px; letter-spacing: -0.4px;}
-    #modalMessage, #confirmMessage { color: #636366; font-size: 0.95rem; line-height: 1.45; margin: 0; }
+    .modal-close-icon { 
+      position: absolute; top: 15px; right: 15px; background: #F2F2F7; 
+      width: 28px; height: 28px; border-radius: 50%; display: flex; 
+      align-items: center; justify-content: center; color: #8E8E93; 
+      cursor: pointer; border: none; font-size: 16px; transition: 0.2s; 
+    }
+    .modal-close-icon:hover { background: #E5E5EA; color: #1C1C1E; }
+
+    /* วงกลมไอคอนตรงกลาง */
+    .modal-icon-wrapper {
+      width: 80px; height: 80px; border-radius: 50%; display: flex;
+      align-items: center; justify-content: center; margin: 0 auto 15px;
+    }
+    .modal-icon-wrapper.success { background-color: #FFF4CE; } /* สีเหลืองอ่อน */
+    .modal-icon-wrapper.error { background-color: #FFE5E5; } /* สีแดงอ่อน */
+    .modal-icon-wrapper i, .modal-icon-wrapper span { font-size: 40px; }
     
-    .modal-btn-area { display: flex; width: 100%; border-top: 0.5px solid rgba(60,60,67,0.2); }
-    .modal-btn-single { width: 100%; padding: 16px; background: transparent; border: none; color: #007AFF; font-size: 1.1rem; font-weight: 600; cursor: pointer; }
-    .modal-btn-split { width: 50%; padding: 16px; background: transparent; border: none; font-size: 1.1rem; cursor: pointer; }
-    .modal-btn-split.cancel { color: #007AFF; font-weight: 400; border-right: 0.5px solid rgba(60,60,67,0.2); }
-    .modal-btn-split.confirm { color: #007AFF; font-weight: 600; }
-    .modal-btn-split.danger { color: #FF3B30; font-weight: 600; }
-    .modal-btn-split:active, .modal-btn-single:active { background: rgba(0,0,0,0.05); }
+    #modalTitle, #modalTitleConfirm { font-weight: 700; font-size: 1.25rem; color: #1C1C1E; margin-bottom: 8px; }
+    #modalMessage, #confirmMessage { color: #666; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.5; }
+    
+    /* โครงสร้างปุ่ม 2 ฝั่ง (ซ้ายขาว / ขวาดำ) */
+    .modal-btn-area { display: flex; gap: 10px; justify-content: center; width: 100%; }
+    
+    .modal-btn-single { 
+      width: 100%; padding: 12px; background: #000000; border: 1px solid #000000; 
+      color: #ffffff; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.2s;
+    }
+    .modal-btn-single:hover { background: #1C1C1E; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+
+    .modal-btn-split { 
+      flex: 1; padding: 12px 10px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.2s; 
+    }
+    /* ปุ่มยกเลิก/ซ้าย (ขาวขอบดำ) */
+    .modal-btn-split.cancel { background: #ffffff; border: 1px solid #1C1C1E; color: #1C1C1E; }
+    .modal-btn-split.cancel:hover { background: #F2F2F7; }
+    /* ปุ่มยืนยัน/ขวา (สีดำ) */
+    .modal-btn-split.confirm { background: #1C1C1E; border: 1px solid #1C1C1E; color: #fff; }
+    .modal-btn-split.confirm:hover { background: #000000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
 
     .btn-main { background-color: var(--primary-color); color: white; padding: 14px 30px; border-radius: 16px; font-size: 1.1rem; font-weight: 600; border: none; width: 100%; transition: 0.2s; }
     .status-pill { padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
@@ -324,13 +349,12 @@
                 <tr>
                   <th>วันเวลา</th>
                   <th>ห้อง</th>
-                  <th>หัวข้อ</th>
                   <th>ผู้จอง (เบอร์ติดต่อ)</th>
                   <th class="text-center">สถานะ</th>
                   <th class="text-center">จัดการ</th>
                 </tr>
               </thead>
-              <tbody><tr><td colspan="6" class="text-center py-5"><div class="spinner-border text-primary"></div></td></tr></tbody>
+              <tbody><tr><td colspan="5" class="text-center py-5"><div class="spinner-border text-primary"></div></td></tr></tbody>
             </table>
           </div>
         </div>
@@ -341,19 +365,21 @@
 
 <div id="customModal" class="modal-overlay">
   <div class="modal-box">
+    <button class="modal-close-icon" onclick="closeModal()"><i class="bi bi-x"></i></button>
     <div class="modal-content-area">
       <div id="modalIcon"></div>
       <h3 id="modalTitle"></h3>
       <p id="modalMessage"></p>
     </div>
     <div class="modal-btn-area">
-      <button class="modal-btn-single" onclick="closeModal()">ตกลง</button>
+      <button id="modalBtn" class="modal-btn-single" onclick="closeModal()">ตกลง</button>
     </div>
   </div>
 </div>
 
 <div id="confirmModal" class="modal-overlay">
   <div class="modal-box">
+    <button class="modal-close-icon" onclick="closeConfirmModal()"><i class="bi bi-x"></i></button>
     <div class="modal-content-area">
       <div id="confirmIcon"></div>
       <h3 id="modalTitleConfirm">ยืนยันการดำเนินการ</h3>
@@ -533,10 +559,20 @@
     btn.disabled = false; btn.innerHTML = "ยืนยันการจอง";
   }
 
+  /* ==========================================
+     🔥 ฟังก์ชันป๊อปอัพ ใหม่! สไตล์วงกลม (ภาพที่ 2) 🔥
+     ========================================== */
   function showModal(title, msg, type) {
     document.getElementById("modalTitle").innerText = title;
     document.getElementById("modalMessage").innerText = msg;
-    document.getElementById("modalIcon").innerHTML = type === "error" ? '<i class="bi bi-x-circle-fill text-danger"></i>' : '<i class="bi bi-check-circle-fill text-success"></i>';
+    const iconWrap = document.getElementById("modalIcon");
+    if (type === "error") { 
+      iconWrap.className = "modal-icon-wrapper error";
+      iconWrap.innerHTML = '<i class="bi bi-x-lg text-danger"></i>'; 
+    } else { 
+      iconWrap.className = "modal-icon-wrapper success";
+      iconWrap.innerHTML = '<span style="font-size:35px;">🎉</span>'; 
+    }
     document.getElementById("customModal").style.display = "flex";
   }
   function closeModal() { document.getElementById("customModal").style.display = "none"; }
@@ -546,7 +582,7 @@
       document.getElementById("staffLoginCard").style.display = "none";
       document.getElementById("staffDashboard").style.display = "block";
       loadStaffData();
-    } else { showModal("ผิดพลาด", "รหัสผ่านไม่ถูกต้อง", "error"); }
+    } else { showModal("เข้าสู่ระบบไม่สำเร็จ", "รหัสผ่านไม่ถูกต้อง", "error"); }
   }
   function logoutStaff() { document.getElementById("staffLoginCard").style.display = "block"; document.getElementById("staffDashboard").style.display = "none"; document.getElementById("staffPass").value = ""; }
   function loadStaffData() { fetch(API_URL + "?action=getStaff").then(res => res.json()).then(renderStaffTable); }
@@ -566,12 +602,12 @@
       document.getElementById("loginCard").style.display = "none";
       document.getElementById("adminDashboard").style.display = "block";
       loadAdminData();
-    } else { showModal("ผิดพลาด", "ข้อมูลไม่ถูกต้อง", "error"); }
+    } else { showModal("เข้าสู่ระบบไม่สำเร็จ", "ข้อมูลไม่ถูกต้อง", "error"); }
   }
   function logoutAdmin() { document.getElementById("loginCard").style.display = "block"; document.getElementById("adminDashboard").style.display = "none"; }
   function loadAdminData() { fetch(API_URL + "?action=getAdmin").then(res => res.json()).then(renderAdminTable); }
   
-  // 🔥 อัปเดตตารางหน้าผู้ดูแลระบบ ให้มีคอลัมน์ครบตามที่คุณต้องการ (รวมถึงปุ่ม จัดการ) 🔥
+  // 🔥 ตาราง Admin ดึงเบอร์โทร และ เพิ่มปุ่ม "ลบ" 🔥
   function renderAdminTable(data) {
     const tbody = document.getElementById("adminTable").getElementsByTagName("tbody")[0];
     if(!data || data.length === 0) { tbody.innerHTML = "<tr><td colspan='6' class='text-center py-4'>ไม่มีข้อมูล</td></tr>"; return; }
@@ -580,23 +616,24 @@
       let d = new Date(row.startRaw);
       let dateText = d.toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric' });
       let timeText = d.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) + " - " + new Date(row.endRaw).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) + " น.";
-      let phoneStr = String(row.phone).trim(); if(phoneStr && !phoneStr.startsWith('0')) { phoneStr = '0' + phoneStr; }
+      
+      let phoneStr = String(row.phone).trim(); 
+      if(phoneStr && !phoneStr.startsWith('0')) { phoneStr = '0' + phoneStr; }
       
       let statusColor = row.status === "อนุมัติ" ? "#34C759" : (row.status === "ไม่อนุมัติ" || row.status === "ยกเลิก" ? "#FF3B30" : "#FF9500");
 
       var btns = `
-        <div class="d-flex gap-1 justify-content-end justify-content-md-center">
+        <div class="d-flex gap-2 justify-content-end justify-content-md-center mt-2 mt-md-0">
           <button class="btn btn-sm" style="background:#34C759; color:white; border-radius:8px;" onclick="confirmUpdate(${row.rowIndex},'อนุมัติ')"><i class="bi bi-check-lg"></i></button>
           <button class="btn btn-sm" style="background:#FF9500; color:white; border-radius:8px;" onclick="confirmUpdate(${row.rowIndex},'ไม่อนุมัติ')"><i class="bi bi-x-lg"></i></button>
-          <button class="btn btn-sm" style="background:#FF3B30; color:white; border-radius:8px;" onclick="confirmUpdate(${row.rowIndex},'ยกเลิก')"><i class="bi bi-trash"></i></button>
+          <button class="btn btn-sm d-flex align-items-center" style="background:#FF3B30; color:white; border-radius:8px;" onclick="confirmUpdate(${row.rowIndex},'ยกเลิก')"><i class="bi bi-trash me-1"></i> ลบ</button>
         </div>`;
 
       html += `<tr>
         <td><div class="td-content"><b>${dateText}</b><br><small class="text-muted">${timeText}</small></div></td>
         <td><div class="td-content"><b style="color:var(--primary-color);">${row.room}</b></div></td>
-        <td><div class="td-content">${row.title}</div></td>
-        <td><div class="td-content">${row.name}<br><small class="text-muted">${phoneStr}</small></div></td>
-        <td class="text-center align-middle"><div class="td-content"><b style="color:${statusColor};">${row.status}</b></div></td>
+        <td><div class="td-content">${row.name}<br><small class="text-muted"><i class="bi bi-telephone"></i> ${phoneStr || '-'}</small></div></td>
+        <td class="text-center align-middle"><div class="td-content"><span class="status-pill" style="border: 1px solid ${statusColor}; color:${statusColor}; background: transparent;">${row.status}</span></div></td>
         <td class="text-center align-middle">${btns}</td>
       </tr>`;
     });
@@ -606,9 +643,20 @@
   function confirmUpdate(idx, status) {
     pendingRow = idx; pendingStatus = status;
     document.getElementById("confirmMessage").innerText = `คุณต้องการ ${status} รายการนี้ใช่หรือไม่?`;
-    document.getElementById("confirmIcon").innerHTML = status === 'อนุมัติ' ? '<i class="bi bi-check-circle-fill text-success"></i>' : '<i class="bi bi-x-circle-fill text-danger"></i>';
+    const iconWrap = document.getElementById("confirmIcon");
+    if(status === 'อนุมัติ') { 
+      iconWrap.className = "modal-icon-wrapper success";
+      iconWrap.innerHTML = '<i class="bi bi-check-lg text-success"></i>'; 
+    } else if(status === 'ไม่อนุมัติ') { 
+      iconWrap.className = "modal-icon-wrapper error";
+      iconWrap.innerHTML = '<i class="bi bi-x-lg text-warning"></i>'; 
+    } else { 
+      iconWrap.className = "modal-icon-wrapper error";
+      iconWrap.innerHTML = '<i class="bi bi-trash-fill text-danger"></i>'; 
+    }
     document.getElementById("confirmModal").style.display = "flex";
   }
+
   function executeStatusUpdate() {
     fetchAPI({ action: "updateStatus", rowIndex: pendingRow, status: pendingStatus }).then(() => { loadAdminData(); closeConfirmModal(); });
   }
