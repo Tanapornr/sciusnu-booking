@@ -17,7 +17,7 @@
   <style>
     :root { 
       --primary-color: #007AFF; 
-      --sidebar-bg: #231C1A; /* โทนสีเข้มตามรูปที่ 2 */
+      --sidebar-bg: #231C1A; /* โทนสีเข้ม */
       --sidebar-text: #f8f9fa;
       --bg-color: #F2F2F7; 
       --card-radius: 20px; 
@@ -36,29 +36,27 @@
     #wrapper { display: flex; width: 100%; min-height: 100vh; position: relative; }
     
     /* ==========================================
-       สไตล์แถบเมนูข้าง (ตามภาพที่ 2 และ 3)
+       สไตล์แถบเมนูข้าง (Floating Sidebar)
        ========================================== */
     #sidebar-wrapper { 
       min-width: 270px; max-width: 270px; 
       background-color: var(--sidebar-bg); 
       color: var(--sidebar-text); transition: all 0.3s; display: flex; flex-direction: column; 
-      /* ให้ Sidebar ลอยและมีขอบมน (เหมือน iPad/Mac) */
       margin: 15px; border-radius: 24px;
       height: calc(100vh - 30px);
       box-shadow: 0 10px 30px rgba(0,0,0,0.1);
       position: sticky; top: 15px; overflow-y: auto;
-      scrollbar-width: none; /* ซ่อน scrollbar Firefox */
+      scrollbar-width: none; 
     }
-    #sidebar-wrapper::-webkit-scrollbar { display: none; } /* ซ่อน scrollbar Chrome/Safari */
+    #sidebar-wrapper::-webkit-scrollbar { display: none; } 
 
     .sidebar-heading { 
       padding: 2rem 1.5rem 1rem; border-bottom: none; display: flex; flex-direction: column; align-items: center;
     }
-    /* แก้ไขโลโก้ให้เป็นกล่องสี่เหลี่ยมแนวยาวพื้นขาว (ไม่โดนบีบเป็นวงกลม) */
+    /* เอาพื้นสีขาวและเงาของโลโก้ออก ให้โปร่งใสกลืนไปกับพื้นหลัง */
     .sidebar-logo { 
       width: 100%; max-width: 200px; height: auto; 
-      background: #ffffff; padding: 10px 15px; border-radius: 12px; 
-      object-fit: contain; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      object-fit: contain; margin-bottom: 15px; background: transparent;
     }
     .sidebar-user-info { text-align: center; }
     .sidebar-role { font-size: 0.7rem; font-weight: 600; color: rgba(255,255,255,0.4); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 2px; }
@@ -68,7 +66,7 @@
     
     .list-group-item { 
       background-color: transparent; color: rgba(255,255,255,0.6); 
-      border: none; padding: 12px 18px; margin: 4px 15px; border-radius: 12px !important; /* ขอบมนลอย */
+      border: none; padding: 12px 18px; margin: 4px 15px; border-radius: 12px !important; 
       font-size: 0.95rem; font-weight: 500; cursor: pointer; transition: 0.2s; 
       display: flex; align-items: center;
     }
@@ -76,7 +74,6 @@
     .list-group-item.active { background-color: rgba(255,255,255,0.1) !important; color: #fff !important; font-weight: 600; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
     .list-group-item i { margin-right: 12px; font-size: 1.2rem; }
     
-    /* ซ่อน Header มือถือด้านบนทิ้งไปเลย เพื่อให้เจอหน้าต่างด้านข้างแบบเต็มๆ */
     .mobile-header { display: none !important; }
     #page-content-wrapper { width: 100%; padding: 15px 20px 20px 5px; }
     
@@ -108,19 +105,17 @@
     .note-box strong { font-size: 1.1rem; color: #D32F2F; display: block; margin-bottom: 10px; }
 
     /* ==========================================
-       Responsive สำหรับมือถือ (เปิดมาเจอเมนูเลย)
+       Responsive สำหรับมือถือ 
        ========================================== */
     #sidebar-overlay { display: none; }
     
     @media (max-width: 768px) {
-      /* ในมือถือ ให้เปิดมาเจอ Sidebar เสมอ (ลบ margin ให้เต็มจอ) */
       #sidebar-wrapper { 
         position: relative; width: 100%; min-width: 100%; height: auto; 
         margin: 0; border-radius: 0; box-shadow: none; z-index: 10;
         padding-bottom: 20px;
       }
       
-      /* ซ่อน Content ไว้ก่อน ถือว่าให้ผู้ใช้กดเมนูแล้วค่อยลงมาดูเนื้อหา */
       #page-content-wrapper { padding: 20px 15px; }
 
       .table-responsive { border: none !important; margin: 0; padding: 0; }
@@ -142,8 +137,7 @@
     }
 
     /* ==========================================
-       สไตล์ป๊อบอัพ (Modal) แบบกล่องขอบมน (ตามภาพที่ 1)
-       *ไม่มีวงเล็บภาษาอังกฤษ ย่อขนาดกระชับ*
+       สไตล์ป๊อบอัพ (Modal) คลีนๆ
        ========================================== */
     .modal-overlay { 
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
@@ -151,37 +145,30 @@
       backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
     }
     .modal-box { 
-      background: #ffffff; width: 90%; max-width: 320px; padding: 25px 20px 20px; 
-      border-radius: 20px; text-align: center; position: relative;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.15); 
-      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+      background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+      width: 85%; max-width: 320px; padding: 0; border-radius: 18px; text-align: center; 
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.5);
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); overflow: hidden;
     }
     @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     
-    /* ปุ่มกากบาทขวาบน (ลบออกตามภาพ 1 ให้ดูคลีนๆ) */
-    .modal-close-icon {
-      position: absolute; top: 12px; right: 12px; background: #F2F2F7;
-      width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      color: #8E8E93; cursor: pointer; border: none; font-size: 14px; transition: 0.2s;
-    }
+    .modal-content-area { padding: 25px 20px 20px; }
+    .modal-close-icon { position: absolute; top: 12px; right: 12px; background: #F2F2F7; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #8E8E93; cursor: pointer; border: none; font-size: 16px; transition: 0.2s; }
     .modal-close-icon:hover { background: #E5E5EA; color: #1C1C1E; }
 
-    #modalIcon { font-size: 35px; margin-bottom: 8px; }
-    #modalTitle, #modalTitleConfirm { font-weight: 700; font-size: 1.15rem; color: #1C1C1E; margin-bottom: 5px; letter-spacing: -0.3px;}
-    #modalMessage, #confirmMessage { color: #8E8E93; font-size: 0.9rem; line-height: 1.4; margin-bottom: 20px; }
+    #modalIcon, #confirmIcon { font-size: 40px; margin-bottom: 8px; }
+    #modalTitle, #modalTitleConfirm { font-weight: 600; font-size: 1.15rem; color: #1C1C1E; margin-bottom: 6px; letter-spacing: -0.3px;}
+    #modalMessage, #confirmMessage { color: #666; font-size: 0.9rem; line-height: 1.4; margin: 0; }
     
-    /* ปุ่มแยก 2 ฝั่ง (ตามภาพที่ 1) */
-    .modal-btn-area { display: flex; gap: 10px; justify-content: center; width: 100%; }
-    .modal-btn-split { 
-      flex: 1; padding: 10px; border-radius: 10px; font-size: 0.95rem; font-weight: 600; 
-      cursor: pointer; transition: 0.2s; text-align: center; border: 1px solid transparent;
-    }
-    /* ปุ่มยกเลิก/ตรวจสอบ (พื้นขาว ขอบเทา) */
-    .modal-btn-split.cancel { background: #ffffff; border-color: #C7C7CC; color: #1C1C1E; }
-    .modal-btn-split.cancel:hover { background: #F2F2F7; }
-    /* ปุ่มยืนยัน/ตกลง (พื้นดำทึบ) */
-    .modal-btn-split.confirm { background: #000000; border-color: #000000; color: #ffffff; }
-    .modal-btn-split.confirm:hover { background: #1C1C1E; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+    .modal-btn-area { display: flex; width: 100%; border-top: 1px solid #E5E5EA; }
+    .modal-btn-single { width: 100%; padding: 14px; background: transparent; border: none; color: #007AFF; font-size: 1.05rem; font-weight: 600; cursor: pointer; transition: 0.2s;}
+    .modal-btn-single:active { background: rgba(0,0,0,0.05); }
+    
+    .modal-btn-split { width: 50%; padding: 14px; background: transparent; border: none; font-size: 1.05rem; cursor: pointer; transition: 0.2s; }
+    .modal-btn-split.cancel { color: #007AFF; font-weight: 400; border-right: 1px solid #E5E5EA; }
+    .modal-btn-split.confirm { color: #007AFF; font-weight: 600; }
+    .modal-btn-split.danger { color: #FF3B30; font-weight: 600; }
+    .modal-btn-split:active { background: rgba(0,0,0,0.05); }
 
     .btn-main { background-color: var(--primary-color); color: white; padding: 12px 30px; border-radius: 12px; font-size: 1.05rem; font-weight: 600; border: none; width: 100%; transition: 0.2s; }
     .btn-main:hover { background-color: #005bb5; }
@@ -204,18 +191,16 @@
     </div>
     
     <div class="sidebar-section-title">Main Menu</div>
-    
     <div class="list-group list-group-flush">
       <button class="list-group-item list-group-item-action active" onclick="showSection('schedule', this)"><i class="bi bi-calendar-week"></i> ตารางใช้ห้อง</button>
       <button class="list-group-item list-group-item-action" onclick="showSection('roominfo', this)"><i class="bi bi-images"></i> ข้อมูลห้องเรียน</button>
       <button class="list-group-item list-group-item-action" onclick="showSection('booking', this)"><i class="bi bi-pencil-square"></i> จองห้องเรียน</button>
       
-      <div class="sidebar-section-title mt-2">Management</div>
-      
+      <div class="sidebar-section-title mt-3">Management</div>
       <button class="list-group-item list-group-item-action" onclick="showSection('staff', this)"><i class="bi bi-door-open-fill"></i> พนักงานเปิดห้อง</button>
       <button class="list-group-item list-group-item-action" onclick="showSection('admin', this)"><i class="bi bi-gear-fill"></i> ผู้ดูแลระบบ</button>
     </div>
-    <div style="margin-top:auto; padding: 20px; text-align:center; font-size:0.8rem; color:rgba(255,255,255,0.3);">พัฒนาโดย:<br>นางสาวธนาภรณ์ รอดฉ่ำ</div>
+    <div style="margin-top:auto; padding: 20px; text-align:center; font-size:0.75rem; color:rgba(255,255,255,0.3);">พัฒนาโดย:<br>ธนาภรณ์ รอดฉ่ำ</div>
   </div>
 
   <div id="page-content-wrapper">
@@ -356,11 +341,13 @@
 <div id="customModal" class="modal-overlay">
   <div class="modal-box">
     <button class="modal-close-icon" onclick="closeModal()"><i class="bi bi-x"></i></button>
-    <div id="modalIcon" style="margin-bottom: 5px;"></div>
-    <h3 id="modalTitle"></h3>
-    <p id="modalMessage"></p>
-    <div class="modal-btn-area mt-3">
-      <button id="modalBtn" class="modal-btn-split confirm" style="width:100%; border-radius:10px;" onclick="closeModal()">ตกลง</button>
+    <div class="modal-content-area">
+      <div id="modalIcon"></div>
+      <h3 id="modalTitle"></h3>
+      <p id="modalMessage"></p>
+    </div>
+    <div class="modal-btn-area mt-2">
+      <button id="modalBtn" class="modal-btn-single" onclick="closeModal()">ตกลง</button>
     </div>
   </div>
 </div>
@@ -368,10 +355,12 @@
 <div id="confirmModal" class="modal-overlay">
   <div class="modal-box">
     <button class="modal-close-icon" onclick="closeConfirmModal()"><i class="bi bi-x"></i></button>
-    <div id="confirmIcon"></div>
-    <h3 id="modalTitleConfirm">ยืนยันการดำเนินการ</h3>
-    <p id="confirmMessage"></p>
-    <div class="modal-btn-area mt-3">
+    <div class="modal-content-area">
+      <div id="confirmIcon"></div>
+      <h3 id="modalTitleConfirm" style="margin-top: 10px;">ยืนยันการดำเนินการ</h3>
+      <p id="confirmMessage"></p>
+    </div>
+    <div class="modal-btn-area">
       <button class="modal-btn-split cancel" onclick="closeConfirmModal()">ยกเลิก</button>
       <button id="confirmBtn" class="modal-btn-split confirm" onclick="executeStatusUpdate()">ยืนยัน</button>
     </div>
@@ -403,7 +392,6 @@
     document.querySelectorAll('.list-group-item').forEach(el => el.classList.remove('active'));
     if(element) element.classList.add('active');
     
-    // โหลดข้อมูลให้ถูกหน้าเท่านั้น จะได้ไม่หน่วง
     if(sectionId === 'schedule') { loadPublicData(); }
     if(sectionId === 'admin' && document.getElementById('adminDashboard').style.display === 'block') { loadAdminData(); }
     if(sectionId === 'staff' && document.getElementById('staffDashboard').style.display === 'block') { loadStaffData(); }
@@ -450,7 +438,6 @@
   window.onload = function() { 
     loadPublicData(); 
     setInterval(function() {
-      // โหลดแบคกราวด์เฉพาะหน้าที่เปิดอยู่ จะได้ไม่หน่วงเว็บครับ
       if(document.getElementById('section-schedule').style.display === 'block') { fetch(API_URL + "?action=getPublic").then(res=>res.json()).then(renderPublicTable).catch(()=>{}); }
       else if(document.getElementById('staffDashboard').style.display === 'block') { fetch(API_URL + "?action=getStaff").then(res=>res.json()).then(renderStaffTable).catch(()=>{}); }
       else if(document.getElementById('adminDashboard').style.display === 'block') { fetch(API_URL + "?action=getAdmin").then(res=>res.json()).then(renderAdminTable).catch(()=>{}); }
@@ -567,15 +554,13 @@
     btn.disabled = false; btn.innerHTML = '<i class="bi bi-send-fill"></i> ยืนยันการจอง';
   }
 
-  /* ฟังก์ชันป๊อบอัพแบบลดทอน (ตามภาพที่ 1 - ไม่เอาวงเล็บภาษาอังกฤษ) */
   function showModal(title, message, type) {
     document.getElementById("modalTitle").innerText = title;
     document.getElementById("modalMessage").innerHTML = message;
     var icon = document.getElementById("modalIcon");
     if (type === "error") { 
-      icon.innerHTML = `<img src="https://img5.pic.in.th/file/secure-sv1/images--1--removebg-preview-1.png" style="width:50px; height:50px; margin:0 auto; display:block;">`; 
+      icon.innerHTML = `<img src="https://img5.pic.in.th/file/secure-sv1/images--1--removebg-preview-1.png" style="width:55px; height:55px; margin:0 auto; display:block;">`; 
     } else { 
-      // เปลี่ยนเป็นไอคอนสำเร็จสีเขียว
       icon.innerHTML = `<i class="bi bi-check-circle-fill" style="color:#34C759; font-size: 50px;"></i>`; 
     }
     document.getElementById("customModal").style.display = "flex";
@@ -660,15 +645,15 @@
     pendingStatus = status;
     const icon = document.getElementById('confirmIcon');
     if(status === 'อนุมัติ') { 
-      icon.innerHTML = '<i class="bi bi-check-circle-fill" style="color:#34C759; font-size: 40px;"></i>'; 
+      icon.innerHTML = '<i class="bi bi-check-circle-fill" style="color:#34C759; font-size: 50px;"></i>'; 
       document.getElementById('confirmMessage').innerText = 'คุณต้องการอนุมัติรายการนี้ใช่หรือไม่?'; 
     } 
     else if(status === 'ไม่อนุมัติ') { 
-      icon.innerHTML = '<i class="bi bi-x-circle-fill" style="color:#FF9500; font-size: 40px;"></i>'; 
+      icon.innerHTML = '<i class="bi bi-x-circle-fill" style="color:#FF9500; font-size: 50px;"></i>'; 
       document.getElementById('confirmMessage').innerText = 'คุณต้องการไม่อนุมัติรายการนี้ใช่หรือไม่?'; 
     } 
     else { 
-      icon.innerHTML = `<img src="https://img5.pic.in.th/file/secure-sv1/images--1--removebg-preview-1.png" style="width:50px; height:50px; margin:0 auto; display:block;">`; 
+      icon.innerHTML = `<img src="https://img5.pic.in.th/file/secure-sv1/images--1--removebg-preview-1.png" style="width:55px; height:55px; margin:0 auto; display:block;">`; 
       document.getElementById('confirmMessage').innerText = 'คุณต้องการลบหรือยกเลิกรายการนี้ใช่หรือไม่?'; 
     }
     document.getElementById('confirmModal').style.display = 'flex';
