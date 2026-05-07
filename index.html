@@ -29,7 +29,6 @@
       -webkit-font-smoothing: antialiased;
     }
     
-    /* ตัดดีเลย์การสัมผัสบนมือถือ ทำให้กดปุ่มได้ไวขึ้น */
     button, input, select { touch-action: manipulation; }
 
     #wrapper { display: flex; width: 100%; min-height: 100vh; position: relative; }
@@ -88,17 +87,20 @@
 
     .room-info-container { background: #F2F2F7; border-radius: 16px; padding: 20px; display: none; margin-bottom: 25px; }
 
+    /* ==========================================
+       🔥 ปรับกล่อง Note ให้คลีนเหมือนภาพที่ 1 🔥
+       ========================================== */
     .note-box { 
-      background-color: #FFF9C4; border-left: 6px solid #FFCC00; color: #5D4037; 
-      padding: 18px 20px; border-radius: 12px; margin-bottom: 25px; 
-      font-size: 0.95rem; line-height: 1.6; box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+      background-color: #FCF7D9; border-left: 6px solid #E6C229; color: #5D4037; 
+      padding: 18px 22px; border-radius: 14px; margin-bottom: 25px; 
+      font-size: 0.95rem; line-height: 1.6;
       animation: popIn 0.3s ease;
     }
-    .note-box-title { font-size: 1.05rem; color: #D32F2F; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; }
-    .note-box-title i { margin-right: 8px; font-size: 1.2rem; }
-    .note-box ul { margin: 0; padding-left: 22px; margin-bottom: 10px; }
-    .note-box li { margin-bottom: 5px; }
-    .note-box-footer { color: #D32F2F; font-size: 0.9rem; font-weight: 600; }
+    .note-box-title { font-size: 1.05rem; color: #C62828; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; }
+    .note-box-title i { margin-right: 8px; font-size: 1.15rem; }
+    .note-box ul { margin: 0; padding-left: 20px; margin-bottom: 12px; color: #4E342E; }
+    .note-box li { margin-bottom: 6px; }
+    .note-box-footer { color: #C62828; font-size: 0.9rem; font-weight: 600; }
 
     /* ==========================================
        Responsive สำหรับมือถือ
@@ -122,7 +124,7 @@
       .table-responsive table, .table-responsive tbody, .table-responsive tr, .table-responsive td { display: block; width: 100%; border: none; }
       .table-responsive thead { display: none; } 
       .table-responsive tr { margin-bottom: 15px; background: #FFFFFF; border: 1px solid #E5E5EA !important; border-radius: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); padding: 15px; }
-      .table-responsive td { display: flex !important; justify-content: space-between; align-items: flex-start; padding: 8px 0 !important; border-bottom: 1px dashed #F2F2F7 !important; text-align: right; }
+      .table-responsive td { display: flex !important; justify-content: space-between; align-items: flex-start; padding: 10px 0 !important; border-bottom: 1px dashed #E5E5EA !important; text-align: right; }
       .table-responsive td:last-child { border-bottom: none !important; padding-bottom: 0 !important; }
       .table-responsive td::before { font-weight: 600; color: #8E8E93; text-align: left; font-size: 0.9rem; margin-right: 10px; flex-shrink: 0; }
       
@@ -153,7 +155,6 @@
     
     .modal-btn-area { display: flex; gap: 10px; justify-content: center; width: 100%; }
     
-    /* 🔥 เพิ่ม Feedback การยุบตัวเวลาคลิก เพื่อให้รู้สึกว่าปุ่มตอบสนองเร็ว 🔥 */
     .modal-btn-single { width: 100%; padding: 12px; background: #000000; border: 1px solid #000000; color: #ffffff; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.15s; }
     .modal-btn-single:hover { background: #1C1C1E; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
     .modal-btn-single:active { transform: scale(0.96); }
@@ -165,12 +166,18 @@
     .modal-btn-split.confirm:hover { background: #000000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
     .modal-btn-split:active { transform: scale(0.96); }
 
-    .btn-main { background-color: var(--primary-color); color: white; padding: 14px 30px; border-radius: 16px; font-size: 1.1rem; font-weight: 600; border: none; width: 100%; transition: 0.15s; display: flex; justify-content: center; align-items: center; }
-    .btn-main:active { transform: scale(0.97); } /* เด้งรับนิ้วตอนกด */
+    .btn-main { background-color: var(--primary-color); color: white; padding: 14px 30px; border-radius: 14px; font-size: 1.1rem; font-weight: 600; border: none; width: 100%; transition: 0.15s; display: flex; justify-content: center; align-items: center; }
+    .btn-main:active { transform: scale(0.97); } 
     .btn-main:disabled { background-color: #A0C3FF; cursor: not-allowed; transform: none; }
 
-    .status-pill { padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
-    .status-ok { background-color: #E2F4D9; color: #2E7D32; } .status-wait { background-color: #FFF3E0; color: #F57C00; } .status-no { background-color: #FFEBEE; color: #C62828; }
+    /* ปรับปรุง Status Pill ให้มีขอบ (Outline) เหมือนภาพที่ 3 */
+    .status-pill { padding: 5px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block; background: transparent;}
+    .status-ok { border: 1px solid #28a745; color: #28a745; } 
+    .status-wait { border: 1px solid #fd7e14; color: #fd7e14; } 
+    .status-no { border: 1px solid #dc3545; color: #dc3545; }
+    
+    /* สไตล์ปุ่มตารางแอดมิน */
+    table td { vertical-align: middle; padding: 1rem 0.75rem; }
   </style>
 </head>
 <body>
@@ -216,7 +223,7 @@
         </div>
         <div class="table-responsive">
           <table class="table table-hover align-middle mb-0" id="bookingTable">
-            <thead class="table-light"><tr><th>วันเวลา</th><th>ห้อง</th><th>หัวข้อ</th><th>ผู้จอง</th><th>เบอร์</th><th class="text-center">สถานะ</th></tr></thead>
+            <thead class="table-dark"><tr><th>วันเวลา</th><th>ห้อง</th><th>หัวข้อ</th><th>ผู้จอง</th><th>เบอร์</th><th class="text-center">สถานะ</th></tr></thead>
             <tbody><tr><td colspan="6" class="text-center py-5"><div class="spinner-border text-primary"></div></td></tr></tbody>
           </table>
         </div>
@@ -294,7 +301,7 @@
             <div class="page-title m-0 text-success">ตารางเตรียมเปิดห้อง</div>
             <button class="btn btn-outline-danger btn-sm rounded-pill" onclick="logoutStaff()">ออกจากระบบ</button>
           </div>
-          <div class="alert alert-success d-flex align-items-center" style="border-radius:12px; border:none; background:#E2F4D9; color:#2E7D32;"><i class="bi bi-info-circle-fill me-2"></i> แสดงเฉพาะที่ "อนุมัติ" แล้ว เรียงตามเวลาใช้งาน</div>
+          <div class="alert alert-success d-flex align-items-center" style="border-radius:12px; border:none; background:#E2F4D9; color:#2E7D32;"><i class="bi bi-info-circle-fill me-2"></i> แสดงเฉพาะที่ "อนุมัติ" แล้ว เรียงตามเวลาใช้งาน (ซ่อนรายการในอดีต)</div>
           <div class="table-responsive">
             <table class="table table-bordered align-middle mb-0" id="staffTable">
               <thead class="table-dark"><tr><th>วันเวลา</th><th>ห้อง</th><th>หัวข้อ</th><th>ผู้จอง (เบอร์ติดต่อ)</th></tr></thead>
@@ -319,9 +326,9 @@
         <div class="custom-card">
           <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
             <div class="page-title m-0 text-danger mb-2 mb-md-0">จัดการการจอง</div>
-            <button class="btn btn-outline-danger btn-sm rounded-pill" onclick="logoutAdmin()">ออกจากระบบ</button>
+            <button class="btn btn-outline-danger btn-sm rounded-pill px-4" onclick="logoutAdmin()">ออกจากระบบ</button>
           </div>
-          <div class="alert alert-info" style="border-radius:12px; border:none; background:#E5F0FF; color:#005bb5;"><i class="bi bi-info-circle"></i> ข้อมูลอัปเดตอัตโนมัติ (เรียลไทม์) กดปุ่ม อนุมัติ / ไม่ผ่าน ระบบจะส่งอีเมลแจ้งผู้จองทันที</div>
+          <div class="alert alert-info d-flex align-items-center" style="border-radius:12px; border:none; background:#E5F0FF; color:#005bb5;"><i class="bi bi-info-circle me-2"></i> ข้อมูลอัปเดตอัตโนมัติ (เรียลไทม์) กดปุ่ม อนุมัติ / ไม่ผ่าน ระบบจะส่งอีเมลแจ้งผู้จองทันที</div>
           <div class="table-responsive">
             <table class="table table-bordered align-middle mb-0" id="adminTable">
               <thead class="table-dark">
@@ -391,7 +398,6 @@
 
   function fetchAPI(payload) { return fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) }); }
 
-  // สลับเมนูแบบแคชข้อมูล (ลื่นไหล ไม่หมุนติ้วๆ ทุกครั้งที่กด)
   function showSection(sectionId, element) {
     ['schedule', 'booking', 'admin', 'staff', 'roominfo'].forEach(id => {
       const el = document.getElementById('section-' + id);
@@ -438,7 +444,6 @@
   flatpickr("#startTime", { enableTime: true, noCalendar: true, dateFormat: "H:i", time_24hr: true, locale: "th" });
   flatpickr("#endTime", { enableTime: true, noCalendar: true, dateFormat: "H:i", time_24hr: true, locale: "th" });
 
-  // ระบบดึงข้อมูลเรียลไทม์เบื้องหลัง (ทุก 8 วินาที)
   window.onload = function() { 
     loadPublicData(); 
     setInterval(() => {
@@ -508,21 +513,19 @@
     let html = "";
     data.forEach(row => {
       let d = new Date(row.startRaw);
-      let dateT = d.toLocaleDateString('th-TH', { month: 'short', day: 'numeric' });
-      let timeT = d.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) + " - " + new Date(row.endRaw).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
+      let dateT = d.toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric' });
+      let timeT = d.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) + " - " + new Date(row.endRaw).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) + " น.";
       let badge = row.status === "อนุมัติ" ? "status-ok" : (row.status === "รออนุมัติ" ? "status-wait" : "status-no");
-      html += `<tr><td><div class="td-content"><b>${dateT}</b><br><small>${timeT}</small></div></td><td><div class="td-content" style="color:var(--primary-color); font-weight:600;">${row.room}</div></td><td><div class="td-content">${row.title}</div></td><td><div class="td-content">${row.name}</div></td><td><div class="td-content">${row.internalPhone}</div></td><td class="text-center align-middle"><span class="status-pill ${badge}">${row.status}</span></td></tr>`;
+      html += `<tr><td><div class="td-content"><b>${dateT}</b><br><small class="text-muted">${timeT}</small></div></td><td><div class="td-content" style="color:var(--primary-color); font-weight:600;">${row.room}</div></td><td><div class="td-content">${row.title}</div></td><td><div class="td-content">${row.name}</div></td><td><div class="td-content">${row.internalPhone}</div></td><td class="text-center align-middle"><span class="status-pill ${badge}">${row.status}</span></td></tr>`;
     });
     tbody.innerHTML = html;
   }
 
-  // ฟอร์มส่งจอง (แก้ปุ่มหน่วง)
   async function handleFormSubmit(e) {
     e.preventDefault();
     const btn = document.getElementById("submitBtn");
     const dates = document.getElementById("bookingDate").value.split(", ");
     
-    // โชว์ว่ากำลังโหลดทันทีที่กด!
     btn.disabled = true; 
     btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status"></span> กำลังส่งข้อมูล...`;
     
@@ -568,12 +571,11 @@
   }
   function closeModal() { document.getElementById("customModal").style.display = "none"; }
 
-  // พนักงานล็อกอิน (แก้ปุ่มหน่วง + กด Enter ได้)
   function checkStaffLogin() {
     const btn = document.getElementById("btnStaffLogin");
     btn.disabled = true; btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span> รอสักครู่...`;
     
-    setTimeout(() => { // หน่วงไว้หลอกๆ 0.5 วิ ให้ผู้ใช้เห็นว่าระบบกำลังคิด
+    setTimeout(() => { 
       if (document.getElementById("staffPass").value === "staff1234") { 
         document.getElementById("staffLoginCard").style.display = "none";
         document.getElementById("staffDashboard").style.display = "block";
@@ -596,17 +598,25 @@
     let html = "";
     data.forEach(row => {
       let d = new Date(row.startRaw);
-      html += `<tr><td><div class="td-content"><b>${d.toLocaleDateString('th-TH')}</b><br><small>${d.toLocaleTimeString('th-TH')} - ${new Date(row.endRaw).toLocaleTimeString('th-TH')}</small></div></td><td><b>${row.room}</b></td><td>${row.title}</td><td>${row.name}</td></tr>`;
+      let dateText = d.toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric' });
+      let timeText = d.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) + " - " + new Date(row.endRaw).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) + " น.";
+      
+      let phoneStr = String(row.phone).trim(); if(phoneStr && !phoneStr.startsWith('0')) { phoneStr = '0' + phoneStr; }
+      html += `<tr>
+        <td><div class="td-content"><b>${dateText}</b><br><small class="text-muted">${timeText}</small></div></td>
+        <td><div class="td-content"><b style="color:var(--primary-color);">${row.room}</b></div></td>
+        <td><div class="td-content">${row.title}</div></td>
+        <td><div class="td-content">${row.name}<br><small class="text-muted"><i class="bi bi-telephone"></i> ${phoneStr || '-'}</small></div></td>
+      </tr>`;
     });
     tbody.innerHTML = html;
   }
 
-  // แอดมินล็อกอิน (แก้ปุ่มหน่วง + กด Enter ได้)
   function checkLogin() {
     const btn = document.getElementById("btnAdminLogin");
     btn.disabled = true; btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span> รอสักครู่...`;
     
-    setTimeout(() => { // หน่วงไว้หลอกๆ 0.5 วิ
+    setTimeout(() => { 
       if (document.getElementById("adminUser").value === "admin" && document.getElementById("adminPass").value === "admin1234") {
         document.getElementById("loginCard").style.display = "none";
         document.getElementById("adminDashboard").style.display = "block";
@@ -623,6 +633,7 @@
       globalAdminData = data; renderAdminTable(data);
     }); 
   }
+  
   function renderAdminTable(data) {
     const tbody = document.getElementById("adminTable").getElementsByTagName("tbody")[0];
     if(!data || data.length === 0) { tbody.innerHTML = "<tr><td colspan='6' class='text-center py-4'>ไม่มีข้อมูล</td></tr>"; return; }
@@ -635,13 +646,13 @@
       let phoneStr = String(row.phone).trim(); 
       if(phoneStr && !phoneStr.startsWith('0')) { phoneStr = '0' + phoneStr; }
       
-      let statusColor = row.status === "อนุมัติ" ? "#34C759" : (row.status === "ไม่อนุมัติ" || row.status === "ยกเลิก" ? "#FF3B30" : "#FF9500");
+      let statusColor = row.status === "อนุมัติ" ? "#28a745" : (row.status === "ไม่อนุมัติ" || row.status === "ยกเลิก" ? "#dc3545" : "#fd7e14");
 
       var btns = `
         <div class="d-flex gap-2 justify-content-end justify-content-md-center mt-2 mt-md-0">
-          <button class="btn btn-sm" style="background:#34C759; color:white; border-radius:8px;" onclick="confirmUpdate(${row.rowIndex},'อนุมัติ')"><i class="bi bi-check-lg"></i></button>
-          <button class="btn btn-sm" style="background:#FF9500; color:white; border-radius:8px;" onclick="confirmUpdate(${row.rowIndex},'ไม่อนุมัติ')"><i class="bi bi-x-lg"></i></button>
-          <button class="btn btn-sm d-flex align-items-center" style="background:#FF3B30; color:white; border-radius:8px;" onclick="confirmUpdate(${row.rowIndex},'ยกเลิก')"><i class="bi bi-trash me-1"></i> ลบ</button>
+          <button class="btn btn-sm" style="background:#28a745; color:white; border-radius:8px; width:32px; height:32px; display:flex; align-items:center; justify-content:center;" onclick="confirmUpdate(${row.rowIndex},'อนุมัติ')"><i class="bi bi-check-lg"></i></button>
+          <button class="btn btn-sm" style="background:#fd7e14; color:white; border-radius:8px; width:32px; height:32px; display:flex; align-items:center; justify-content:center;" onclick="confirmUpdate(${row.rowIndex},'ไม่อนุมัติ')"><i class="bi bi-x-lg"></i></button>
+          <button class="btn btn-sm d-flex align-items-center" style="background:#dc3545; color:white; border-radius:8px; height:32px; padding:0 10px;" onclick="confirmUpdate(${row.rowIndex},'ยกเลิก')"><i class="bi bi-trash me-1"></i> ลบ</button>
         </div>`;
 
       html += `<tr>
@@ -668,7 +679,7 @@
       iconWrap.innerHTML = '<i class="bi bi-x-lg text-warning"></i>'; 
     } else { 
       iconWrap.className = "modal-icon-wrapper error";
-      iconWrap.innerHTML = '<i class="bi bi-trash-fill text-danger"></i>'; 
+      iconWrap.innerHTML = '<i class="bi bi-trash3-fill text-danger"></i>'; 
     }
     document.getElementById("confirmModal").style.display = "flex";
   }
