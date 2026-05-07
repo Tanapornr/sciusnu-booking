@@ -28,6 +28,9 @@
       background-color: var(--bg-color); color: #1C1C1E; overflow-x: hidden; font-size: 16px; min-height: 100vh;
       -webkit-font-smoothing: antialiased;
     }
+    
+    /* ตัดดีเลย์การทัชบนมือถือ ทำให้กดปุ่มได้ไวขึ้น */
+    button, input, select { touch-action: manipulation; }
 
     #wrapper { display: flex; width: 100%; min-height: 100vh; position: relative; }
     
@@ -136,59 +139,25 @@
     }
 
     /* ==========================================
-       🔥 ดีไซน์ป๊อบอัพใหม่ล่าสุด (ตามภาพที่ส่งมาเป๊ะๆ) 🔥
+       iOS Modal 
        ========================================== */
-    .modal-overlay { 
-      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-      background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center; 
-      backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
-    }
-    .modal-box { 
-      background: #ffffff; width: 90%; max-width: 340px; padding: 25px; 
-      border-radius: 20px; text-align: center; position: relative; 
-      box-shadow: 0 10px 40px rgba(0,0,0,0.15); 
-      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-    }
-    @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+    .modal-box { background: rgba(255, 255, 255, 0.98); width: 88%; max-width: 320px; padding: 0; border-radius: 22px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.2); animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); overflow: hidden; }
+    @keyframes popIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     
-    .modal-close-icon { 
-      position: absolute; top: 15px; right: 15px; background: #F2F2F7; 
-      width: 28px; height: 28px; border-radius: 50%; display: flex; 
-      align-items: center; justify-content: center; color: #8E8E93; 
-      cursor: pointer; border: none; font-size: 16px; transition: 0.2s; 
-    }
-    .modal-close-icon:hover { background: #E5E5EA; color: #1C1C1E; }
-
-    /* วงกลมไอคอนตรงกลาง */
-    .modal-icon-wrapper {
-      width: 80px; height: 80px; border-radius: 50%; display: flex;
-      align-items: center; justify-content: center; margin: 0 auto 15px;
-    }
-    .modal-icon-wrapper.success { background-color: #FFF4CE; } /* สีเหลืองอ่อน */
-    .modal-icon-wrapper.error { background-color: #FFE5E5; } /* สีแดงอ่อน */
-    .modal-icon-wrapper i, .modal-icon-wrapper span { font-size: 40px; }
+    .modal-content-area { padding: 30px 20px 24px; }
+    #modalIcon, #confirmIcon { font-size: 42px; margin-bottom: 10px; display: block; }
+    #modalTitle, #modalTitleConfirm { font-weight: 700; font-size: 1.2rem; color: #1C1C1E; margin-bottom: 8px; letter-spacing: -0.4px;}
+    #modalMessage, #confirmMessage { color: #636366; font-size: 0.95rem; line-height: 1.45; margin: 0; }
     
-    #modalTitle, #modalTitleConfirm { font-weight: 700; font-size: 1.25rem; color: #1C1C1E; margin-bottom: 8px; }
-    #modalMessage, #confirmMessage { color: #666; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.5; }
-    
-    /* โครงสร้างปุ่ม 2 ฝั่ง (ซ้ายขาว / ขวาดำ) */
-    .modal-btn-area { display: flex; gap: 10px; justify-content: center; width: 100%; }
-    
-    .modal-btn-single { 
-      width: 100%; padding: 12px; background: #000000; border: 1px solid #000000; 
-      color: #ffffff; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.2s;
-    }
-    .modal-btn-single:hover { background: #1C1C1E; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-
-    .modal-btn-split { 
-      flex: 1; padding: 12px 10px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.2s; 
-    }
-    /* ปุ่มยกเลิก/ซ้าย (ขาวขอบดำ) */
-    .modal-btn-split.cancel { background: #ffffff; border: 1px solid #1C1C1E; color: #1C1C1E; }
-    .modal-btn-split.cancel:hover { background: #F2F2F7; }
-    /* ปุ่มยืนยัน/ขวา (สีดำ) */
-    .modal-btn-split.confirm { background: #1C1C1E; border: 1px solid #1C1C1E; color: #fff; }
-    .modal-btn-split.confirm:hover { background: #000000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    .modal-btn-area { display: flex; width: 100%; border-top: 0.5px solid rgba(60,60,67,0.2); }
+    .modal-btn-single { width: 100%; padding: 16px; background: transparent; border: none; color: #007AFF; font-size: 1.1rem; font-weight: 600; cursor: pointer; }
+    .modal-btn-split { width: 50%; padding: 16px; background: transparent; border: none; font-size: 1.1rem; cursor: pointer; }
+    .modal-btn-split.cancel { color: #007AFF; font-weight: 400; border-right: 0.5px solid rgba(60,60,67,0.2); }
+    .modal-btn-split.confirm { color: #007AFF; font-weight: 600; }
+    .modal-btn-split.danger { color: #FF3B30; font-weight: 600; }
+    .modal-btn-split:active, .modal-btn-single:active { background: rgba(0,0,0,0.05); }
+    .modal-btn-split:disabled, .modal-btn-single:disabled { opacity: 0.6; cursor: not-allowed; }
 
     .btn-main { background-color: var(--primary-color); color: white; padding: 14px 30px; border-radius: 16px; font-size: 1.1rem; font-weight: 600; border: none; width: 100%; transition: 0.2s; }
     .status-pill { padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
@@ -305,8 +274,10 @@
       <div id="staffLoginCard" class="custom-card" style="max-width:400px; margin: 40px auto; text-align:center;">
         <i class="bi bi-key-fill text-success" style="font-size:3.5rem;"></i>
         <h4 class="mt-3 fw-bold">พนักงานเปิดห้อง</h4>
-        <input type="password" id="staffPass" class="form-control my-4" placeholder="รหัสผ่าน">
-        <button class="btn btn-main" style="background-color: #34C759;" onclick="checkStaffLogin()">เข้าสู่ระบบ</button>
+        <form onsubmit="event.preventDefault(); checkStaffLogin();">
+          <input type="password" id="staffPass" class="form-control my-4" placeholder="รหัสผ่าน" required>
+          <button type="submit" class="btn btn-main" style="background-color: #34C759;">เข้าสู่ระบบ</button>
+        </form>
       </div>
       <div id="staffDashboard" style="display:none;">
         <div class="custom-card">
@@ -329,9 +300,11 @@
       <div id="loginCard" class="custom-card" style="max-width:400px; margin: 40px auto; text-align:center;">
         <i class="bi bi-shield-lock-fill text-primary" style="font-size:3.5rem;"></i>
         <h4 class="mt-3 fw-bold">ผู้ดูแลระบบ</h4>
-        <input type="text" id="adminUser" class="form-control mt-4" placeholder="ชื่อผู้ใช้งาน">
-        <input type="password" id="adminPass" class="form-control my-3" placeholder="รหัสผ่าน">
-        <button class="btn btn-main" onclick="checkLogin()">เข้าสู่ระบบ</button>
+        <form onsubmit="event.preventDefault(); checkLogin();">
+          <input type="text" id="adminUser" class="form-control mt-4" placeholder="ชื่อผู้ใช้งาน" required>
+          <input type="password" id="adminPass" class="form-control my-3" placeholder="รหัสผ่าน" required>
+          <button type="submit" class="btn btn-main">เข้าสู่ระบบ</button>
+        </form>
       </div>
       <div id="adminDashboard" style="display:none;">
         <div class="custom-card">
@@ -349,12 +322,13 @@
                 <tr>
                   <th>วันเวลา</th>
                   <th>ห้อง</th>
+                  <th>หัวข้อ</th>
                   <th>ผู้จอง (เบอร์ติดต่อ)</th>
                   <th class="text-center">สถานะ</th>
                   <th class="text-center">จัดการ</th>
                 </tr>
               </thead>
-              <tbody><tr><td colspan="5" class="text-center py-5"><div class="spinner-border text-primary"></div></td></tr></tbody>
+              <tbody><tr><td colspan="6" class="text-center py-5"><div class="spinner-border text-primary"></div></td></tr></tbody>
             </table>
           </div>
         </div>
@@ -365,29 +339,27 @@
 
 <div id="customModal" class="modal-overlay">
   <div class="modal-box">
-    <button class="modal-close-icon" onclick="closeModal()"><i class="bi bi-x"></i></button>
     <div class="modal-content-area">
       <div id="modalIcon"></div>
       <h3 id="modalTitle"></h3>
       <p id="modalMessage"></p>
     </div>
     <div class="modal-btn-area">
-      <button id="modalBtn" class="modal-btn-single" onclick="closeModal()">ตกลง</button>
+      <button class="modal-btn-single" type="button" onclick="closeModal()">ตกลง</button>
     </div>
   </div>
 </div>
 
 <div id="confirmModal" class="modal-overlay">
   <div class="modal-box">
-    <button class="modal-close-icon" onclick="closeConfirmModal()"><i class="bi bi-x"></i></button>
     <div class="modal-content-area">
       <div id="confirmIcon"></div>
       <h3 id="modalTitleConfirm">ยืนยันการดำเนินการ</h3>
       <p id="confirmMessage"></p>
     </div>
     <div class="modal-btn-area">
-      <button class="modal-btn-split cancel" onclick="closeConfirmModal()">ยกเลิก</button>
-      <button id="confirmBtn" class="modal-btn-split confirm" onclick="executeStatusUpdate()">ยืนยัน</button>
+      <button class="modal-btn-split cancel" type="button" onclick="closeConfirmModal()">ยกเลิก</button>
+      <button id="confirmBtn" class="modal-btn-split confirm" type="button" onclick="executeStatusUpdate()">ยืนยัน</button>
     </div>
   </div>
 </div>
@@ -560,18 +532,18 @@
   }
 
   /* ==========================================
-     🔥 ฟังก์ชันป๊อปอัพ ใหม่! สไตล์วงกลม (ภาพที่ 2) 🔥
+     🔥 ฟังก์ชันป๊อปอัพ 
      ========================================== */
   function showModal(title, msg, type) {
     document.getElementById("modalTitle").innerText = title;
     document.getElementById("modalMessage").innerText = msg;
     const iconWrap = document.getElementById("modalIcon");
     if (type === "error") { 
-      iconWrap.className = "modal-icon-wrapper error";
-      iconWrap.innerHTML = '<i class="bi bi-x-lg text-danger"></i>'; 
+      // ใช้ไอคอนวงกลมสีแดงสไตล์ใหม่
+      iconWrap.innerHTML = `<img src="https://img5.pic.in.th/file/secure-sv1/images--1--removebg-preview-1.png" style="width:65px; height:65px; margin:0 auto; display:block;">`; 
     } else { 
-      iconWrap.className = "modal-icon-wrapper success";
-      iconWrap.innerHTML = '<span style="font-size:35px;">🎉</span>'; 
+      // ใช้ไอคอนพลุเฉลิมฉลอง (หรือติ๊กถูก)
+      iconWrap.innerHTML = `<span style="font-size:50px; display:inline-block; margin-bottom: -10px;">🎉</span>`; 
     }
     document.getElementById("customModal").style.display = "flex";
   }
@@ -607,7 +579,7 @@
   function logoutAdmin() { document.getElementById("loginCard").style.display = "block"; document.getElementById("adminDashboard").style.display = "none"; }
   function loadAdminData() { fetch(API_URL + "?action=getAdmin").then(res => res.json()).then(renderAdminTable); }
   
-  // 🔥 ตาราง Admin ดึงเบอร์โทร และ เพิ่มปุ่ม "ลบ" 🔥
+  // 🔥 ตาราง Admin ดึงหัวข้อ, เบอร์โทร และ เพิ่มปุ่ม "ลบ" ให้ครบ 🔥
   function renderAdminTable(data) {
     const tbody = document.getElementById("adminTable").getElementsByTagName("tbody")[0];
     if(!data || data.length === 0) { tbody.innerHTML = "<tr><td colspan='6' class='text-center py-4'>ไม่มีข้อมูล</td></tr>"; return; }
@@ -622,16 +594,18 @@
       
       let statusColor = row.status === "อนุมัติ" ? "#34C759" : (row.status === "ไม่อนุมัติ" || row.status === "ยกเลิก" ? "#FF3B30" : "#FF9500");
 
+      // เพิ่มปุ่มลบ (ยกเลิก) เข้าไป
       var btns = `
         <div class="d-flex gap-2 justify-content-end justify-content-md-center mt-2 mt-md-0">
           <button class="btn btn-sm" style="background:#34C759; color:white; border-radius:8px;" onclick="confirmUpdate(${row.rowIndex},'อนุมัติ')"><i class="bi bi-check-lg"></i></button>
           <button class="btn btn-sm" style="background:#FF9500; color:white; border-radius:8px;" onclick="confirmUpdate(${row.rowIndex},'ไม่อนุมัติ')"><i class="bi bi-x-lg"></i></button>
-          <button class="btn btn-sm d-flex align-items-center" style="background:#FF3B30; color:white; border-radius:8px;" onclick="confirmUpdate(${row.rowIndex},'ยกเลิก')"><i class="bi bi-trash me-1"></i> ลบ</button>
+          <button class="btn btn-sm d-flex align-items-center" style="background:#FF3B30; color:white; border-radius:8px;" onclick="confirmUpdate(${row.rowIndex},'ยกเลิก')"><i class="bi bi-trash me-1"></i>ลบ</button>
         </div>`;
 
       html += `<tr>
         <td><div class="td-content"><b>${dateText}</b><br><small class="text-muted">${timeText}</small></div></td>
         <td><div class="td-content"><b style="color:var(--primary-color);">${row.room}</b></div></td>
+        <td><div class="td-content">${row.title}</div></td>
         <td><div class="td-content">${row.name}<br><small class="text-muted"><i class="bi bi-telephone"></i> ${phoneStr || '-'}</small></div></td>
         <td class="text-center align-middle"><div class="td-content"><span class="status-pill" style="border: 1px solid ${statusColor}; color:${statusColor}; background: transparent;">${row.status}</span></div></td>
         <td class="text-center align-middle">${btns}</td>
@@ -645,21 +619,33 @@
     document.getElementById("confirmMessage").innerText = `คุณต้องการ ${status} รายการนี้ใช่หรือไม่?`;
     const iconWrap = document.getElementById("confirmIcon");
     if(status === 'อนุมัติ') { 
-      iconWrap.className = "modal-icon-wrapper success";
-      iconWrap.innerHTML = '<i class="bi bi-check-lg text-success"></i>'; 
+      iconWrap.innerHTML = '<span style="font-size:50px;">🎉</span>'; 
     } else if(status === 'ไม่อนุมัติ') { 
-      iconWrap.className = "modal-icon-wrapper error";
-      iconWrap.innerHTML = '<i class="bi bi-x-lg text-warning"></i>'; 
+      iconWrap.innerHTML = `<img src="https://img5.pic.in.th/file/secure-sv1/images--1--removebg-preview-1.png" style="width:65px; height:65px; margin:0 auto; display:block;">`; 
     } else { 
-      iconWrap.className = "modal-icon-wrapper error";
-      iconWrap.innerHTML = '<i class="bi bi-trash-fill text-danger"></i>'; 
+      // ปุ่มลบใช้ไอคอนถังขยะ
+      iconWrap.innerHTML = '<i class="bi bi-trash3-fill" style="color:#FF3B30; font-size:45px;"></i>'; 
     }
     document.getElementById("confirmModal").style.display = "flex";
   }
 
   function executeStatusUpdate() {
-    fetchAPI({ action: "updateStatus", rowIndex: pendingRow, status: pendingStatus }).then(() => { loadAdminData(); closeConfirmModal(); });
+    if(pendingRow !== null && pendingStatus !== null) {
+      const btn = document.getElementById('confirmBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> รอสักครู่...';
+      
+      document.getElementById("adminTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='6' class='text-center py-4 text-muted'><div class='spinner-border text-primary' role='status'></div><div class='mt-2'>กำลังอัปเดตข้อมูล...</div></td></tr>";
+      
+      fetchAPI({ action: "updateStatus", rowIndex: pendingRow, status: pendingStatus }).then(() => { 
+        loadAdminData(); 
+        closeConfirmModal(); 
+        btn.disabled = false;
+        btn.innerText = "ยืนยัน";
+      });
+    }
   }
+  
   function closeConfirmModal() { document.getElementById('confirmModal').style.display = 'none'; }
 </script>
 </body>
