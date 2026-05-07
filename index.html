@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   
   <script>
-    // ********* URL Vercel ของคุณ (รอบล่าสุด) *********
+    // ********* ยืนยัน URL จาก Vercel *********
     const API_URL = "https://script.google.com/macros/s/AKfycbyvk5fj2_2qRutnY2W-OLeH3GjADw6k6pFTYftlcRtZ1AIkuanFk0Y_K-u8FHCzQfSGVQ/exec"; 
     // ***************************************
   </script>
@@ -17,7 +17,7 @@
   <style>
     :root { 
       --primary-color: #007AFF; 
-      --sidebar-bg: #231C1A;
+      --sidebar-bg: #1C1C1E; /* สีดำแบบ Apple */
       --sidebar-text: #f8f9fa;
       --bg-color: #F2F2F7; 
       --card-radius: 20px; 
@@ -31,66 +31,89 @@
 
     #wrapper { display: flex; width: 100%; min-height: 100vh; position: relative; }
     
+    /* ==========================================
+       สไตล์แถบเมนูข้าง (Floating Sidebar แบบภาพที่ 3) 
+       ========================================== */
     #sidebar-wrapper { 
-      min-width: 270px; max-width: 270px; background-color: var(--sidebar-bg); 
+      min-width: 260px; max-width: 260px; 
+      background-color: var(--sidebar-bg); 
       color: var(--sidebar-text); transition: all 0.3s; display: flex; flex-direction: column; 
+      margin: 15px; border-radius: 24px; /* ทำให้เมนูลอยและขอบมน */
+      height: calc(100vh - 30px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      position: sticky; top: 15px; overflow-y: auto;
+      scrollbar-width: none;
     }
-    
-    /* แก้ไขการจัดวางโลโก้ในแถบข้างให้เห็นชัดเจน */
-    .sidebar-heading { padding: 2rem 1.5rem 1rem; border-bottom: none; text-align: center; }
-    .sidebar-logo { max-width: 100%; max-height: 50px; object-fit: contain; margin-bottom: 10px; }
-    
-    .sidebar-title-area { margin-top: 10px; text-align: center; }
-    .main-title { font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 0.2rem; }
-    .sub-title { font-size: 0.8rem; font-weight: 400; color: rgba(255,255,255,0.7); }
-    
+    #sidebar-wrapper::-webkit-scrollbar { display: none; }
+
+    .sidebar-heading { padding: 30px 20px 10px; border-bottom: none; text-align: center; }
+    /* แก้ไขโลโก้ให้เป็นสี่เหลี่ยม เห็นชัดเจน */
+    .sidebar-logo { 
+      width: 100%; max-width: 200px; height: auto; 
+      background: #ffffff; padding: 8px 12px; border-radius: 12px; 
+      object-fit: contain; margin-bottom: 15px;
+    }
+    .sidebar-title-area { margin-top: 5px; text-align: center; }
+    .main-title { font-size: 1.05rem; font-weight: 600; color: #fff; margin-bottom: 2px; }
+    .sub-title { font-size: 0.8rem; font-weight: 400; color: rgba(255,255,255,0.6); }
+
     .sidebar-section-title { font-size: 0.7rem; font-weight: 600; color: rgba(255,255,255,0.4); letter-spacing: 1px; padding: 15px 25px 5px; text-transform: uppercase; }
     
+    /* เมนูย่อย */
     .list-group-item { 
-      background-color: transparent; color: rgba(255,255,255,0.6); border: none; padding: 12px 18px; margin: 4px 15px; 
-      border-radius: 12px !important; font-size: 0.95rem; font-weight: 500; cursor: pointer; transition: 0.2s; display: flex; align-items: center;
+      background-color: transparent; color: rgba(255,255,255,0.7); border: none; 
+      padding: 12px 18px; margin: 4px 15px; border-radius: 12px !important; 
+      font-size: 0.95rem; font-weight: 500; cursor: pointer; transition: 0.2s; display: flex; align-items: center;
     }
-    .list-group-item:hover { background-color: rgba(255,255,255,0.05); color: #fff; }
-    .list-group-item.active { background-color: rgba(255,255,255,0.1) !important; color: #fff !important; font-weight: 600; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+    .list-group-item:hover { background-color: rgba(255,255,255,0.08); color: #fff; }
+    .list-group-item.active { background-color: var(--primary-color) !important; color: #fff !important; font-weight: 600; box-shadow: 0 4px 15px rgba(0,122,255,0.3); }
     .list-group-item i { margin-right: 12px; font-size: 1.2rem; }
     
-    #page-content-wrapper { width: 100%; padding: 20px; }
+    #page-content-wrapper { width: 100%; padding: 15px 20px 20px 5px; }
+    
     .custom-card { background: #FFFFFF; border: none; border-radius: var(--card-radius); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04); padding: 30px; margin-bottom: 30px; }
-    .page-title { font-size: 1.5rem; font-weight: 700; color: #1C1C1E; margin-bottom: 20px; border-bottom: 1px solid #E5E5EA; padding-bottom: 10px; letter-spacing: -0.5px;}
+    .page-title { font-size: 1.4rem; font-weight: 700; color: #1C1C1E; margin-bottom: 20px; border-bottom: 1px solid #E5E5EA; padding-bottom: 10px; letter-spacing: -0.5px;}
 
     .form-control, .form-select { background: #F2F2F7 !important; border: 1px solid transparent; border-radius: 12px; padding: 14px 15px; color: #1C1C1E; }
     .form-control:focus, .form-select:focus { background: #fff !important; border-color: var(--primary-color); box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.15); }
 
+    /* รูปแบบการ์ดห้อง */
     .room-card { background: #FFFFFF; border: 1px solid #E5E5EA; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: transform 0.2s, box-shadow 0.2s; height: 100%; display: flex; flex-direction: column; }
     .room-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
-    
     .room-img-container { padding: 15px 15px 0 15px; display: flex; flex-direction: column; gap: 10px; }
     .room-main-img { width: 100%; height: 200px; border-radius: 16px; object-fit: cover; cursor: pointer; transition: 0.3s; background: #E5E5EA; }
     .room-thumbnails { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; }
     .room-thumbnails::-webkit-scrollbar { display: none; }
     .room-thumbnail-img { width: 65px; height: 65px; border-radius: 12px; object-fit: cover; cursor: pointer; flex-shrink: 0; border: 2px solid transparent; transition: 0.2s; background: #E5E5EA; }
     .room-thumbnail-img:hover { border-color: var(--primary-color); transform: scale(1.05); }
-
     .room-card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-    .room-card-title { font-weight: 700; color: #1C1C1E; margin-bottom: 10px; font-size: 1.3rem; letter-spacing: -0.3px;}
+    .room-card-title { font-weight: 700; color: #1C1C1E; margin-bottom: 10px; font-size: 1.2rem; letter-spacing: -0.3px;}
     .room-card-text { font-size: 0.95rem; color: #8E8E93; margin-bottom: 8px; line-height: 1.5; white-space: normal; }
 
     .room-info-container { background: #F2F2F7; border-radius: 16px; padding: 20px; display: none; margin-bottom: 25px; }
 
-    .note-box { background-color: #FFF9C4; border-left: 5px solid #FFCC00; color: #8D6E63; padding: 20px; border-radius: 12px; margin-bottom: 25px; font-size: 1rem; line-height: 1.7; }
-    .note-box strong { font-size: 1.1rem; color: #D32F2F; display: block; margin-bottom: 10px; }
+    .note-box { background-color: #FFF9C4; border-left: 5px solid #FFCC00; color: #8D6E63; padding: 20px; border-radius: 12px; margin-bottom: 25px; font-size: 0.95rem; line-height: 1.6; }
+    .note-box strong { font-size: 1.05rem; color: #D32F2F; display: block; margin-bottom: 8px; }
 
+    /* --- Responsive Mobile --- */
     .mobile-header { display: none; }
     #sidebar-overlay { display: none; }
 
     @media (max-width: 768px) {
-      .mobile-header { display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 65px; background: rgba(28, 28, 30, 0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); color: white; z-index: 1040; align-items: center; justify-content: space-between; padding: 0 15px; }
+      .mobile-header { 
+        display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 65px; 
+        background: rgba(28, 28, 30, 0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+        color: white; z-index: 1040; align-items: center; justify-content: space-between; padding: 0 15px; border-bottom: 1px solid rgba(255,255,255,0.1);
+      }
       .mobile-menu-btn { background: transparent; border: none; color: white; font-size: 2rem; cursor: pointer; padding: 0; }
-      #sidebar-wrapper { position: fixed; height: 100vh; z-index: 1050; margin-left: -270px; top: 0; left: 0; }
+      
+      #sidebar-wrapper { 
+        position: fixed; height: 100vh; z-index: 1050; margin-left: -280px; top: 0; left: 0; margin: 0; border-radius: 0;
+      }
       #wrapper.toggled #sidebar-wrapper { margin-left: 0; }
-      #sidebar-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.4); z-index: 1045; display: none; backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
+      #sidebar-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 1045; display: none; backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
       #wrapper.toggled #sidebar-overlay { display: block; }
-      #page-content-wrapper { padding-top: 85px; }
+      #page-content-wrapper { padding: 85px 15px 20px 15px; }
 
       .table-responsive { border: none !important; margin: 0; padding: 0; }
       .table-responsive table, .table-responsive tbody, .table-responsive tr, .table-responsive td { display: block; width: 100%; border: none; }
@@ -110,23 +133,39 @@
       .td-content { text-align: right; word-break: break-word; width: 100%; } .td-content div { text-align: right; } .td-content .d-flex { justify-content: flex-end; }
     }
 
-    /* Modal Popups */
-    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
-    .modal-box { background: #ffffff; width: 90%; max-width: 360px; padding: 35px 25px 25px; border-radius: 20px; text-align: center; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.15); animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    /* ==========================================
+       สไตล์ป๊อบอัพปรับใหม่ (เล็กลง กระชับ ไม่มีวงเล็บอังกฤษ)
+       ========================================== */
+    .modal-overlay { 
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+      background: rgba(0,0,0,0.4); z-index: 9999; align-items: center; justify-content: center; 
+      backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+    }
+    .modal-box { 
+      background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+      width: 85%; max-width: 320px; padding: 0; border-radius: 18px; text-align: center; 
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.5);
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); overflow: hidden;
+    }
     @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     
-    .modal-close-icon { position: absolute; top: 15px; right: 15px; background: #F2F2F7; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #8E8E93; cursor: pointer; border: none; font-size: 18px; transition: 0.2s; }
+    .modal-content-area { padding: 25px 20px 20px; }
+    .modal-close-icon { position: absolute; top: 12px; right: 12px; background: #F2F2F7; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #8E8E93; cursor: pointer; border: none; font-size: 16px; transition: 0.2s; }
     .modal-close-icon:hover { background: #E5E5EA; color: #1C1C1E; }
 
-    #modalTitle, #modalTitleConfirm { font-weight: 700; font-size: 1.3rem; color: #1C1C1E; margin-bottom: 10px; letter-spacing: -0.5px;}
-    #modalMessage, #confirmMessage { color: #8E8E93; font-size: 0.95rem; line-height: 1.5; margin-bottom: 25px; }
+    #modalIcon, #confirmIcon { font-size: 40px; margin-bottom: 8px; }
+    #modalTitle, #modalTitleConfirm { font-weight: 600; font-size: 1.15rem; color: #1C1C1E; margin-bottom: 6px; letter-spacing: -0.3px;}
+    #modalMessage, #confirmMessage { color: #666; font-size: 0.9rem; line-height: 1.4; margin: 0; }
     
-    .modal-btn-area { display: flex; gap: 12px; justify-content: center; width: 100%; }
-    .modal-btn-split { flex: 1; padding: 12px 10px; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: 0.2s; text-align: center; }
-    .modal-btn-split.cancel { background: #ffffff; border: 1px solid #C7C7CC; color: #1C1C1E; }
-    .modal-btn-split.cancel:hover { background: #F2F2F7; }
-    .modal-btn-split.confirm { background: #000000; border: 1px solid #000000; color: #ffffff; }
-    .modal-btn-split.confirm:hover { background: #1C1C1E; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+    .modal-btn-area { display: flex; width: 100%; border-top: 1px solid #E5E5EA; }
+    .modal-btn-single { width: 100%; padding: 14px; background: transparent; border: none; color: #007AFF; font-size: 1.05rem; font-weight: 600; cursor: pointer; transition: 0.2s;}
+    .modal-btn-single:active { background: rgba(0,0,0,0.05); }
+    
+    .modal-btn-split { width: 50%; padding: 14px; background: transparent; border: none; font-size: 1.05rem; cursor: pointer; transition: 0.2s; }
+    .modal-btn-split.cancel { color: #007AFF; font-weight: 400; border-right: 1px solid #E5E5EA; }
+    .modal-btn-split.confirm { color: #007AFF; font-weight: 600; }
+    .modal-btn-split.danger { color: #FF3B30; font-weight: 600; }
+    .modal-btn-split:active { background: rgba(0,0,0,0.05); }
 
     .btn-main { background-color: var(--primary-color); color: white; padding: 12px 30px; border-radius: 12px; font-size: 1.05rem; font-weight: 600; border: none; width: 100%; transition: 0.2s; }
     .btn-main:hover { background-color: #005bb5; }
@@ -139,7 +178,7 @@
 <div class="mobile-header">
   <div class="d-flex align-items-center">
     <button class="mobile-menu-btn me-3" onclick="document.getElementById('wrapper').classList.add('toggled')"><i class="bi bi-list"></i></button>
-    <img src="https://img2.pic.in.th/logo-banner-scius91e6464acbe6a320.png" alt="Logo" style="height:35px; object-fit:contain; margin-right:10px;" border="0">
+    <img src="https://img2.pic.in.th/logo-banner-scius91e6464acbe6a320.png" alt="Logo" style="height:35px; background:white; padding:2px; border-radius:8px; margin-right:10px;" border="0">
   </div>
 </div>
 
@@ -150,7 +189,7 @@
     <div class="sidebar-heading">
       <img src="https://img2.pic.in.th/logo-banner-scius91e6464acbe6a320.png" alt="Logo Banner SCiUS" class="sidebar-logo">
       <div class="sidebar-title-area">
-        <div class="main-title">ระบบจองห้องโครงการ วมว.</div>
+        <div class="main-title">ระบบจองห้อง</div>
         <div class="sub-title">โครงการ วมว. มน.</div>
       </div>
     </div>
@@ -161,11 +200,11 @@
       <button class="list-group-item list-group-item-action" onclick="showSection('roominfo', this)"><i class="bi bi-images"></i> ข้อมูลห้องเรียน</button>
       <button class="list-group-item list-group-item-action" onclick="showSection('booking', this)"><i class="bi bi-pencil-square"></i> จองห้องเรียน</button>
       
-      <div class="sidebar-section-title mt-2">Management</div>
+      <div class="sidebar-section-title mt-3">Management</div>
       <button class="list-group-item list-group-item-action" onclick="showSection('staff', this)"><i class="bi bi-door-open-fill"></i> พนักงานเปิดห้อง</button>
       <button class="list-group-item list-group-item-action" onclick="showSection('admin', this)"><i class="bi bi-gear-fill"></i> ผู้ดูแลระบบ</button>
     </div>
-    <div style="margin-top:auto; padding: 20px; text-align:center; font-size:0.8rem; color:rgba(255,255,255,0.3);">พัฒนาโดย:<br>นางสาวธนาภรณ์ รอดฉ่ำ</div>
+    <div style="margin-top:auto; padding: 20px; text-align:center; font-size:0.75rem; color:rgba(255,255,255,0.3);">พัฒนาโดย:<br>ธนาภรณ์ รอดฉ่ำ</div>
   </div>
 
   <div id="page-content-wrapper">
@@ -312,7 +351,7 @@
       <p id="modalMessage"></p>
     </div>
     <div class="modal-btn-area">
-      <button id="modalBtn" class="modal-btn-split confirm" style="width:100%; border-radius:12px;" onclick="closeModal()">ตกลง (Accept)</button>
+      <button id="modalBtn" class="modal-btn-single" onclick="closeModal()">ตกลง</button>
     </div>
   </div>
 </div>
@@ -322,12 +361,12 @@
     <button class="modal-close-icon" onclick="closeConfirmModal()"><i class="bi bi-x"></i></button>
     <div class="modal-content-area">
       <div id="confirmIcon"></div>
-      <h3 id="modalTitleConfirm" style="margin-top: 5px;">ยืนยันการดำเนินการ</h3>
+      <h3 id="modalTitleConfirm">ยืนยันการดำเนินการ</h3>
       <p id="confirmMessage"></p>
     </div>
     <div class="modal-btn-area">
-      <button class="modal-btn-split cancel" onclick="closeConfirmModal()">ยกเลิก (Reject)</button>
-      <button id="confirmBtn" class="modal-btn-split confirm" onclick="executeStatusUpdate()">ยืนยัน (Accept)</button>
+      <button class="modal-btn-split cancel" onclick="closeConfirmModal()">ยกเลิก</button>
+      <button id="confirmBtn" class="modal-btn-split confirm" onclick="executeStatusUpdate()">ยืนยัน</button>
     </div>
   </div>
 </div>
@@ -348,6 +387,7 @@
 
   function fetchAPI(payload) { return fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) }); }
 
+  // แก้ไขให้ไม่ล้างหน้าจอเป็นโหลด Spinner ทุกครั้งที่กดเปลี่ยนเมนู
   function showSection(sectionId, element) {
     ['schedule', 'booking', 'admin', 'staff', 'roominfo'].forEach(id => {
       const el = document.getElementById('section-' + id);
@@ -357,10 +397,10 @@
     document.querySelectorAll('.list-group-item').forEach(el => el.classList.remove('active'));
     if(element) element.classList.add('active');
     
-    // โหลดข้อมูลให้ถูกหน้าเท่านั้น จะได้ไม่หน่วง
-    if(sectionId === 'schedule') { document.getElementById("bookingTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='6' class='text-center text-muted py-5'><div class='spinner-border text-primary' role='status'></div><div class='mt-2'>กำลังโหลดข้อมูล...</div></td></tr>"; loadPublicData(); }
-    if(sectionId === 'admin' && document.getElementById('adminDashboard').style.display === 'block') { document.getElementById("adminTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='5' class='text-center py-4 text-muted'><div class='spinner-border text-primary' role='status'></div><div class='mt-2'>กำลังโหลดข้อมูล...</div></td></tr>"; loadAdminData(); }
-    if(sectionId === 'staff' && document.getElementById('staffDashboard').style.display === 'block') { document.getElementById("staffTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='4' class='text-center py-4 text-muted'><div class='spinner-border text-success' role='status'></div><div class='mt-2'>กำลังโหลดข้อมูล...</div></td></tr>"; loadStaffData(); }
+    // สั่งโหลดข้อมูลเงียบๆ ไม่ต้องแสดงวงกลมหมุนๆ ข้อมูลจะลื่นไหลขึ้นมากครับ
+    if(sectionId === 'schedule') { loadPublicData(); }
+    if(sectionId === 'admin' && document.getElementById('adminDashboard').style.display === 'block') { loadAdminData(); }
+    if(sectionId === 'staff' && document.getElementById('staffDashboard').style.display === 'block') { loadStaffData(); }
     if(sectionId === 'roominfo') renderAllRooms();
     
     if(window.innerWidth < 768) document.getElementById('wrapper').classList.remove('toggled');
@@ -399,13 +439,13 @@
   flatpickr("#startTime", { enableTime: true, noCalendar: true, dateFormat: "H:i", time_24hr: true, locale: "th" });
   flatpickr("#endTime", { enableTime: true, noCalendar: true, dateFormat: "H:i", time_24hr: true, locale: "th" });
 
-  // โหลดเฉพาะหน้าที่เปิดอยู่เท่านั้น ป้องกันระบบช้า
   window.onload = function() { 
     loadPublicData(); 
     setInterval(function() {
-      if(document.getElementById('section-schedule').style.display === 'block') { loadPublicData(); }
-      else if(document.getElementById('staffDashboard').style.display === 'block') { loadStaffData(); }
-      else if(document.getElementById('adminDashboard').style.display === 'block') { loadAdminData(); }
+      // โหลดแบคกราวด์เฉพาะหน้าที่เปิดอยู่ จะได้ไม่หน่วงเว็บครับ
+      if(document.getElementById('section-schedule').style.display === 'block') { fetch(API_URL + "?action=getPublic").then(res=>res.json()).then(renderPublicTable).catch(()=>{}); }
+      else if(document.getElementById('staffDashboard').style.display === 'block') { fetch(API_URL + "?action=getStaff").then(res=>res.json()).then(renderStaffTable).catch(()=>{}); }
+      else if(document.getElementById('adminDashboard').style.display === 'block') { fetch(API_URL + "?action=getAdmin").then(res=>res.json()).then(renderAdminTable).catch(()=>{}); }
     }, 15000); 
   };
 
@@ -507,7 +547,6 @@
       showModal("บันทึกสำเร็จ", `ระบบได้รับคำขอจองทั้งหมด <b>${successCount} วัน</b> เรียบร้อยแล้ว<br><br>โปรดรอรับแจ้งผลอนุมัติทางอีเมล`, "success");
       document.getElementById("bookingForm").reset();
       document.getElementById("roomInfoDisplay").style.display = "none";
-      document.getElementById("bookingTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='6' class='text-center text-muted py-5'><div class='spinner-border text-primary' role='status'></div><div class='mt-2'>กำลังโหลดข้อมูล...</div></td></tr>";
       loadPublicData();
       showSection('schedule');
     } else if(successCount > 0) {
@@ -516,7 +555,7 @@
     } else {
       showModal("ไม่สามารถจองได้", `<b>สาเหตุ:</b><br><small style="color:#FF3B30;">${failMsgs.join("<br>")}</small>`, "error");
     }
-    btn.disabled = false; btn.innerHTML = 'ยืนยันการจอง';
+    btn.disabled = false; btn.innerHTML = '<i class="bi bi-send-fill"></i> ยืนยันการจอง';
   }
 
   function showModal(title, message, type) {
@@ -524,9 +563,9 @@
     document.getElementById("modalMessage").innerHTML = message;
     var icon = document.getElementById("modalIcon");
     if (type === "error") { 
-      icon.innerHTML = '<i class="bi bi-x-circle-fill" style="color:#FF3B30; font-size: 50px;"></i>'; 
+      icon.innerHTML = '<i class="bi bi-x-circle-fill" style="color:#FF3B30; font-size: 40px;"></i>'; 
     } else { 
-      icon.innerHTML = '<i class="bi bi-check-circle-fill" style="color:#34C759; font-size: 50px;"></i>'; 
+      icon.innerHTML = '<i class="bi bi-check-circle-fill" style="color:#34C759; font-size: 40px;"></i>'; 
     }
     document.getElementById("customModal").style.display = "flex";
   }
@@ -566,7 +605,7 @@
       let startTimeText = dateObj.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
       let endTimeText = new Date(row.endRaw).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
       let phoneStr = String(row.phone).trim(); if(phoneStr && !phoneStr.startsWith('0')) { phoneStr = '0' + phoneStr; }
-      let phoneHtml = phoneStr ? `<a href="tel:${phoneStr}" style="color:#007AFF; font-weight:600; text-decoration:none;"><i class="bi bi-telephone-fill"></i> ${phoneStr}</a>` : '<span class="text-muted">-</span>';
+      let phoneHtml = phoneStr ? `<a href="tel:${phoneStr}" style="color:#0d6efd; font-weight:600; text-decoration:none;"><i class="bi bi-telephone-fill"></i> ${phoneStr}</a>` : '<span class="text-muted">-</span>';
       htmlContent += `<tr><td><div class="td-content"><div class="text-success" style="font-weight:600; font-size:1.05rem;"><i class="bi bi-calendar-event"></i> ${dateText}</div><div class="text-danger mt-1" style="font-size:0.95rem; font-weight:600;"><i class="bi bi-clock"></i> ${startTimeText} - ${endTimeText} น.</div></div></td><td><div class="td-content" style="font-size:1.1rem; font-weight:700; color:var(--primary-color);">${row.room}</div></td><td><div class="td-content">${row.title}</div></td><td><div class="td-content">${row.name}<br><small class="mt-1 d-inline-block">${phoneHtml}</small></div></td></tr>`;
     });
     tbody.innerHTML = htmlContent;
@@ -609,9 +648,9 @@
     pendingRow = rowIndex;
     pendingStatus = status;
     const icon = document.getElementById('confirmIcon');
-    if(status === 'อนุมัติ') { icon.innerHTML = '<i class="bi bi-check-circle-fill" style="color:#34C759; font-size: 50px;"></i>'; document.getElementById('confirmMessage').innerText = 'คุณต้องการ "อนุมัติ" รายการนี้ใช่หรือไม่?'; } 
-    else if(status === 'ไม่อนุมัติ') { icon.innerHTML = '<i class="bi bi-x-circle-fill" style="color:#FF9500; font-size: 50px;"></i>'; document.getElementById('confirmMessage').innerText = 'คุณต้องการ "ไม่อนุมัติ" รายการนี้ใช่หรือไม่?'; } 
-    else { icon.innerHTML = '<i class="bi bi-trash-fill" style="color:#FF3B30; font-size: 50px;"></i>'; document.getElementById('confirmMessage').innerText = 'คุณต้องการ "ลบ/ยกเลิก" รายการนี้ใช่หรือไม่?'; }
+    if(status === 'อนุมัติ') { icon.innerHTML = '<i class="bi bi-check-circle-fill" style="color:#34C759; font-size: 40px;"></i>'; document.getElementById('confirmMessage').innerText = 'คุณต้องการ "อนุมัติ" รายการนี้ใช่หรือไม่?'; } 
+    else if(status === 'ไม่อนุมัติ') { icon.innerHTML = '<i class="bi bi-x-circle-fill" style="color:#FF9500; font-size: 40px;"></i>'; document.getElementById('confirmMessage').innerText = 'คุณต้องการ "ไม่อนุมัติ" รายการนี้ใช่หรือไม่?'; } 
+    else { icon.innerHTML = '<i class="bi bi-trash-fill" style="color:#FF3B30; font-size: 40px;"></i>'; document.getElementById('confirmMessage').innerText = 'คุณต้องการ "ลบ/ยกเลิก" รายการนี้ใช่หรือไม่?'; }
     document.getElementById('confirmModal').style.display = 'flex';
   }
 
