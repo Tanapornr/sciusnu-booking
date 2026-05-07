@@ -17,7 +17,7 @@
   <style>
     :root { 
       --primary-color: #007AFF; 
-      --sidebar-bg: #231C1A; 
+      --sidebar-bg: #1C1C1E; 
       --sidebar-text: #f8f9fa;
       --bg-color: #F2F2F7; 
       --card-radius: 20px; 
@@ -25,11 +25,7 @@
     
     body { 
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Sarabun", "Segoe UI", Roboto, sans-serif;
-      background-color: var(--bg-color); 
-      color: #1C1C1E; 
-      overflow-x: hidden; 
-      font-size: 16px; 
-      min-height: 100vh;
+      background-color: var(--bg-color); color: #1C1C1E; overflow-x: hidden; font-size: 16px; min-height: 100vh;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -44,55 +40,51 @@
       color: var(--sidebar-text); transition: all 0.3s; display: flex; flex-direction: column; 
       margin: 15px; border-radius: 24px;
       height: calc(100vh - 30px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
       position: sticky; top: 15px; overflow-y: auto;
-      scrollbar-width: none; 
+      scrollbar-width: none;
     }
-    #sidebar-wrapper::-webkit-scrollbar { display: none; } 
+    #sidebar-wrapper::-webkit-scrollbar { display: none; }
 
-    .sidebar-heading { 
-      padding: 2rem 1.5rem 1rem; border-bottom: none; display: flex; flex-direction: column; align-items: center;
-    }
-    .sidebar-logo { 
-      width: 100%; max-width: 200px; height: auto; 
-      object-fit: contain; margin-bottom: 15px; background: transparent !important;
-    }
-    .sidebar-user-info { text-align: center; width: 100%; }
-    .main-title { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 2px; }
-    .sub-title { font-size: 0.8rem; font-weight: 400; color: rgba(255,255,255,0.5); }
+    .sidebar-heading { padding: 35px 20px 15px; text-align: center; }
     
-    .sidebar-section-title { font-size: 0.7rem; font-weight: 600; color: rgba(255,255,255,0.4); letter-spacing: 1px; padding: 15px 25px 5px; text-transform: uppercase; }
+    .sidebar-logo { 
+      width: 100%; max-width: 220px; height: auto; 
+      object-fit: contain; margin-bottom: 15px; background: transparent !important; 
+    }
+    
+    .sidebar-title-area { text-align: center; width: 100%; }
+    .main-title { font-size: 1.2rem; font-weight: 700; color: #fff; margin-bottom: 4px; display: block; }
+    .sub-title { font-size: 0.85rem; font-weight: 400; color: rgba(255,255,255,0.5); display: block; }
+
+    .sidebar-section-title { font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.3); letter-spacing: 1.2px; padding: 20px 25px 8px; text-transform: uppercase; }
     
     .list-group-item { 
-      background-color: transparent; color: rgba(255,255,255,0.6); 
-      border: none; padding: 12px 18px; margin: 4px 15px; border-radius: 12px !important; 
-      font-size: 0.95rem; font-weight: 500; cursor: pointer; transition: 0.2s; 
-      display: flex; align-items: center;
+      background-color: transparent; color: rgba(255,255,255,0.65); border: none; 
+      padding: 14px 20px; margin: 4px 15px; border-radius: 14px !important; 
+      font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center;
     }
-    .list-group-item:hover { background-color: rgba(255,255,255,0.05); color: #fff; }
-    .list-group-item.active { background-color: rgba(255,255,255,0.1) !important; color: #fff !important; font-weight: 600; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-    .list-group-item i { margin-right: 12px; font-size: 1.2rem; }
+    .list-group-item:hover { background-color: rgba(255,255,255,0.08); color: #fff; transform: translateX(5px); }
+    .list-group-item.active { background-color: var(--primary-color) !important; color: #fff !important; font-weight: 600; box-shadow: 0 4px 12px rgba(0,122,255,0.4); }
+    .list-group-item i { margin-right: 15px; font-size: 1.25rem; }
     
-    /* ==========================================
-       รูปแบบ Card / Form พื้นฐาน
-       ========================================== */
     .mobile-header { display: none !important; }
-    #page-content-wrapper { width: 100%; padding: 15px 20px 20px 5px; }
+    #page-content-wrapper { width: 100%; padding: 15px 20px 20px 5px; transition: 0.3s; }
     
     .custom-card { background: #FFFFFF; border: none; border-radius: var(--card-radius); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04); padding: 30px; margin-bottom: 30px; }
-    .page-title { font-size: 1.5rem; font-weight: 700; color: #1C1C1E; margin-bottom: 20px; border-bottom: 1px solid #E5E5EA; padding-bottom: 10px; letter-spacing: -0.5px;}
+    .page-title { font-size: 1.6rem; font-weight: 700; color: #1C1C1E; margin-bottom: 25px; border-bottom: 1px solid #E5E5EA; padding-bottom: 12px; letter-spacing: -0.5px;}
 
-    .form-control, .form-select { background: #F2F2F7 !important; border: 1px solid transparent; border-radius: 12px; padding: 14px 15px; color: #1C1C1E; }
-    .form-control:focus, .form-select:focus { background: #fff !important; border-color: var(--primary-color); box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.15); }
+    .form-control, .form-select { background: #F2F2F7 !important; border: 1px solid transparent; border-radius: 14px; padding: 14px 18px; color: #1C1C1E; font-size: 1rem; }
+    .form-control:focus, .form-select:focus { background: #fff !important; border-color: var(--primary-color); box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.12); }
 
-    .room-card { background: #FFFFFF; border: 1px solid #E5E5EA; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: transform 0.2s, box-shadow 0.2s; height: 100%; display: flex; flex-direction: column; }
-    .room-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
-    .room-img-container { padding: 15px 15px 0 15px; display: flex; flex-direction: column; gap: 10px; }
-    .room-main-img { width: 100%; height: 200px; border-radius: 16px; object-fit: cover; cursor: pointer; transition: 0.3s; background: #E5E5EA; }
+    .room-card { background: #FFFFFF; border: 1px solid #E5E5EA; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: all 0.3s ease; height: 100%; display: flex; flex-direction: column; }
+    .room-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.1); }
+    .room-img-container { padding: 15px; display: flex; flex-direction: column; gap: 12px; }
+    .room-main-img { width: 100%; height: 210px; border-radius: 18px; object-fit: cover; cursor: pointer; background: #E5E5EA; }
     .room-thumbnails { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; }
     .room-thumbnails::-webkit-scrollbar { display: none; }
-    .room-thumbnail-img { width: 65px; height: 65px; border-radius: 12px; object-fit: cover; cursor: pointer; flex-shrink: 0; border: 2px solid transparent; transition: 0.2s; background: #E5E5EA; }
-    .room-thumbnail-img:hover { border-color: var(--primary-color); transform: scale(1.05); }
+    .room-thumbnail-img { width: 68px; height: 68px; border-radius: 12px; object-fit: cover; cursor: pointer; flex-shrink: 0; border: 2px solid transparent; transition: 0.2s; background: #E5E5EA; }
+    .room-thumbnail-img.active-thumb { border-color: var(--primary-color); transform: scale(1.05); }
 
     .room-card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
     .room-card-title { font-weight: 700; color: #1C1C1E; margin-bottom: 10px; font-size: 1.3rem; letter-spacing: -0.3px;}
@@ -100,18 +92,22 @@
 
     .room-info-container { background: #F2F2F7; border-radius: 16px; padding: 20px; display: none; margin-bottom: 25px; }
 
-    /* สไตล์กล่องแจ้งเตือน (ที่เด้งเวลาเลือกห้องมีเรียน) */
+    /* ==========================================
+       สไตล์กล่องแจ้งเตือนให้เหมือนรูปภาพ
+       ========================================== */
     .note-box { 
-      background-color: #FFF9C4; border-left: 5px solid #FFCC00; color: #8D6E63; 
-      padding: 15px 20px; border-radius: 12px; margin-bottom: 20px; font-size: 0.95rem; line-height: 1.6; 
+      background-color: #FFF9C4; border-left: 6px solid #FFCC00; color: #5D4037; 
+      padding: 18px 20px; border-radius: 12px; margin-bottom: 25px; 
+      font-size: 0.95rem; line-height: 1.6; box-shadow: 0 4px 12px rgba(0,0,0,0.03);
       animation: popIn 0.3s ease;
     }
+    .note-box-title { font-size: 1.05rem; color: #D32F2F; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; }
+    .note-box-title i { margin-right: 8px; font-size: 1.2rem; }
+    .note-box ul { margin: 0; padding-left: 22px; margin-bottom: 10px; }
+    .note-box li { margin-bottom: 5px; }
+    .note-box-footer { color: #D32F2F; font-size: 0.9rem; font-weight: 600; }
 
-    /* ==========================================
-       Responsive สำหรับมือถือ 
-       ========================================== */
-    #sidebar-overlay { display: none; }
-    
+    /* Mobile Responsive */
     @media (max-width: 768px) {
       .mobile-header { 
         display: flex !important; position: fixed; top: 0; left: 0; width: 100%; height: 70px; 
@@ -175,7 +171,7 @@
 <div class="mobile-header">
   <div class="d-flex align-items-center">
     <button class="mobile-menu-btn me-3" onclick="document.getElementById('wrapper').classList.add('toggled')"><i class="bi bi-list"></i></button>
-    <img src="https://img2.pic.in.th/logo-banner-scius91e6464acbe6a320.png" alt="Logo" style="height:35px; background:transparent !important; object-fit:contain;" border="0">
+    <img src="https://img2.pic.in.th/logo-banner-scius91e6464acbe6a320.png" alt="Logo" style="height:35px; object-fit:contain;" border="0">
   </div>
 </div>
 
@@ -186,8 +182,8 @@
     <div class="sidebar-heading">
       <img src="https://img2.pic.in.th/logo-banner-scius91e6464acbe6a320.png" alt="Logo Banner SCiUS" class="sidebar-logo">
       <div class="sidebar-title-area">
-        <div class="main-title">ระบบจองห้อง</div>
-        <div class="sub-title">โครงการ วมว. มน.</div>
+        <span class="main-title">ระบบจองห้อง</span>
+        <span class="sub-title">โครงการ วมว. มน.</span>
       </div>
     </div>
     
@@ -230,42 +226,41 @@
         <div class="page-title"><i class="bi bi-pen me-2"></i>แบบฟอร์มขอใช้ห้อง</div>
         <form id="bookingForm" onsubmit="handleFormSubmit(event)">
           <div class="mb-4">
-            <label class="form-label fw-bold">เลือกห้องที่ต้องการ</label>
-            <select class="form-select" name="room" id="roomSelect" onchange="updateRoomInfo()" required>
+            <label class="form-label text-secondary fw-bold">เลือกห้องที่ต้องการจอง</label>
+            <select class="form-select form-select-lg" name="room" id="roomSelect" onchange="updateRoomInfo()" required>
               <option value="" disabled selected>-- กรุณาเลือกห้อง --</option>
               <option value="SC1-411">ห้อง SC1-411</option>
               <option value="SC1-414">ห้อง SC1-414</option>
               <option value="SC1-415">ห้อง SC1-415</option>
               <option value="SC1-416">ห้อง SC1-416</option>
-              <option value="Student Center (Main)">Student Center (ห้องโถง)</option>
+              <option value="Student Center (Main)">Student Center (ห้องโถงใหญ่)</option>
               <option value="Meeting 1">Student Center - Meeting 1</option>
               <option value="Meeting 2">Student Center - Meeting 2</option>
               <option value="Meeting 3">Student Center - Meeting 3</option>
             </select>
           </div>
           
+          <div id="scheduleNote" class="note-box" style="display:none;"></div>
+          
           <div id="roomInfoDisplay" class="room-info-container">
-            <h4 id="roomNameDisplay" style="color:var(--primary-color); font-weight:700; margin-bottom:15px;"></h4>
-            
-            <div id="scheduleNote" class="note-box" style="display:none;"></div>
-
+            <h4 id="roomNameDisplay" style="color:var(--primary-color); font-weight:700;">ชื่อห้อง</h4>
             <div class="row mb-3">
-              <div class="col-md-6 mb-2"><b><i class="bi bi-people-fill text-muted me-1"></i> ความจุ:</b> <span id="roomCap"></span> คน</div>
-              <div class="col-md-6"><b><i class="bi bi-tools text-muted me-1"></i> อุปกรณ์:</b> <span id="roomEquip"></span></div>
+              <div class="col-md-6"><i class="bi bi-people-fill text-muted"></i> <b>ความจุ:</b> <span id="roomCap"></span> คน</div>
+              <div class="col-md-6"><i class="bi bi-tools text-muted"></i> <b>อุปกรณ์:</b> <span id="roomEquip"></span></div>
             </div>
             <label class="form-label small text-muted fw-bold mb-2">ภาพบรรยากาศ:</label>
             <div id="roomGallery" style="width: 100%;"></div>
           </div>
 
-          <div class="mb-3"><label class="form-label fw-bold">หัวข้อกิจกรรม</label><input type="text" class="form-control" name="title" required></div>
+          <div class="mb-3"><label class="form-label text-secondary fw-bold">หัวข้อการประชุม/กิจกรรม</label><input type="text" class="form-control" name="title" required placeholder="ระบุหัวข้อ..."></div>
           <div class="row mb-3">
-            <div class="col-md-6 mb-3 mb-md-0"><label class="form-label fw-bold">ชื่อ-นามสกุล</label><input type="text" class="form-control" name="name" required></div>
-            <div class="col-md-6"><label class="form-label fw-bold">หน่วยงาน</label><input type="text" class="form-control" name="dept" required></div>
+            <div class="col-md-6 mb-3 mb-md-0"><label class="form-label text-secondary fw-bold">ชื่อ-นามสกุล</label><input type="text" class="form-control" name="name" required></div>
+            <div class="col-md-6"><label class="form-label text-secondary fw-bold">หน่วยงาน</label><input type="text" class="form-control" name="dept" required></div>
           </div>
           <div class="row mb-3">
-            <div class="col-md-6 mb-3 mb-md-0"><label class="form-label fw-bold">อีเมล</label><input type="email" class="form-control" name="email" required></div>
-            <div class="col-md-3 mb-3 mb-md-0"><label class="form-label fw-bold">เบอร์มือถือ</label><input type="text" class="form-control" name="phone" required></div>
-            <div class="col-md-3"><label class="form-label fw-bold">เบอร์ภายใน</label><input type="text" class="form-control" name="internalPhone" required></div>
+            <div class="col-md-6 mb-3 mb-md-0"><label class="form-label text-secondary fw-bold">อีเมล</label><input type="email" class="form-control" name="email" required></div>
+            <div class="col-md-3 mb-3 mb-md-0"><label class="form-label text-secondary fw-bold">เบอร์มือถือ</label><input type="text" class="form-control" name="phone" required></div>
+            <div class="col-md-3"><label class="form-label text-secondary fw-bold">เบอร์ภายใน</label><input type="text" class="form-control" name="internalPhone" required></div>
           </div>
           <div class="row mb-4">
             <div class="col-md-4 mb-3 mb-md-0"><label class="form-label text-primary fw-bold">วันที่จอง (เลือกหลายวันได้)</label><input type="text" class="form-control" id="bookingDate" name="bookingDate" required readonly></div>
@@ -313,8 +308,10 @@
         <div class="custom-card">
           <div class="d-flex justify-content-between align-items-center mb-4">
             <div class="page-title m-0 text-danger">จัดการการจอง</div>
-            <button class="btn btn-primary btn-sm me-2 rounded-pill" onclick="loadAdminData()">รีเฟรช</button>
-            <button class="btn btn-outline-danger btn-sm rounded-pill" onclick="logoutAdmin()">ออกจากระบบ</button>
+            <div>
+              <button class="btn btn-primary btn-sm me-2 rounded-pill" onclick="loadAdminData()">รีเฟรช</button>
+              <button class="btn btn-outline-danger btn-sm rounded-pill" onclick="logoutAdmin()">ออกจากระบบ</button>
+            </div>
           </div>
           <div class="alert alert-info" style="border-radius:12px; border:none; background:#E5F0FF; color:#005bb5;"><i class="bi bi-info-circle"></i> กดปุ่ม อนุมัติ / ไม่ผ่าน ระบบจะส่งอีเมลแจ้งผู้จองอัตโนมัติ</div>
           <div class="table-responsive">
@@ -434,37 +431,36 @@
     }, 20000); 
   };
 
-  // 🔥 ฟังก์ชันอัปเดตข้อมูลห้อง (เพิ่มระบบเด้งแจ้งเตือนตารางเรียนเฉพาะห้องที่มีปัญหา) 🔥
+  // 🔥 อัปเดตกล่องแจ้งเตือน ให้เด้งขึ้นมาพร้อมรายละเอียด (ตามรูปตัวอย่างเป๊ะๆ) 🔥
   function updateRoomInfo() {
     const room = document.getElementById("roomSelect").value;
     const gallery = document.getElementById("roomGallery");
     const scheduleNote = document.getElementById("scheduleNote");
-    
+
+    // ตรวจสอบเงื่อนไขว่าต้องโชว์กล่องเหลืองไหม
+    let noteText = "";
+    if (room === "SC1-415" || room === "SC1-416" || room === "SC1-411") {
+      // โชว์ข้อความทั้งหมดเพื่อให้เหมือนในภาพ (รวมกฎทั้ง 3 ข้อ เพื่อให้ผู้ใช้ทราบ)
+      noteText = `
+        <li><b>SC1-415:</b> มีเรียน ม.5.7 จันทร์-พุธ (08.00-16.30) และ พฤหัสบดี (12.35-15.30)</li>
+        <li><b>SC1-416:</b> มีเรียน ม.5.8 จันทร์-พุธ (08.00-16.30)</li>
+        <li><b>SC1-411:</b> มีเรียน ม.6.7-6.8 พฤหัสบดี (08.00-12.00)</li>
+      `;
+      scheduleNote.innerHTML = `
+        <div class="note-box-title"><i class="bi bi-exclamation-triangle-fill"></i> หมายเหตุตารางเรียน (14 ต.ค. 68 - 7 มี.ค. 69)</div>
+        <ul>${noteText}</ul>
+        <div class="note-box-footer">*หากเลือกเวลาชนกับตารางเรียน ระบบจะแจ้งเตือนและไม่อนุญาตให้จอง</div>
+      `;
+      scheduleNote.style.display = "block";
+    } else {
+      scheduleNote.style.display = "none";
+    }
+
     if (roomData[room]) {
       document.getElementById("roomInfoDisplay").style.display = "block";
       document.getElementById("roomNameDisplay").innerText = room;
       document.getElementById("roomCap").innerText = roomData[room].cap;
       document.getElementById("roomEquip").innerText = roomData[room].equip;
-      
-      // เงื่อนไขแจ้งเตือนเวลาเรียน
-      let noteText = "";
-      if (room === "SC1-415") {
-        noteText = "<b>มีเรียน ม.5.7:</b> จันทร์-พุธ (08:00-16:30 น.) และ พฤหัสบดี (12:35-15:30 น.)";
-      } else if (room === "SC1-416") {
-        noteText = "<b>มีเรียน ม.5.8:</b> จันทร์-พุธ (08:00-16:30 น.)";
-      } else if (room === "SC1-411") {
-        noteText = "<b>มีเรียน ม.6.7-6.8:</b> พฤหัสบดี (08:00-12:00 น.)";
-      }
-
-      // ถ้ามีเงื่อนไขเรียน ให้แสดงกล่องเหลือง
-      if (noteText !== "") {
-        scheduleNote.innerHTML = `<strong><i class="bi bi-exclamation-triangle-fill"></i> แจ้งเตือนตารางเรียน (14 ต.ค. 68 - 7 มี.ค. 69)</strong><br>${noteText}<div style="margin-top:8px; color:#D32F2F; font-size:0.85rem; font-weight:600;">*หากจองชนเวลาเรียน ระบบจะไม่อนุญาตให้จอง</div>`;
-        scheduleNote.style.display = "block";
-      } else {
-        // ถ้าเป็นห้องอื่นให้ซ่อนกล่องไป
-        scheduleNote.style.display = "none";
-      }
-
       let html = `<div style="border-radius:14px; overflow:hidden; margin-bottom:10px;"><img src="${roomData[room].imgs[0]}" id="formMainImg" style="width:100%; height:180px; object-fit:cover;"></div><div style="display:flex; gap:8px; overflow-x:auto;">`;
       roomData[room].imgs.forEach(url => { html += `<img src="${url}" style="width:60px; height:60px; border-radius:10px; object-fit:cover; cursor:pointer;" onclick="document.getElementById('formMainImg').src='${url}'">`; });
       gallery.innerHTML = html + `</div>`;
@@ -520,6 +516,8 @@
     if(success > 0) {
       showModal("สำเร็จ", `จองสำเร็จทั้งหมด ${success} รายการ`, "success");
       document.getElementById("bookingForm").reset();
+      document.getElementById("scheduleNote").style.display = "none";
+      document.getElementById("roomInfoDisplay").style.display = "none";
       showSection('schedule');
     } else { showModal("ไม่สำเร็จ", "เกิดข้อผิดพลาดในการจอง", "error"); }
     btn.disabled = false; btn.innerHTML = "ยืนยันการจอง";
