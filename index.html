@@ -10,16 +10,16 @@
   
   <script>
     // ********* ยืนยัน URL จาก Vercel *********
-    const API_URL = "https://script.google.com/macros/s/AKfycby-298JdtyoXHk4iWfamo-VCDkrl0YmePsF4-dRL7QM0vNr_QOPb318WwhKT_9xYuCmzQ/exec"; 
+    const API_URL = "https://script.google.com/macros/s/AKfycbyvk5fj2_2qRutnY2W-OLeH3GjADw6k6pFTYftlcRtZ1AIkuanFk0Y_K-u8FHCzQfSGVQ/exec"; 
     // ***************************************
   </script>
 
   <style>
     :root { 
-      --primary-color: #007AFF; /* iOS Blue */
-      --sidebar-bg: rgba(28, 28, 30, 0.95); 
+      --primary-color: #007AFF; 
+      --sidebar-bg: #231C1A; /* โทนสีเข้มตามรูปที่ 2 */
       --sidebar-text: #f8f9fa;
-      --bg-color: #F2F2F7; /* iOS System Gray 6 */
+      --bg-color: #F2F2F7; 
       --card-radius: 20px; 
     }
     
@@ -35,74 +35,74 @@
 
     #wrapper { display: flex; width: 100%; min-height: 100vh; position: relative; }
     
-    /* สไตล์แถบเมนูข้าง (ตามภาพที่ 2) */
+    /* ==========================================
+       สไตล์แถบเมนูข้าง (ตามภาพที่ 2) 
+       ========================================== */
     #sidebar-wrapper { 
-      min-width: 260px; max-width: 260px; 
+      min-width: 270px; max-width: 270px; 
       background-color: var(--sidebar-bg); 
-      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       color: var(--sidebar-text); transition: all 0.3s; display: flex; flex-direction: column; 
-      border-right: 1px solid rgba(255,255,255,0.05);
     }
     .sidebar-heading { 
-      padding: 1.5rem; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.08); 
-      position: relative;
+      padding: 2rem 1.5rem 1rem; border-bottom: none;
     }
-    .sidebar-logo { 
-      position: absolute; top: 1rem; left: 1.5rem; height: 35px; width: auto; 
-      background: white; padding: 2px; border-radius: 8px; 
+    .sidebar-user { 
+      display: flex; align-items: center; 
     }
-    .sidebar-title-area {
-      margin-top: 3.5rem; text-align: center;
+    .sidebar-avatar { 
+      width: 45px; height: 45px; border-radius: 50%; background: #fff; padding: 2px; object-fit: contain; 
     }
-    .main-title { font-size: 1.15rem; font-weight: 600; color: #fff; margin-bottom: 0.2rem; }
-    .sub-title { font-size: 0.8rem; font-weight: 400; color: rgba(255,255,255,0.7); margin-left: 1rem;}
-
+    .sidebar-user-info { 
+      margin-left: 12px; text-align: left; 
+    }
+    .sidebar-role { 
+      font-size: 0.7rem; font-weight: 600; color: rgba(255,255,255,0.4); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 2px;
+    }
+    .sidebar-name { 
+      font-size: 1.05rem; font-weight: 700; color: #fff; letter-spacing: -0.3px;
+    }
+    
+    .sidebar-section-title { 
+      font-size: 0.7rem; font-weight: 600; color: rgba(255,255,255,0.4); letter-spacing: 1px; padding: 15px 25px 5px; text-transform: uppercase; 
+    }
+    
     .list-group-item { 
-      background-color: transparent; color: rgba(255,255,255,0.7); 
-      border: none; padding: 15px 25px; font-size: 1.05rem; cursor: pointer; transition: 0.2s; 
+      background-color: transparent; color: rgba(255,255,255,0.6); 
+      border: none; padding: 12px 18px; margin: 4px 15px; border-radius: 12px !important; /* ขอบมนรอบด้าน ลอยขึ้นมา */
+      font-size: 0.95rem; font-weight: 500; cursor: pointer; transition: 0.2s; 
       display: flex; align-items: center;
     }
     .list-group-item:hover { background-color: rgba(255,255,255,0.05); color: #fff; }
-    .list-group-item i { margin-right: 10px; font-size: 1.2rem; }
     
-    /* สไตล์เมนูที่กำลังใช้งาน (ตามภาพที่ 2) */
+    /* สไตล์เมนูที่กำลังใช้งาน (Active State ตามรูป 2) */
     .list-group-item.active { 
-      background-color: var(--primary-color); 
+      background-color: rgba(255,255,255,0.1) !important; 
       color: #fff !important; font-weight: 600; 
-      border-radius: 20px 0 0 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     }
+    .list-group-item i { margin-right: 12px; font-size: 1.2rem; }
     
     #page-content-wrapper { width: 100%; padding: 20px; }
     
+    /* ==========================================
+       รูปแบบ Card / Form พื้นฐาน
+       ========================================== */
     .custom-card { 
-      background: #FFFFFF;
-      border: none; 
-      border-radius: var(--card-radius); 
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04); 
-      padding: 30px; margin-bottom: 30px; 
+      background: #FFFFFF; border: none; border-radius: var(--card-radius); 
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04); padding: 30px; margin-bottom: 30px; 
     }
     .page-title { font-size: 1.5rem; font-weight: 700; color: #1C1C1E; margin-bottom: 20px; border-bottom: 1px solid #E5E5EA; padding-bottom: 10px; letter-spacing: -0.5px;}
 
     .form-control, .form-select {
-      background: #F2F2F7 !important;
-      border: 1px solid transparent;
-      border-radius: 12px;
-      padding: 14px 15px;
-      color: #1C1C1E;
+      background: #F2F2F7 !important; border: 1px solid transparent; border-radius: 12px; padding: 14px 15px; color: #1C1C1E;
     }
     .form-control:focus, .form-select:focus {
-      background: #fff !important;
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.15);
+      background: #fff !important; border-color: var(--primary-color); box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.15);
     }
 
     .room-card { 
-      background: #FFFFFF; 
-      border: 1px solid #E5E5EA; 
-      border-radius: 20px; overflow: hidden; 
-      box-shadow: 0 4px 15px rgba(0,0,0,0.03); 
-      transition: transform 0.2s, box-shadow 0.2s; 
-      height: 100%; display: flex; flex-direction: column; 
+      background: #FFFFFF; border: 1px solid #E5E5EA; border-radius: 20px; overflow: hidden; 
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: transform 0.2s, box-shadow 0.2s; height: 100%; display: flex; flex-direction: column; 
     }
     .room-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
     
@@ -122,18 +122,18 @@
     .note-box { background-color: #FFF9C4; border-left: 5px solid #FFCC00; color: #8D6E63; padding: 20px; border-radius: 12px; margin-bottom: 25px; font-size: 1rem; line-height: 1.7; }
     .note-box strong { font-size: 1.1rem; color: #D32F2F; display: block; margin-bottom: 10px; }
 
+    /* --- Responsive Mobile Header --- */
     .mobile-header { display: none; }
     #sidebar-overlay { display: none; }
 
     @media (max-width: 768px) {
       .mobile-header { 
         display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 65px; 
-        background: rgba(28, 28, 30, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+        background: rgba(28, 28, 30, 0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
         color: white; z-index: 1040; align-items: center; justify-content: space-between; padding: 0 15px; 
-        border-bottom: 1px solid rgba(255,255,255,0.1);
       }
       .mobile-menu-btn { background: transparent; border: none; color: white; font-size: 2rem; cursor: pointer; padding: 0; }
-      #sidebar-wrapper { position: fixed; height: 100vh; z-index: 1050; margin-left: -260px; top: 0; left: 0; }
+      #sidebar-wrapper { position: fixed; height: 100vh; z-index: 1050; margin-left: -270px; top: 0; left: 0; }
       #wrapper.toggled #sidebar-wrapper { margin-left: 0; }
       #sidebar-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.4); z-index: 1045; display: none; backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
       #wrapper.toggled #sidebar-overlay { display: block; }
@@ -161,46 +161,48 @@
       .td-content { text-align: right; word-break: break-word; width: 100%; } .td-content div { text-align: right; } .td-content .d-flex { justify-content: flex-end; }
     }
 
-    /* สไตล์ป๊อบอัพ (Modal) (ตามภาพที่ 1) */
+    /* ==========================================
+       สไตล์ป๊อบอัพ (Modal) แบบกล่องขอบมน (ตามภาพที่ 1)
+       ========================================== */
     .modal-overlay { 
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-      background: rgba(0,0,0,0.3); z-index: 9999; 
+      background: rgba(0,0,0,0.4); z-index: 9999; 
       align-items: center; justify-content: center; 
-      backdrop-filter: blur(10px); /* เพิ่มเอฟเฟกต์เบลอหลัง */
-      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
     }
     .modal-box { 
-      background: rgba(255, 255, 255, 0.8); /* พื้นหลังโปร่งแสง */
-      backdrop-filter: blur(20px); /* เบลอภายในกล่อง */
-      -webkit-backdrop-filter: blur(20px);
-      width: 85%; max-width: 320px; padding: 0; 
-      border-radius: var(--card-radius); text-align: center; 
-      box-shadow: 0 10px 40px rgba(0,0,0,0.15); 
-      border: 1px solid rgba(255,255,255,0.4);
+      background: #ffffff; width: 90%; max-width: 360px; padding: 35px 25px 25px; 
+      border-radius: 20px; text-align: center; position: relative;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15); 
       animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-      overflow: hidden;
     }
     @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     
-    .modal-content-area { padding: 25px 20px 20px; }
-    #modalIcon { font-size: 40px; margin-bottom: 10px; }
-    #modalTitle { font-weight: 600; font-size: 1.2rem; color: #1C1C1E; margin-bottom: 8px; letter-spacing: -0.5px;}
-    #modalMessage, #confirmMessage { color: #3A3A3C; font-size: 1rem; line-height: 1.4; margin: 0; }
-    
-    /* สไตล์ปุ่มในป๊อบอัพ (ตามภาพที่ 1) */
-    .modal-btn-area { border-top: 1px solid rgba(60,60,67,0.29); display: flex; width: 100%; }
-    .modal-btn-single { 
-      width: 100%; padding: 15px; background: transparent; border: none; 
-      color: var(--primary-color); font-size: 1.1rem; font-weight: 600; transition: 0.2s; cursor: pointer;
+    /* ปุ่มกากบาทขวาบน */
+    .modal-close-icon {
+      position: absolute; top: 15px; right: 15px; background: #F2F2F7;
+      width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      color: #8E8E93; cursor: pointer; border: none; font-size: 18px; transition: 0.2s;
     }
-    .modal-btn-single:active { background: rgba(0,0,0,0.05); }
-    
-    .modal-btn-split { width: 50%; padding: 15px; background: transparent; border: none; font-size: 1.1rem; transition: 0.2s; cursor: pointer; }
-    .modal-btn-split.cancel { color: var(--primary-color); font-weight: 400; border-right: 1px solid rgba(60,60,67,0.29); }
-    .modal-btn-split.confirm { color: var(--primary-color); font-weight: 600; }
-    .modal-btn-split.danger { color: #FF3B30; font-weight: 600; }
-    .modal-btn-split:active { background: rgba(0,0,0,0.05); }
+    .modal-close-icon:hover { background: #E5E5EA; color: #1C1C1E; }
 
+    #modalTitle, #modalTitleConfirm { font-weight: 700; font-size: 1.3rem; color: #1C1C1E; margin-bottom: 10px; letter-spacing: -0.5px;}
+    #modalMessage, #confirmMessage { color: #8E8E93; font-size: 0.95rem; line-height: 1.5; margin-bottom: 25px; }
+    
+    /* ปุ่มแยก 2 ฝั่ง (ตามภาพที่ 1) */
+    .modal-btn-area { display: flex; gap: 12px; justify-content: center; width: 100%; }
+    .modal-btn-split { 
+      flex: 1; padding: 12px 10px; border-radius: 12px; font-size: 1rem; font-weight: 600; 
+      cursor: pointer; transition: 0.2s; text-align: center;
+    }
+    /* ปุ่ม Reject พื้นขาว ขอบเทา */
+    .modal-btn-split.cancel { background: #ffffff; border: 1px solid #C7C7CC; color: #1C1C1E; }
+    .modal-btn-split.cancel:hover { background: #F2F2F7; }
+    /* ปุ่ม Accept พื้นดำทึบ */
+    .modal-btn-split.confirm { background: #000000; border: 1px solid #000000; color: #ffffff; }
+    .modal-btn-split.confirm:hover { background: #1C1C1E; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+
+    /* ปุ่มหลักในหน้าเว็บ */
     .btn-main { background-color: var(--primary-color); color: white; padding: 12px 30px; border-radius: 12px; font-size: 1.05rem; font-weight: 600; border: none; width: 100%; transition: 0.2s; }
     .btn-main:hover { background-color: #005bb5; }
     .status-pill { padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block; }
@@ -222,20 +224,28 @@
 
   <div id="sidebar-wrapper">
     <div class="sidebar-heading">
-      <img src="https://img2.pic.in.th/logo-banner-scius91e6464acbe6a320.png" alt="Logo Banner SCiUS" class="sidebar-logo" border="0">
-      <div class="sidebar-title-area">
-        <div class="main-title">ระบบจองห้องโครงการ วมว.</div>
-        <div class="sub-title">โครงการ วมว. มน.</div>
+      <div class="sidebar-user">
+        <img src="https://img2.pic.in.th/logo-banner-scius91e6464acbe6a320.png" alt="Avatar" class="sidebar-avatar">
+        <div class="sidebar-user-info">
+          <div class="sidebar-role">ระบบจองห้อง</div>
+          <div class="sidebar-name">โครงการ วมว. มน.</div>
+        </div>
       </div>
     </div>
-    <div class="list-group list-group-flush mt-3">
+    
+    <div class="sidebar-section-title">Main Menu</div>
+    
+    <div class="list-group list-group-flush">
       <button class="list-group-item list-group-item-action active" onclick="showSection('schedule', this)"><i class="bi bi-calendar-week"></i> ตารางใช้ห้อง</button>
       <button class="list-group-item list-group-item-action" onclick="showSection('roominfo', this)"><i class="bi bi-images"></i> ข้อมูลห้องเรียน</button>
       <button class="list-group-item list-group-item-action" onclick="showSection('booking', this)"><i class="bi bi-pencil-square"></i> จองห้องเรียน</button>
+      
+      <div class="sidebar-section-title mt-2">Management</div>
+      
       <button class="list-group-item list-group-item-action" onclick="showSection('staff', this)"><i class="bi bi-door-open-fill"></i> พนักงานเปิดห้อง</button>
       <button class="list-group-item list-group-item-action" onclick="showSection('admin', this)"><i class="bi bi-gear-fill"></i> ผู้ดูแลระบบ</button>
     </div>
-    <div style="margin-top:auto; padding: 20px; text-align:center; font-size:0.8rem; color:rgba(255,255,255,0.5);">พัฒนาโดย:<br>นางสาวธนาภรณ์ รอดฉ่ำ</div>
+    <div style="margin-top:auto; padding: 20px; text-align:center; font-size:0.8rem; color:rgba(255,255,255,0.3);">พัฒนาโดย:<br>นางสาวธนาภรณ์ รอดฉ่ำ</div>
   </div>
 
   <div id="page-content-wrapper">
@@ -293,8 +303,8 @@
               <div class="col-md-6"><i class="bi bi-people-fill text-muted"></i> <b>ความจุ:</b> <span id="roomCap"></span> คน</div>
               <div class="col-md-6"><i class="bi bi-tools text-muted"></i> <b>อุปกรณ์:</b> <span id="roomEquip"></span></div>
             </div>
-            <label class="form-label small text-muted fw-bold">ภาพบรรยากาศ:</label>
-            <div class="row g-2" id="roomGallery"></div>
+            <label class="form-label small text-muted fw-bold mb-2">ภาพบรรยากาศ:</label>
+            <div id="roomGallery" style="width: 100%;"></div>
           </div>
 
           <div class="mb-3"><label class="form-label text-secondary fw-bold">หัวข้อการประชุม/กิจกรรม</label><input type="text" class="form-control" name="title" required placeholder="ระบุหัวข้อ..."></div>
@@ -375,27 +385,24 @@
 
 <div id="customModal" class="modal-overlay">
   <div class="modal-box">
-    <div class="modal-content-area">
-      <div id="modalIcon"></div>
-      <h3 id="modalTitle"></h3>
-      <p id="modalMessage"></p>
-    </div>
-    <div class="modal-btn-area">
-      <button id="modalBtn" class="modal-btn-single" onclick="closeModal()">ตกลง</button>
+    <button class="modal-close-icon" onclick="closeModal()"><i class="bi bi-x"></i></button>
+    <div id="modalIcon" style="font-size: 45px; margin-bottom: 5px;"></div>
+    <h3 id="modalTitle"></h3>
+    <p id="modalMessage"></p>
+    <div class="modal-btn-area mt-2">
+      <button id="modalBtn" class="modal-btn-split confirm" style="width:100%; border-radius:12px;" onclick="closeModal()">ตกลง (Accept)</button>
     </div>
   </div>
 </div>
 
 <div id="confirmModal" class="modal-overlay">
   <div class="modal-box">
-    <div class="modal-content-area">
-      <div id="confirmIcon"></div>
-      <h3 id="modalTitleConfirm">ยืนยันการดำเนินการ</h3>
-      <p id="confirmMessage"></p>
-    </div>
+    <button class="modal-close-icon" onclick="closeConfirmModal()"><i class="bi bi-x"></i></button>
+    <h3 id="modalTitleConfirm" style="margin-top: 10px;">ยืนยันการดำเนินการ</h3>
+    <p id="confirmMessage"></p>
     <div class="modal-btn-area">
-      <button class="modal-btn-split cancel" onclick="closeConfirmModal()">ยกเลิก</button>
-      <button id="confirmBtn" class="modal-btn-split confirm" onclick="executeStatusUpdate()">ยืนยัน</button>
+      <button class="modal-btn-split cancel" onclick="closeConfirmModal()">ยกเลิก (Reject)</button>
+      <button id="confirmBtn" class="modal-btn-split confirm" onclick="executeStatusUpdate()">ยืนยัน (Accept)</button>
     </div>
   </div>
 </div>
@@ -485,12 +492,21 @@
       document.getElementById("roomNameDisplay").innerText = room;
       document.getElementById("roomCap").innerText = roomData[room].cap;
       document.getElementById("roomEquip").innerText = roomData[room].equip;
-      gallery.innerHTML = "";
+      
+      let mainImgUrl = roomData[room].imgs[0] || 'https://via.placeholder.com/600x400';
+      let mainImgId = 'formMainImg';
+      
+      let html = `
+        <div style="width:100%; border-radius:12px; overflow:hidden; margin-bottom:10px; border: 1px solid #E5E5EA;">
+          <img src="${mainImgUrl}" id="${mainImgId}" style="width:100%; height:200px; object-fit:cover; display:block; transition: 0.3s; background:#E5E5EA;" onclick="window.open(this.src,'_blank')">
+        </div>
+        <div style="display:flex; gap:10px; overflow-x:auto; padding-bottom:5px; scrollbar-width: none;">
+      `;
       roomData[room].imgs.forEach(function(imgUrl) {
-        var col = document.createElement("div"); col.className = "col-6 col-md-3";
-        col.innerHTML = `<img src="${imgUrl}" style="width:100%; height:80px; object-fit:cover; border-radius:8px; cursor:pointer;" onclick="window.open('${imgUrl}','_blank')">`;
-        gallery.appendChild(col);
+        html += `<img src="${imgUrl}" style="width:70px; height:70px; object-fit:cover; border-radius:10px; cursor:pointer; border:2px solid transparent; background:#E5E5EA;" onclick="document.getElementById('${mainImgId}').src='${imgUrl}'">`;
       });
+      html += `</div>`;
+      gallery.innerHTML = html;
     } else { display.style.display = "none"; }
   }
 
@@ -568,24 +584,22 @@
       loadPublicData();
       showSection('schedule');
     } else if(successCount > 0) {
-      showModal("สำเร็จบางส่วน", `จองสำเร็จ: ${successCount} วัน<br><br><b>ไม่สามารถจองได้:</b><br><small style="color:red;">${failMsgs.join("<br>")}</small>`, "error");
+      showModal("สำเร็จบางส่วน", `จองสำเร็จ: ${successCount} วัน<br><br><b>ไม่สามารถจองได้:</b><br><small style="color:#FF3B30;">${failMsgs.join("<br>")}</small>`, "error");
       loadPublicData();
     } else {
-      showModal("ไม่สามารถจองได้", `<b>สาเหตุ:</b><br><small style="color:red;">${failMsgs.join("<br>")}</small>`, "error");
+      showModal("ไม่สามารถจองได้", `<b>สาเหตุ:</b><br><small style="color:#FF3B30;">${failMsgs.join("<br>")}</small>`, "error");
     }
     btn.disabled = false; btn.innerHTML = 'ยืนยันการจอง';
   }
 
-  /* ฟังก์ชันป๊อบอัพ (ตามภาพที่ 1) */
   function showModal(title, message, type) {
     document.getElementById("modalTitle").innerText = title;
     document.getElementById("modalMessage").innerHTML = message;
     var icon = document.getElementById("modalIcon");
     if (type === "error") { 
-      icon.innerHTML = '<i class="bi bi-x-circle-fill" style="color:#FF3B30;"></i>'; /* ไอคอนผิดพลาดสีแดง */
-    } 
-    else { 
-      icon.innerHTML = '<i class="bi bi-check-circle-fill" style="color:#34C759;"></i>'; /* ไอคอนสำเร็จสีเขียว */
+      icon.innerHTML = '<i class="bi bi-x-circle-fill" style="color:#FF3B30;"></i>'; 
+    } else { 
+      icon.innerHTML = '<i class="bi bi-check-circle-fill" style="color:#34C759;"></i>'; 
     }
     document.getElementById("customModal").style.display = "flex";
   }
@@ -625,7 +639,7 @@
       let startTimeText = dateObj.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
       let endTimeText = new Date(row.endRaw).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
       let phoneStr = String(row.phone).trim(); if(phoneStr && !phoneStr.startsWith('0')) { phoneStr = '0' + phoneStr; }
-      let phoneHtml = phoneStr ? `<a href="tel:${phoneStr}" style="color:#0d6efd; font-weight:600; text-decoration:none;"><i class="bi bi-telephone-fill"></i> ${phoneStr}</a>` : '<span class="text-muted">-</span>';
+      let phoneHtml = phoneStr ? `<a href="tel:${phoneStr}" style="color:#007AFF; font-weight:600; text-decoration:none;"><i class="bi bi-telephone-fill"></i> ${phoneStr}</a>` : '<span class="text-muted">-</span>';
       htmlContent += `<tr><td><div class="td-content"><div class="text-success" style="font-weight:600; font-size:1.05rem;"><i class="bi bi-calendar-event"></i> ${dateText}</div><div class="text-danger mt-1" style="font-size:0.95rem; font-weight:600;"><i class="bi bi-clock"></i> ${startTimeText} - ${endTimeText} น.</div></div></td><td><div class="td-content" style="font-size:1.1rem; font-weight:700; color:var(--primary-color);">${row.room}</div></td><td><div class="td-content">${row.title}</div></td><td><div class="td-content">${row.name}<br><small class="mt-1 d-inline-block">${phoneHtml}</small></div></td></tr>`;
     });
     tbody.innerHTML = htmlContent;
@@ -667,11 +681,7 @@
   function confirmUpdate(rowIndex, status) {
     pendingRow = rowIndex;
     pendingStatus = status;
-    const icon = document.getElementById('confirmIcon');
-    const btn = document.getElementById('confirmBtn');
-    if(status === 'อนุมัติ') { icon.innerHTML = '<i class="bi bi-check-circle-fill" style="color:#34C759;"></i>'; btn.className = 'modal-btn-split confirm'; btn.style.color = '#34C759'; document.getElementById('confirmMessage').innerText = 'คุณต้องการ "อนุมัติ" รายการนี้ใช่หรือไม่?'; } 
-    else if(status === 'ไม่อนุมัติ') { icon.innerHTML = '<i class="bi bi-x-circle-fill" style="color:#FF9500;"></i>'; btn.className = 'modal-btn-split danger'; btn.style.color = '#FF9500'; document.getElementById('confirmMessage').innerText = 'คุณต้องการ "ไม่อนุมัติ" รายการนี้ใช่หรือไม่?'; } 
-    else { icon.innerHTML = '<i class="bi bi-trash-fill" style="color:#FF3B30;"></i>'; btn.className = 'modal-btn-split danger'; btn.style.color = '#FF3B30'; document.getElementById('confirmMessage').innerText = 'คุณต้องการ "ลบ/ยกเลิก" รายการนี้ใช่หรือไม่?'; }
+    document.getElementById('confirmMessage').innerText = status === 'อนุมัติ' ? 'คุณต้องการ "อนุมัติ" รายการนี้ใช่หรือไม่?' : (status === 'ไม่อนุมัติ' ? 'คุณต้องการ "ไม่อนุมัติ" รายการนี้ใช่หรือไม่?' : 'คุณต้องการ "ลบ/ยกเลิก" รายการนี้ใช่หรือไม่?');
     document.getElementById('confirmModal').style.display = 'flex';
   }
 
