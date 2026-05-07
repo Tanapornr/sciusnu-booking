@@ -92,9 +92,6 @@
 
     .room-info-container { background: #F2F2F7; border-radius: 16px; padding: 20px; display: none; margin-bottom: 25px; }
 
-    /* ==========================================
-       สไตล์กล่องแจ้งเตือนให้เหมือนรูปภาพ
-       ========================================== */
     .note-box { 
       background-color: #FFF9C4; border-left: 6px solid #FFCC00; color: #5D4037; 
       padding: 18px 20px; border-radius: 12px; margin-bottom: 25px; 
@@ -133,7 +130,14 @@
       
       #bookingTable td:nth-child(1)::before { content: "วัน/เวลา:"; } #bookingTable td:nth-child(2)::before { content: "ห้อง:"; } #bookingTable td:nth-child(3)::before { content: "หัวข้อ:"; } #bookingTable td:nth-child(4)::before { content: "ผู้จอง:"; } #bookingTable td:nth-child(5)::before { content: "เบอร์ภายใน:"; } #bookingTable td:nth-child(6)::before { content: "สถานะ:"; align-self: center;}
       #staffTable td:nth-child(1)::before { content: "วัน/เวลา:"; } #staffTable td:nth-child(2)::before { content: "ห้อง:"; } #staffTable td:nth-child(3)::before { content: "หัวข้อ:"; } #staffTable td:nth-child(4)::before { content: "ผู้จอง/เบอร์:"; }
-      #adminTable td:nth-child(1)::before { content: "วัน/เวลา:"; } #adminTable td:nth-child(2)::before { content: "ห้อง:"; } #adminTable td:nth-child(3)::before { content: "ผู้จอง:"; } #adminTable td:nth-child(4)::before { content: "สถานะ:"; align-self: center;} #adminTable td:nth-child(5)::before { content: "จัดการ:"; align-self: center;}
+      
+      /* อัปเดตตารางแอดมินใหม่สำหรับมือถือ */
+      #adminTable td:nth-child(1)::before { content: "วัน/เวลา:"; } 
+      #adminTable td:nth-child(2)::before { content: "ห้อง:"; } 
+      #adminTable td:nth-child(3)::before { content: "หัวข้อ:"; } 
+      #adminTable td:nth-child(4)::before { content: "ผู้จอง/เบอร์:"; } 
+      #adminTable td:nth-child(5)::before { content: "สถานะ:"; align-self: center;} 
+      #adminTable td:nth-child(6)::before { content: "จัดการ:"; align-self: center;}
       
       #staffTable tr.table-warning { padding: 12px; background: #FFF9C4 !important; border: none !important; box-shadow: none !important; margin-bottom: 15px; border-radius: 12px; }
       #staffTable tr.table-warning td { display: block !important; text-align: center !important; padding: 0 !important; border: none !important; }
@@ -171,7 +175,7 @@
 <div class="mobile-header">
   <div class="d-flex align-items-center">
     <button class="mobile-menu-btn me-3" onclick="document.getElementById('wrapper').classList.add('toggled')"><i class="bi bi-list"></i></button>
-    <img src="https://img2.pic.in.th/logo-banner-scius91e6464acbe6a320.png" alt="Logo" style="height:35px; object-fit:contain;" border="0">
+    <img src="https://img2.pic.in.th/logo-banner-scius91e6464acbe6a320.png" alt="Logo" style="height:35px; background:transparent !important; object-fit:contain;" border="0">
   </div>
 </div>
 
@@ -288,7 +292,7 @@
           <div class="alert alert-success d-flex align-items-center" style="border-radius:12px; border:none; background:#E2F4D9; color:#2E7D32;"><i class="bi bi-info-circle-fill me-2"></i> แสดงเฉพาะที่ "อนุมัติ" แล้ว เรียงตามเวลาใช้งาน (ซ่อนรายการในอดีต)</div>
           <div class="table-responsive">
             <table class="table table-bordered align-middle mb-0" id="staffTable">
-              <thead class="table-dark"><tr><th>วันเวลา</th><th>ห้อง</th><th>หัวข้อ</th><th>ผู้จอง</th></tr></thead>
+              <thead class="table-dark"><tr><th>วันเวลา</th><th>ห้อง</th><th>หัวข้อ</th><th>ผู้จอง (เบอร์ติดต่อ)</th></tr></thead>
               <tbody><tr><td colspan="4" class="text-center py-5"><div class="spinner-border text-success"></div></td></tr></tbody>
             </table>
           </div>
@@ -306,8 +310,8 @@
       </div>
       <div id="adminDashboard" style="display:none;">
         <div class="custom-card">
-          <div class="d-flex justify-content-between align-items-center mb-4">
-            <div class="page-title m-0 text-danger">จัดการการจอง</div>
+          <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+            <div class="page-title m-0 text-danger mb-2 mb-md-0">จัดการการจอง</div>
             <div>
               <button class="btn btn-primary btn-sm me-2 rounded-pill" onclick="loadAdminData()">รีเฟรช</button>
               <button class="btn btn-outline-danger btn-sm rounded-pill" onclick="logoutAdmin()">ออกจากระบบ</button>
@@ -316,8 +320,17 @@
           <div class="alert alert-info" style="border-radius:12px; border:none; background:#E5F0FF; color:#005bb5;"><i class="bi bi-info-circle"></i> กดปุ่ม อนุมัติ / ไม่ผ่าน ระบบจะส่งอีเมลแจ้งผู้จองอัตโนมัติ</div>
           <div class="table-responsive">
             <table class="table table-bordered align-middle mb-0" id="adminTable">
-              <thead class="table-dark"><tr><th>วันเวลา</th><th>ห้อง</th><th>ผู้จอง</th><th class="text-center">สถานะ</th><th>จัดการ</th></tr></thead>
-              <tbody><tr><td colspan="5" class="text-center py-5"><div class="spinner-border text-primary"></div></td></tr></tbody>
+              <thead class="table-dark">
+                <tr>
+                  <th>วันเวลา</th>
+                  <th>ห้อง</th>
+                  <th>หัวข้อ</th>
+                  <th>ผู้จอง (เบอร์ติดต่อ)</th>
+                  <th class="text-center">สถานะ</th>
+                  <th class="text-center">จัดการ</th>
+                </tr>
+              </thead>
+              <tbody><tr><td colspan="6" class="text-center py-5"><div class="spinner-border text-primary"></div></td></tr></tbody>
             </table>
           </div>
         </div>
@@ -431,16 +444,13 @@
     }, 20000); 
   };
 
-  // 🔥 อัปเดตกล่องแจ้งเตือน ให้เด้งขึ้นมาพร้อมรายละเอียด (ตามรูปตัวอย่างเป๊ะๆ) 🔥
   function updateRoomInfo() {
     const room = document.getElementById("roomSelect").value;
     const gallery = document.getElementById("roomGallery");
     const scheduleNote = document.getElementById("scheduleNote");
 
-    // ตรวจสอบเงื่อนไขว่าต้องโชว์กล่องเหลืองไหม
     let noteText = "";
     if (room === "SC1-415" || room === "SC1-416" || room === "SC1-411") {
-      // โชว์ข้อความทั้งหมดเพื่อให้เหมือนในภาพ (รวมกฎทั้ง 3 ข้อ เพื่อให้ผู้ใช้ทราบ)
       noteText = `
         <li><b>SC1-415:</b> มีเรียน ม.5.7 จันทร์-พุธ (08.00-16.30) และ พฤหัสบดี (12.35-15.30)</li>
         <li><b>SC1-416:</b> มีเรียน ม.5.8 จันทร์-พุธ (08.00-16.30)</li>
@@ -560,13 +570,35 @@
   }
   function logoutAdmin() { document.getElementById("loginCard").style.display = "block"; document.getElementById("adminDashboard").style.display = "none"; }
   function loadAdminData() { fetch(API_URL + "?action=getAdmin").then(res => res.json()).then(renderAdminTable); }
+  
+  // 🔥 อัปเดตตารางหน้าผู้ดูแลระบบ ให้มีคอลัมน์ครบตามที่คุณต้องการ (รวมถึงปุ่ม จัดการ) 🔥
   function renderAdminTable(data) {
     const tbody = document.getElementById("adminTable").getElementsByTagName("tbody")[0];
-    if(!data || data.length === 0) { tbody.innerHTML = "<tr><td colspan='5' class='text-center py-4'>ไม่มีข้อมูล</td></tr>"; return; }
+    if(!data || data.length === 0) { tbody.innerHTML = "<tr><td colspan='6' class='text-center py-4'>ไม่มีข้อมูล</td></tr>"; return; }
     let html = "";
     data.forEach(row => {
       let d = new Date(row.startRaw);
-      html += `<tr><td><b>${d.toLocaleDateString('th-TH')}</b></td><td><b>${row.room}</b></td><td>${row.name}</td><td class="text-center align-middle"><b>${row.status}</b></td><td class="text-center align-middle"><button class="btn btn-success btn-sm me-1" onclick="confirmUpdate(${row.rowIndex},'อนุมัติ')">✓</button><button class="btn btn-danger btn-sm" onclick="confirmUpdate(${row.rowIndex},'ไม่อนุมัติ')">✕</button></td></tr>`;
+      let dateText = d.toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric' });
+      let timeText = d.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) + " - " + new Date(row.endRaw).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) + " น.";
+      let phoneStr = String(row.phone).trim(); if(phoneStr && !phoneStr.startsWith('0')) { phoneStr = '0' + phoneStr; }
+      
+      let statusColor = row.status === "อนุมัติ" ? "#34C759" : (row.status === "ไม่อนุมัติ" || row.status === "ยกเลิก" ? "#FF3B30" : "#FF9500");
+
+      var btns = `
+        <div class="d-flex gap-1 justify-content-end justify-content-md-center">
+          <button class="btn btn-sm" style="background:#34C759; color:white; border-radius:8px;" onclick="confirmUpdate(${row.rowIndex},'อนุมัติ')"><i class="bi bi-check-lg"></i></button>
+          <button class="btn btn-sm" style="background:#FF9500; color:white; border-radius:8px;" onclick="confirmUpdate(${row.rowIndex},'ไม่อนุมัติ')"><i class="bi bi-x-lg"></i></button>
+          <button class="btn btn-sm" style="background:#FF3B30; color:white; border-radius:8px;" onclick="confirmUpdate(${row.rowIndex},'ยกเลิก')"><i class="bi bi-trash"></i></button>
+        </div>`;
+
+      html += `<tr>
+        <td><div class="td-content"><b>${dateText}</b><br><small class="text-muted">${timeText}</small></div></td>
+        <td><div class="td-content"><b style="color:var(--primary-color);">${row.room}</b></div></td>
+        <td><div class="td-content">${row.title}</div></td>
+        <td><div class="td-content">${row.name}<br><small class="text-muted">${phoneStr}</small></div></td>
+        <td class="text-center align-middle"><div class="td-content"><b style="color:${statusColor};">${row.status}</b></div></td>
+        <td class="text-center align-middle">${btns}</td>
+      </tr>`;
     });
     tbody.innerHTML = html;
   }
