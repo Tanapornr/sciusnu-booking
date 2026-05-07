@@ -29,7 +29,7 @@
       -webkit-font-smoothing: antialiased;
     }
     
-    /* ตัดดีเลย์การทัชบนมือถือ ทำให้กดปุ่มได้ไวขึ้น */
+    /* ตัดดีเลย์การสัมผัสบนมือถือ ทำให้กดปุ่มได้ไวขึ้น */
     button, input, select { touch-action: manipulation; }
 
     #wrapper { display: flex; width: 100%; min-height: 100vh; position: relative; }
@@ -39,21 +39,16 @@
        ========================================== */
     #sidebar-wrapper { 
       min-width: 270px; max-width: 270px; 
-      background-color: var(--sidebar-bg); 
-      color: var(--sidebar-text); transition: all 0.3s; display: flex; flex-direction: column; 
-      margin: 15px; border-radius: 24px;
-      height: calc(100vh - 30px);
+      background-color: var(--sidebar-bg); color: var(--sidebar-text); 
+      transition: all 0.3s; display: flex; flex-direction: column; 
+      margin: 15px; border-radius: 24px; height: calc(100vh - 30px);
       box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-      position: sticky; top: 15px; overflow-y: auto;
-      scrollbar-width: none;
+      position: sticky; top: 15px; overflow-y: auto; scrollbar-width: none;
     }
     #sidebar-wrapper::-webkit-scrollbar { display: none; }
 
     .sidebar-heading { padding: 35px 20px 15px; text-align: center; }
-    .sidebar-logo { 
-      width: 100%; max-width: 220px; height: auto; 
-      object-fit: contain; margin-bottom: 15px; background: transparent !important; 
-    }
+    .sidebar-logo { width: 100%; max-width: 220px; height: auto; object-fit: contain; margin-bottom: 15px; background: transparent !important; }
     .sidebar-title-area { text-align: center; width: 100%; }
     .main-title { font-size: 1.2rem; font-weight: 700; color: #fff; margin-bottom: 4px; display: block; }
     .sub-title { font-size: 0.85rem; font-weight: 400; color: rgba(255,255,255,0.5); display: block; }
@@ -75,7 +70,7 @@
     .custom-card { background: #FFFFFF; border: none; border-radius: var(--card-radius); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04); padding: 30px; margin-bottom: 30px; }
     .page-title { font-size: 1.6rem; font-weight: 700; color: #1C1C1E; margin-bottom: 25px; border-bottom: 1px solid #E5E5EA; padding-bottom: 12px; letter-spacing: -0.5px;}
 
-    .form-control, .form-select { background: #F2F2F7 !important; border: 1px solid transparent; border-radius: 14px; padding: 14px 18px; color: #1C1C1E; font-size: 1rem; }
+    .form-control, .form-select { background: #F2F2F7 !important; border: 1px solid transparent; border-radius: 14px; padding: 14px 18px; color: #1C1C1E; font-size: 1rem; transition: 0.2s; }
     .form-control:focus, .form-select:focus { background: #fff !important; border-color: var(--primary-color); box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.12); }
 
     .room-card { background: #FFFFFF; border: 1px solid #E5E5EA; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: all 0.3s ease; height: 100%; display: flex; flex-direction: column; }
@@ -133,33 +128,47 @@
       
       #bookingTable td:nth-child(1)::before { content: "วัน/เวลา:"; } #bookingTable td:nth-child(2)::before { content: "ห้อง:"; } #bookingTable td:nth-child(3)::before { content: "หัวข้อ:"; } #bookingTable td:nth-child(4)::before { content: "ผู้จอง:"; } #bookingTable td:nth-child(5)::before { content: "เบอร์ภายใน:"; } #bookingTable td:nth-child(6)::before { content: "สถานะ:"; align-self: center;}
       #staffTable td:nth-child(1)::before { content: "วัน/เวลา:"; } #staffTable td:nth-child(2)::before { content: "ห้อง:"; } #staffTable td:nth-child(3)::before { content: "หัวข้อ:"; } #staffTable td:nth-child(4)::before { content: "ผู้จอง/เบอร์:"; }
-      #adminTable td:nth-child(1)::before { content: "วัน/เวลา:"; } #adminTable td:nth-child(2)::before { content: "ห้อง:"; } #adminTable td:nth-child(3)::before { content: "ผู้จอง/เบอร์:"; } #adminTable td:nth-child(4)::before { content: "สถานะ:"; align-self: center;} #adminTable td:nth-child(5)::before { content: "จัดการ:"; align-self: center;}
+      #adminTable td:nth-child(1)::before { content: "วัน/เวลา:"; } #adminTable td:nth-child(2)::before { content: "ห้อง:"; } #adminTable td:nth-child(3)::before { content: "หัวข้อ:"; } #adminTable td:nth-child(4)::before { content: "ผู้จอง/เบอร์:"; } #adminTable td:nth-child(5)::before { content: "สถานะ:"; align-self: center;} #adminTable td:nth-child(6)::before { content: "จัดการ:"; align-self: center;}
       
       .td-content { text-align: right; word-break: break-word; flex-grow: 1; }
     }
 
     /* ==========================================
-       iOS Modal 
+       iOS Modal - No English
        ========================================== */
-    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-    .modal-box { background: rgba(255, 255, 255, 0.98); width: 88%; max-width: 320px; padding: 0; border-radius: 22px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.2); animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); overflow: hidden; }
-    @keyframes popIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
+    .modal-box { background: #ffffff; width: 90%; max-width: 340px; padding: 25px; border-radius: 20px; text-align: center; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.15); animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275); overflow: hidden; }
+    @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     
-    .modal-content-area { padding: 30px 20px 24px; }
-    #modalIcon, #confirmIcon { font-size: 42px; margin-bottom: 10px; display: block; }
-    #modalTitle, #modalTitleConfirm { font-weight: 700; font-size: 1.2rem; color: #1C1C1E; margin-bottom: 8px; letter-spacing: -0.4px;}
-    #modalMessage, #confirmMessage { color: #636366; font-size: 0.95rem; line-height: 1.45; margin: 0; }
-    
-    .modal-btn-area { display: flex; width: 100%; border-top: 0.5px solid rgba(60,60,67,0.2); }
-    .modal-btn-single { width: 100%; padding: 16px; background: transparent; border: none; color: #007AFF; font-size: 1.1rem; font-weight: 600; cursor: pointer; }
-    .modal-btn-split { width: 50%; padding: 16px; background: transparent; border: none; font-size: 1.1rem; cursor: pointer; }
-    .modal-btn-split.cancel { color: #007AFF; font-weight: 400; border-right: 0.5px solid rgba(60,60,67,0.2); }
-    .modal-btn-split.confirm { color: #007AFF; font-weight: 600; }
-    .modal-btn-split.danger { color: #FF3B30; font-weight: 600; }
-    .modal-btn-split:active, .modal-btn-single:active { background: rgba(0,0,0,0.05); }
-    .modal-btn-split:disabled, .modal-btn-single:disabled { opacity: 0.6; cursor: not-allowed; }
+    .modal-close-icon { position: absolute; top: 15px; right: 15px; background: #F2F2F7; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #8E8E93; cursor: pointer; border: none; font-size: 16px; transition: 0.2s; }
+    .modal-close-icon:hover { background: #E5E5EA; color: #1C1C1E; }
 
-    .btn-main { background-color: var(--primary-color); color: white; padding: 14px 30px; border-radius: 16px; font-size: 1.1rem; font-weight: 600; border: none; width: 100%; transition: 0.2s; }
+    .modal-icon-wrapper { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; }
+    .modal-icon-wrapper.success { background-color: #FFF4CE; } 
+    .modal-icon-wrapper.error { background-color: #FFE5E5; } 
+    .modal-icon-wrapper i, .modal-icon-wrapper span { font-size: 40px; }
+    
+    #modalTitle, #modalTitleConfirm { font-weight: 700; font-size: 1.25rem; color: #1C1C1E; margin-bottom: 8px; }
+    #modalMessage, #confirmMessage { color: #666; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.5; }
+    
+    .modal-btn-area { display: flex; gap: 10px; justify-content: center; width: 100%; }
+    
+    /* 🔥 เพิ่ม Feedback การยุบตัวเวลาคลิก เพื่อให้รู้สึกว่าปุ่มตอบสนองเร็ว 🔥 */
+    .modal-btn-single { width: 100%; padding: 12px; background: #000000; border: 1px solid #000000; color: #ffffff; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.15s; }
+    .modal-btn-single:hover { background: #1C1C1E; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    .modal-btn-single:active { transform: scale(0.96); }
+
+    .modal-btn-split { flex: 1; padding: 12px 10px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.15s; }
+    .modal-btn-split.cancel { background: #ffffff; border: 1px solid #1C1C1E; color: #1C1C1E; }
+    .modal-btn-split.cancel:hover { background: #F2F2F7; }
+    .modal-btn-split.confirm { background: #1C1C1E; border: 1px solid #1C1C1E; color: #fff; }
+    .modal-btn-split.confirm:hover { background: #000000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    .modal-btn-split:active { transform: scale(0.96); }
+
+    .btn-main { background-color: var(--primary-color); color: white; padding: 14px 30px; border-radius: 16px; font-size: 1.1rem; font-weight: 600; border: none; width: 100%; transition: 0.15s; display: flex; justify-content: center; align-items: center; }
+    .btn-main:active { transform: scale(0.97); } /* เด้งรับนิ้วตอนกด */
+    .btn-main:disabled { background-color: #A0C3FF; cursor: not-allowed; transform: none; }
+
     .status-pill { padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
     .status-ok { background-color: #E2F4D9; color: #2E7D32; } .status-wait { background-color: #FFF3E0; color: #F57C00; } .status-no { background-color: #FFEBEE; color: #C62828; }
   </style>
@@ -203,7 +212,7 @@
       <div class="custom-card">
         <div class="d-flex justify-content-between align-items-center mb-4">
           <div class="page-title m-0"><i class="bi bi-table me-2"></i>ตารางการใช้ห้อง</div>
-          <small class="text-muted">อัปเดต: <span id="lastUpdate">-</span></small>
+          <small class="text-muted d-flex align-items-center"><span class="spinner-grow spinner-grow-sm text-success me-2" style="width: 10px; height: 10px;" role="status"></span>เรียลไทม์</small>
         </div>
         <div class="table-responsive">
           <table class="table table-hover align-middle mb-0" id="bookingTable">
@@ -276,7 +285,7 @@
         <h4 class="mt-3 fw-bold">พนักงานเปิดห้อง</h4>
         <form onsubmit="event.preventDefault(); checkStaffLogin();">
           <input type="password" id="staffPass" class="form-control my-4" placeholder="รหัสผ่าน" required>
-          <button type="submit" class="btn btn-main" style="background-color: #34C759;">เข้าสู่ระบบ</button>
+          <button type="submit" id="btnStaffLogin" class="btn btn-main" style="background-color: #34C759;">เข้าสู่ระบบ</button>
         </form>
       </div>
       <div id="staffDashboard" style="display:none;">
@@ -285,7 +294,7 @@
             <div class="page-title m-0 text-success">ตารางเตรียมเปิดห้อง</div>
             <button class="btn btn-outline-danger btn-sm rounded-pill" onclick="logoutStaff()">ออกจากระบบ</button>
           </div>
-          <div class="alert alert-success d-flex align-items-center" style="border-radius:12px; border:none; background:#E2F4D9; color:#2E7D32;"><i class="bi bi-info-circle-fill me-2"></i> แสดงเฉพาะที่ "อนุมัติ" แล้ว เรียงตามเวลาใช้งาน (ซ่อนรายการในอดีต)</div>
+          <div class="alert alert-success d-flex align-items-center" style="border-radius:12px; border:none; background:#E2F4D9; color:#2E7D32;"><i class="bi bi-info-circle-fill me-2"></i> แสดงเฉพาะที่ "อนุมัติ" แล้ว เรียงตามเวลาใช้งาน</div>
           <div class="table-responsive">
             <table class="table table-bordered align-middle mb-0" id="staffTable">
               <thead class="table-dark"><tr><th>วันเวลา</th><th>ห้อง</th><th>หัวข้อ</th><th>ผู้จอง (เบอร์ติดต่อ)</th></tr></thead>
@@ -303,19 +312,16 @@
         <form onsubmit="event.preventDefault(); checkLogin();">
           <input type="text" id="adminUser" class="form-control mt-4" placeholder="ชื่อผู้ใช้งาน" required>
           <input type="password" id="adminPass" class="form-control my-3" placeholder="รหัสผ่าน" required>
-          <button type="submit" class="btn btn-main">เข้าสู่ระบบ</button>
+          <button type="submit" id="btnAdminLogin" class="btn btn-main">เข้าสู่ระบบ</button>
         </form>
       </div>
       <div id="adminDashboard" style="display:none;">
         <div class="custom-card">
           <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
             <div class="page-title m-0 text-danger mb-2 mb-md-0">จัดการการจอง</div>
-            <div>
-              <button class="btn btn-primary btn-sm me-2 rounded-pill" onclick="loadAdminData()">รีเฟรช</button>
-              <button class="btn btn-outline-danger btn-sm rounded-pill" onclick="logoutAdmin()">ออกจากระบบ</button>
-            </div>
+            <button class="btn btn-outline-danger btn-sm rounded-pill" onclick="logoutAdmin()">ออกจากระบบ</button>
           </div>
-          <div class="alert alert-info" style="border-radius:12px; border:none; background:#E5F0FF; color:#005bb5;"><i class="bi bi-info-circle"></i> กดปุ่ม อนุมัติ / ไม่ผ่าน ระบบจะส่งอีเมลแจ้งผู้จองอัตโนมัติ</div>
+          <div class="alert alert-info" style="border-radius:12px; border:none; background:#E5F0FF; color:#005bb5;"><i class="bi bi-info-circle"></i> ข้อมูลอัปเดตอัตโนมัติ (เรียลไทม์) กดปุ่ม อนุมัติ / ไม่ผ่าน ระบบจะส่งอีเมลแจ้งผู้จองทันที</div>
           <div class="table-responsive">
             <table class="table table-bordered align-middle mb-0" id="adminTable">
               <thead class="table-dark">
@@ -352,6 +358,7 @@
 
 <div id="confirmModal" class="modal-overlay">
   <div class="modal-box">
+    <button class="modal-close-icon" onclick="closeConfirmModal()"><i class="bi bi-x"></i></button>
     <div class="modal-content-area">
       <div id="confirmIcon"></div>
       <h3 id="modalTitleConfirm">ยืนยันการดำเนินการ</h3>
@@ -367,7 +374,9 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://npmcdn.com/flatpickr/dist/l10n/th.js"></script>
 <script>
-  let lastFetchedData = null; 
+  let globalPublicData = null; 
+  let globalStaffData = null;
+  let globalAdminData = null;
 
   const roomData = {
     "SC1-411": { cap: "60", equip: "Projector Interactive, Computer, Whiteboard, ทุกโต๊ะมีปลั๊กไฟ", imgs: ["https://img1.pic.in.th/images/1ef5111ff9c6c132b.jpg", "https://img2.pic.in.th/271561e214bb6d862.jpg", "https://img1.pic.in.th/images/352498bf4ae00c8a7.jpg", "https://img2.pic.in.th/468058eae97a0792e.jpg"] },
@@ -382,6 +391,7 @@
 
   function fetchAPI(payload) { return fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) }); }
 
+  // สลับเมนูแบบแคชข้อมูล (ลื่นไหล ไม่หมุนติ้วๆ ทุกครั้งที่กด)
   function showSection(sectionId, element) {
     ['schedule', 'booking', 'admin', 'staff', 'roominfo'].forEach(id => {
       const el = document.getElementById('section-' + id);
@@ -391,9 +401,9 @@
     document.querySelectorAll('.list-group-item').forEach(el => el.classList.remove('active'));
     if(element) element.classList.add('active');
     
-    if(sectionId === 'schedule') { loadPublicData(); }
-    if(sectionId === 'admin' && document.getElementById('adminDashboard').style.display === 'block') { loadAdminData(); }
-    if(sectionId === 'staff' && document.getElementById('staffDashboard').style.display === 'block') { loadStaffData(); }
+    if(sectionId === 'schedule') { if(!globalPublicData) loadPublicData(); else renderPublicTable(globalPublicData); }
+    if(sectionId === 'admin' && document.getElementById('adminDashboard').style.display === 'block') { if(!globalAdminData) loadAdminData(); else renderAdminTable(globalAdminData); }
+    if(sectionId === 'staff' && document.getElementById('staffDashboard').style.display === 'block') { if(!globalStaffData) loadStaffData(); else renderStaffTable(globalStaffData); }
     if(sectionId === 'roominfo') renderAllRooms();
 
     if(window.innerWidth < 768) {
@@ -428,18 +438,24 @@
   flatpickr("#startTime", { enableTime: true, noCalendar: true, dateFormat: "H:i", time_24hr: true, locale: "th" });
   flatpickr("#endTime", { enableTime: true, noCalendar: true, dateFormat: "H:i", time_24hr: true, locale: "th" });
 
+  // ระบบดึงข้อมูลเรียลไทม์เบื้องหลัง (ทุก 8 วินาที)
   window.onload = function() { 
     loadPublicData(); 
     setInterval(() => {
       if(document.getElementById('section-schedule').style.display === 'block') {
         fetch(API_URL + "?action=getPublic").then(res => res.json()).then(data => {
-            if(JSON.stringify(data) !== JSON.stringify(lastFetchedData)) {
-                lastFetchedData = data;
-                renderPublicTable(data);
-            }
+            if(JSON.stringify(data) !== JSON.stringify(globalPublicData)) { globalPublicData = data; renderPublicTable(data); }
+        }).catch(()=>{});
+      } else if(document.getElementById('adminDashboard').style.display === 'block') {
+        fetch(API_URL + "?action=getAdmin").then(res => res.json()).then(data => {
+            if(JSON.stringify(data) !== JSON.stringify(globalAdminData)) { globalAdminData = data; renderAdminTable(data); }
+        }).catch(()=>{});
+      } else if(document.getElementById('staffDashboard').style.display === 'block') {
+        fetch(API_URL + "?action=getStaff").then(res => res.json()).then(data => {
+            if(JSON.stringify(data) !== JSON.stringify(globalStaffData)) { globalStaffData = data; renderStaffTable(data); }
         }).catch(()=>{});
       }
-    }, 20000); 
+    }, 8000); 
   };
 
   function updateRoomInfo() {
@@ -479,7 +495,7 @@
 
   function loadPublicData() { 
     fetch(API_URL + "?action=getPublic").then(res => res.json()).then(data => {
-      lastFetchedData = data;
+      globalPublicData = data;
       renderPublicTable(data);
     }).catch(err => {
       document.getElementById("bookingTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='6' class='text-center py-4 text-danger'>ไม่สามารถโหลดข้อมูลได้ กรุณาลองใหม่</td></tr>";
@@ -488,7 +504,6 @@
   
   function renderPublicTable(data) {
     const tbody = document.getElementById("bookingTable").getElementsByTagName("tbody")[0];
-    document.getElementById("lastUpdate").innerText = new Date().toLocaleTimeString('th-TH');
     if(!data || data.length === 0) { tbody.innerHTML = "<tr><td colspan='6' class='text-center py-4 text-muted'>ไม่มีรายการจอง</td></tr>"; return; }
     let html = "";
     data.forEach(row => {
@@ -501,11 +516,15 @@
     tbody.innerHTML = html;
   }
 
+  // ฟอร์มส่งจอง (แก้ปุ่มหน่วง)
   async function handleFormSubmit(e) {
     e.preventDefault();
     const btn = document.getElementById("submitBtn");
     const dates = document.getElementById("bookingDate").value.split(", ");
-    btn.disabled = true; btn.innerHTML = "กำลังส่งข้อมูล...";
+    
+    // โชว์ว่ากำลังโหลดทันทีที่กด!
+    btn.disabled = true; 
+    btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status"></span> กำลังส่งข้อมูล...`;
     
     const base = {
       title: document.getElementsByName("title")[0].value, room: document.getElementsByName("room")[0].value,
@@ -526,38 +545,51 @@
       document.getElementById("bookingForm").reset();
       document.getElementById("scheduleNote").style.display = "none";
       document.getElementById("roomInfoDisplay").style.display = "none";
+      document.getElementById("bookingTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='6' class='text-center py-5'><div class='spinner-border text-primary'></div></td></tr>";
+      loadPublicData();
       showSection('schedule');
     } else { showModal("ไม่สำเร็จ", "เกิดข้อผิดพลาดในการจอง", "error"); }
+    
     btn.disabled = false; btn.innerHTML = "ยืนยันการจอง";
   }
 
-  /* ==========================================
-     🔥 ฟังก์ชันป๊อปอัพ 
-     ========================================== */
   function showModal(title, msg, type) {
     document.getElementById("modalTitle").innerText = title;
     document.getElementById("modalMessage").innerText = msg;
     const iconWrap = document.getElementById("modalIcon");
     if (type === "error") { 
-      // ใช้ไอคอนวงกลมสีแดงสไตล์ใหม่
-      iconWrap.innerHTML = `<img src="https://img5.pic.in.th/file/secure-sv1/images--1--removebg-preview-1.png" style="width:65px; height:65px; margin:0 auto; display:block;">`; 
+      iconWrap.className = "modal-icon-wrapper error";
+      iconWrap.innerHTML = '<i class="bi bi-x-lg text-danger"></i>'; 
     } else { 
-      // ใช้ไอคอนพลุเฉลิมฉลอง (หรือติ๊กถูก)
-      iconWrap.innerHTML = `<span style="font-size:50px; display:inline-block; margin-bottom: -10px;">🎉</span>`; 
+      iconWrap.className = "modal-icon-wrapper success";
+      iconWrap.innerHTML = '<span style="font-size:35px;">🎉</span>'; 
     }
     document.getElementById("customModal").style.display = "flex";
   }
   function closeModal() { document.getElementById("customModal").style.display = "none"; }
 
+  // พนักงานล็อกอิน (แก้ปุ่มหน่วง + กด Enter ได้)
   function checkStaffLogin() {
-    if (document.getElementById("staffPass").value === "staff1234") { 
-      document.getElementById("staffLoginCard").style.display = "none";
-      document.getElementById("staffDashboard").style.display = "block";
-      loadStaffData();
-    } else { showModal("เข้าสู่ระบบไม่สำเร็จ", "รหัสผ่านไม่ถูกต้อง", "error"); }
+    const btn = document.getElementById("btnStaffLogin");
+    btn.disabled = true; btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span> รอสักครู่...`;
+    
+    setTimeout(() => { // หน่วงไว้หลอกๆ 0.5 วิ ให้ผู้ใช้เห็นว่าระบบกำลังคิด
+      if (document.getElementById("staffPass").value === "staff1234") { 
+        document.getElementById("staffLoginCard").style.display = "none";
+        document.getElementById("staffDashboard").style.display = "block";
+        document.getElementById("staffTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='4' class='text-center py-5'><div class='spinner-border text-success'></div></td></tr>";
+        loadStaffData();
+      } else { showModal("เข้าสู่ระบบไม่สำเร็จ", "รหัสผ่านไม่ถูกต้อง", "error"); }
+      btn.disabled = false; btn.innerHTML = "เข้าสู่ระบบ";
+    }, 500);
   }
   function logoutStaff() { document.getElementById("staffLoginCard").style.display = "block"; document.getElementById("staffDashboard").style.display = "none"; document.getElementById("staffPass").value = ""; }
-  function loadStaffData() { fetch(API_URL + "?action=getStaff").then(res => res.json()).then(renderStaffTable); }
+  
+  function loadStaffData() { 
+    fetch(API_URL + "?action=getStaff").then(res => res.json()).then(data => {
+      globalStaffData = data; renderStaffTable(data);
+    }); 
+  }
   function renderStaffTable(data) {
     const tbody = document.getElementById("staffTable").getElementsByTagName("tbody")[0];
     if(!data || data.length === 0) { tbody.innerHTML = "<tr><td colspan='4' class='text-center py-4'>ไม่มีข้อมูล</td></tr>"; return; }
@@ -569,17 +601,28 @@
     tbody.innerHTML = html;
   }
 
+  // แอดมินล็อกอิน (แก้ปุ่มหน่วง + กด Enter ได้)
   function checkLogin() {
-    if (document.getElementById("adminUser").value === "admin" && document.getElementById("adminPass").value === "admin1234") {
-      document.getElementById("loginCard").style.display = "none";
-      document.getElementById("adminDashboard").style.display = "block";
-      loadAdminData();
-    } else { showModal("เข้าสู่ระบบไม่สำเร็จ", "ข้อมูลไม่ถูกต้อง", "error"); }
+    const btn = document.getElementById("btnAdminLogin");
+    btn.disabled = true; btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span> รอสักครู่...`;
+    
+    setTimeout(() => { // หน่วงไว้หลอกๆ 0.5 วิ
+      if (document.getElementById("adminUser").value === "admin" && document.getElementById("adminPass").value === "admin1234") {
+        document.getElementById("loginCard").style.display = "none";
+        document.getElementById("adminDashboard").style.display = "block";
+        document.getElementById("adminTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='6' class='text-center py-5'><div class='spinner-border text-primary'></div></td></tr>";
+        loadAdminData();
+      } else { showModal("เข้าสู่ระบบไม่สำเร็จ", "ข้อมูลไม่ถูกต้อง", "error"); }
+      btn.disabled = false; btn.innerHTML = "เข้าสู่ระบบ";
+    }, 500);
   }
-  function logoutAdmin() { document.getElementById("loginCard").style.display = "block"; document.getElementById("adminDashboard").style.display = "none"; }
-  function loadAdminData() { fetch(API_URL + "?action=getAdmin").then(res => res.json()).then(renderAdminTable); }
+  function logoutAdmin() { document.getElementById("loginCard").style.display = "block"; document.getElementById("adminDashboard").style.display = "none"; document.getElementById("adminUser").value = ""; document.getElementById("adminPass").value = ""; }
   
-  // 🔥 ตาราง Admin ดึงหัวข้อ, เบอร์โทร และ เพิ่มปุ่ม "ลบ" ให้ครบ 🔥
+  function loadAdminData() { 
+    fetch(API_URL + "?action=getAdmin").then(res => res.json()).then(data => {
+      globalAdminData = data; renderAdminTable(data);
+    }); 
+  }
   function renderAdminTable(data) {
     const tbody = document.getElementById("adminTable").getElementsByTagName("tbody")[0];
     if(!data || data.length === 0) { tbody.innerHTML = "<tr><td colspan='6' class='text-center py-4'>ไม่มีข้อมูล</td></tr>"; return; }
@@ -594,12 +637,11 @@
       
       let statusColor = row.status === "อนุมัติ" ? "#34C759" : (row.status === "ไม่อนุมัติ" || row.status === "ยกเลิก" ? "#FF3B30" : "#FF9500");
 
-      // เพิ่มปุ่มลบ (ยกเลิก) เข้าไป
       var btns = `
         <div class="d-flex gap-2 justify-content-end justify-content-md-center mt-2 mt-md-0">
           <button class="btn btn-sm" style="background:#34C759; color:white; border-radius:8px;" onclick="confirmUpdate(${row.rowIndex},'อนุมัติ')"><i class="bi bi-check-lg"></i></button>
           <button class="btn btn-sm" style="background:#FF9500; color:white; border-radius:8px;" onclick="confirmUpdate(${row.rowIndex},'ไม่อนุมัติ')"><i class="bi bi-x-lg"></i></button>
-          <button class="btn btn-sm d-flex align-items-center" style="background:#FF3B30; color:white; border-radius:8px;" onclick="confirmUpdate(${row.rowIndex},'ยกเลิก')"><i class="bi bi-trash me-1"></i>ลบ</button>
+          <button class="btn btn-sm d-flex align-items-center" style="background:#FF3B30; color:white; border-radius:8px;" onclick="confirmUpdate(${row.rowIndex},'ยกเลิก')"><i class="bi bi-trash me-1"></i> ลบ</button>
         </div>`;
 
       html += `<tr>
@@ -619,12 +661,14 @@
     document.getElementById("confirmMessage").innerText = `คุณต้องการ ${status} รายการนี้ใช่หรือไม่?`;
     const iconWrap = document.getElementById("confirmIcon");
     if(status === 'อนุมัติ') { 
-      iconWrap.innerHTML = '<span style="font-size:50px;">🎉</span>'; 
+      iconWrap.className = "modal-icon-wrapper success";
+      iconWrap.innerHTML = '<i class="bi bi-check-lg text-success"></i>'; 
     } else if(status === 'ไม่อนุมัติ') { 
-      iconWrap.innerHTML = `<img src="https://img5.pic.in.th/file/secure-sv1/images--1--removebg-preview-1.png" style="width:65px; height:65px; margin:0 auto; display:block;">`; 
+      iconWrap.className = "modal-icon-wrapper error";
+      iconWrap.innerHTML = '<i class="bi bi-x-lg text-warning"></i>'; 
     } else { 
-      // ปุ่มลบใช้ไอคอนถังขยะ
-      iconWrap.innerHTML = '<i class="bi bi-trash3-fill" style="color:#FF3B30; font-size:45px;"></i>'; 
+      iconWrap.className = "modal-icon-wrapper error";
+      iconWrap.innerHTML = '<i class="bi bi-trash-fill text-danger"></i>'; 
     }
     document.getElementById("confirmModal").style.display = "flex";
   }
@@ -633,9 +677,9 @@
     if(pendingRow !== null && pendingStatus !== null) {
       const btn = document.getElementById('confirmBtn');
       btn.disabled = true;
-      btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> รอสักครู่...';
+      btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> รอสักครู่...';
       
-      document.getElementById("adminTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='6' class='text-center py-4 text-muted'><div class='spinner-border text-primary' role='status'></div><div class='mt-2'>กำลังอัปเดตข้อมูล...</div></td></tr>";
+      document.getElementById("adminTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='6' class='text-center py-5'><div class='spinner-border text-primary'></div></td></tr>";
       
       fetchAPI({ action: "updateStatus", rowIndex: pendingRow, status: pendingStatus }).then(() => { 
         loadAdminData(); 
