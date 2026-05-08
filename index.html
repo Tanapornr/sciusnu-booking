@@ -74,25 +74,13 @@
 
     .room-card { background: #FFFFFF; border: 1px solid #E5E5EA; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: all 0.3s ease; height: 100%; display: flex; flex-direction: column; }
     .room-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.1); }
+    .room-img-container { padding: 15px; display: flex; flex-direction: column; gap: 12px; }
+    .room-main-img { width: 100%; height: 210px; border-radius: 18px; object-fit: cover; cursor: pointer; background: #E5E5EA; }
     
-    /* ==========================================
-       🔥 แกลเลอรีแบบ Hybrid (สไลด์ได้ + จิ้มรูปเล็กได้) 🔥
-       ========================================== */
-    .room-img-container { padding: 15px 15px 5px 15px; display: flex; flex-direction: column; gap: 10px; }
-    
-    /* กล่องรูปใหญ่ที่ปัดสไลด์ได้ */
-    .swipe-gallery-container { 
-      display: flex; overflow-x: auto; scroll-snap-type: x mandatory; 
-      border-radius: 18px; scroll-behavior: smooth; scrollbar-width: none; 
-      border: 1px solid #E5E5EA;
-    }
+    .swipe-gallery-container { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; border-radius: 18px; scroll-behavior: smooth; scrollbar-width: none; border: 1px solid #E5E5EA; }
     .swipe-gallery-container::-webkit-scrollbar { display: none; }
-    .swipe-gallery-container img { 
-      flex: 0 0 100%; object-fit: cover; scroll-snap-align: center; 
-      background: #E5E5EA; cursor: pointer; 
-    }
+    .swipe-gallery-container img { flex: 0 0 100%; object-fit: cover; scroll-snap-align: center; background: #E5E5EA; cursor: pointer; }
 
-    /* รูปเล็กด้านล่างที่กดเพื่อเปลี่ยนรูปบนได้ */
     .room-thumbnails { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; }
     .room-thumbnails::-webkit-scrollbar { display: none; }
     .room-thumbnail-img { width: 68px; height: 68px; border-radius: 12px; object-fit: cover; cursor: pointer; flex-shrink: 0; border: 2px solid transparent; transition: 0.2s; background: #E5E5EA; }
@@ -104,12 +92,7 @@
 
     .room-info-container { background: #F2F2F7; border-radius: 16px; padding: 20px; display: none; margin-bottom: 25px; }
 
-    .note-box { 
-      background-color: #FCF7D9; border-left: 6px solid #E6C229; color: #5D4037; 
-      padding: 18px 22px; border-radius: 14px; margin-bottom: 25px; 
-      font-size: 0.95rem; line-height: 1.6;
-      animation: popIn 0.3s ease;
-    }
+    .note-box { background-color: #FCF7D9; border-left: 6px solid #E6C229; color: #5D4037; padding: 18px 22px; border-radius: 14px; margin-bottom: 25px; font-size: 0.95rem; line-height: 1.6; animation: popIn 0.3s ease; }
     .note-box-title { font-size: 1.05rem; color: #C62828; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; }
     .note-box-title i { margin-right: 8px; font-size: 1.15rem; }
     .note-box ul { margin: 0; padding-left: 20px; margin-bottom: 12px; color: #4E342E; }
@@ -117,7 +100,7 @@
     .note-box-footer { color: #C62828; font-size: 0.9rem; font-weight: 600; }
 
     /* ==========================================
-       Responsive สำหรับมือถือ
+       Responsive สำหรับมือถือ (แก้ตัวหมุนโหลดให้แสดงสวยงาม)
        ========================================== */
     @media (max-width: 768px) {
       .mobile-header { 
@@ -138,6 +121,7 @@
       .table-responsive table, .table-responsive tbody, .table-responsive tr, .table-responsive td { display: block; width: 100%; border: none; }
       .table-responsive thead { display: none; } 
       .table-responsive tr { margin-bottom: 15px; background: #FFFFFF; border: 1px solid #E5E5EA !important; border-radius: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); padding: 15px; }
+      
       .table-responsive td { display: flex !important; justify-content: space-between; align-items: flex-start; padding: 10px 0 !important; border-bottom: 1px dashed #E5E5EA !important; text-align: right; }
       .table-responsive td:last-child { border-bottom: none !important; padding-bottom: 0 !important; }
       .table-responsive td::before { font-weight: 600; color: #8E8E93; text-align: left; font-size: 0.9rem; margin-right: 10px; flex-shrink: 0; }
@@ -147,6 +131,11 @@
       #adminTable td:nth-child(1)::before { content: "วัน/เวลา:"; } #adminTable td:nth-child(2)::before { content: "ห้อง:"; } #adminTable td:nth-child(3)::before { content: "หัวข้อ:"; } #adminTable td:nth-child(4)::before { content: "ผู้จอง/เบอร์:"; } #adminTable td:nth-child(5)::before { content: "สถานะ:"; align-self: center;} #adminTable td:nth-child(6)::before { content: "จัดการ:"; align-self: center;}
       
       .td-content { text-align: right; word-break: break-word; flex-grow: 1; }
+      
+      /* 🔥 แก้บั๊กตัวหมุนโหลดและไม่มีข้อมูล บนมือถือ 🔥 */
+      .table-responsive tr.loading-row { padding: 40px 15px; background: transparent; border: none !important; box-shadow: none; }
+      .table-responsive tr.loading-row td { display: flex !important; flex-direction: column; align-items: center; justify-content: center; border: none !important; }
+      .table-responsive tr.loading-row td::before { display: none !important; content: none !important; }
     }
 
     /* ==========================================
@@ -154,7 +143,7 @@
        ========================================== */
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
     .modal-box { background: #ffffff; width: 90%; max-width: 340px; padding: 25px; border-radius: 20px; text-align: center; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.15); animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275); overflow: hidden; }
-    @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    @keyframes popIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     
     .modal-close-icon { position: absolute; top: 15px; right: 15px; background: #F2F2F7; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #8E8E93; cursor: pointer; border: none; font-size: 16px; transition: 0.2s; }
     .modal-close-icon:hover { background: #E5E5EA; color: #1C1C1E; }
@@ -259,7 +248,7 @@
         <div class="table-responsive">
           <table class="table table-hover align-middle mb-0" id="bookingTable">
             <thead class="table-light"><tr><th>วันเวลา</th><th>ห้อง</th><th>หัวข้อ</th><th>ผู้จอง</th><th>เบอร์</th><th class="text-center">สถานะ</th></tr></thead>
-            <tbody><tr><td colspan="6" class="text-center py-5"><div class="spinner-border text-primary"></div></td></tr></tbody>
+            <tbody><tr class="loading-row"><td colspan="6" class="text-center py-5 border-0"><div class="spinner-border text-primary"></div><div class="mt-2 text-muted">กำลังโหลดข้อมูล...</div></td></tr></tbody>
           </table>
         </div>
       </div>
@@ -340,7 +329,7 @@
           <div class="table-responsive">
             <table class="table table-bordered align-middle mb-0" id="staffTable">
               <thead class="table-dark"><tr><th>วันเวลา</th><th>ห้อง</th><th>หัวข้อ</th><th>ผู้จอง (เบอร์ติดต่อ)</th></tr></thead>
-              <tbody><tr><td colspan="4" class="text-center py-5"><div class="spinner-border text-success"></div></td></tr></tbody>
+              <tbody><tr class="loading-row"><td colspan="4" class="text-center py-5 border-0"><div class="spinner-border text-success"></div></td></tr></tbody>
             </table>
           </div>
         </div>
@@ -363,7 +352,7 @@
             <div class="page-title m-0 text-danger mb-2 mb-md-0">จัดการการจอง</div>
             <button class="btn btn-outline-danger btn-sm rounded-pill px-4" onclick="logoutAdmin()">ออกจากระบบ</button>
           </div>
-          <div class="alert alert-info d-flex align-items-center" style="border-radius:12px; border:none; background:#E5F0FF; color:#005bb5;"><i class="bi bi-info-circle me-2"></i> ข้อมูลอัปเดตอัตโนมัติ (เรียลไทม์) กดปุ่ม อนุมัติ / ไม่ผ่าน ระบบจะส่งอีเมลแจ้งผู้จองทันที</div>
+          <div class="alert alert-info d-flex align-items-center" style="border-radius:12px; border:none; background:#E5F0FF; color:#005bb5;"><i class="bi bi-info-circle me-2"></i> ข้อมูลอัปเดตอัตโนมัติ (เรียลไทม์) ระบบจะส่งอีเมลแจ้งผู้จองเมื่อกดอนุมัติ</div>
           <div class="table-responsive">
             <table class="table table-bordered align-middle mb-0" id="adminTable">
               <thead class="table-dark">
@@ -376,7 +365,7 @@
                   <th class="text-center">จัดการ</th>
                 </tr>
               </thead>
-              <tbody><tr><td colspan="6" class="text-center py-5"><div class="spinner-border text-primary"></div></td></tr></tbody>
+              <tbody><tr class="loading-row"><td colspan="6" class="text-center py-5 border-0"><div class="spinner-border text-primary"></div></td></tr></tbody>
             </table>
           </div>
         </div>
@@ -436,6 +425,7 @@
 
   function fetchAPI(payload) { return fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) }); }
 
+  // 🔥 ใช้ระบบแคช เพื่อให้สลับเมนูแล้วโชว์ข้อมูลได้ทันทีแบบไม่ต้องรอ 🔥
   function showSection(sectionId, element) {
     ['schedule', 'booking', 'admin', 'staff', 'roominfo'].forEach(id => {
       const el = document.getElementById('section-' + id);
@@ -445,9 +435,18 @@
     document.querySelectorAll('.list-group-item').forEach(el => el.classList.remove('active'));
     if(element) element.classList.add('active');
     
-    if(sectionId === 'schedule') { if(!globalPublicData) loadPublicData(); else applyFilters(); }
-    if(sectionId === 'admin' && document.getElementById('adminDashboard').style.display === 'block') { if(!globalAdminData) loadAdminData(); else renderAdminTable(globalAdminData); }
-    if(sectionId === 'staff' && document.getElementById('staffDashboard').style.display === 'block') { if(!globalStaffData) loadStaffData(); else renderStaffTable(globalStaffData); }
+    if(sectionId === 'schedule') { 
+      const cached = localStorage.getItem('scius_public');
+      if(cached) { globalPublicData = JSON.parse(cached); applyFilters(); } else { loadPublicData(); }
+    }
+    if(sectionId === 'admin' && document.getElementById('adminDashboard').style.display === 'block') { 
+      const cached = localStorage.getItem('scius_admin');
+      if(cached) { globalAdminData = JSON.parse(cached); renderAdminTable(globalAdminData); } else { loadAdminData(); }
+    }
+    if(sectionId === 'staff' && document.getElementById('staffDashboard').style.display === 'block') { 
+      const cached = localStorage.getItem('scius_staff');
+      if(cached) { globalStaffData = JSON.parse(cached); renderStaffTable(globalStaffData); } else { loadStaffData(); }
+    }
     if(sectionId === 'roominfo') renderAllRooms();
 
     if(window.innerWidth < 768) {
@@ -456,7 +455,6 @@
     }
   }
 
-  // 🔥 อัปเดตข้อมูลห้องให้เป็นแกลเลอรีแบบเลื่อนได้ (Swipeable) และจิ้มรูปเล็กได้ 🔥
   function renderAllRooms() {
     const container = document.getElementById('allRoomsContainer');
     if(container.innerHTML.trim() !== "") return;
@@ -466,17 +464,10 @@
       
       let mainGalleryId = 'cardSwipe-' + roomName.replace(/[\s\(\)-]+/g,'');
       
-      let imagesHtml = `<div class="room-img-container">`;
-      // รูปใหญ่แบบปัดได้
-      imagesHtml += `<div id="${mainGalleryId}" class="swipe-gallery-container" style="height:210px;">`;
+      let imagesHtml = `<div class="room-img-container"><div id="${mainGalleryId}" class="swipe-gallery-container" style="height:210px;">`;
       data.imgs.forEach(url => { imagesHtml += `<img src="${url}" onclick="window.open(this.src, '_blank')">`; });
-      imagesHtml += `</div>`;
-      
-      // รูปเล็กด้านล่างให้กดเพื่อสไลด์รูปใหญ่
-      imagesHtml += `<div class="room-thumbnails mt-2">`;
-      data.imgs.forEach((url, idx) => { 
-        imagesHtml += `<img src="${url}" class="room-thumbnail-img" onclick="document.getElementById('${mainGalleryId}').scrollTo({left: document.getElementById('${mainGalleryId}').offsetWidth * ${idx}, behavior: 'smooth'})">`; 
-      });
+      imagesHtml += `</div><div class="room-thumbnails mt-2">`;
+      data.imgs.forEach((url, idx) => { imagesHtml += `<img src="${url}" class="room-thumbnail-img" onclick="document.getElementById('${mainGalleryId}').scrollTo({left: document.getElementById('${mainGalleryId}').offsetWidth * ${idx}, behavior: 'smooth'})">`; });
       imagesHtml += `</div></div>`;
       
       col.innerHTML = `<div class="room-card">${imagesHtml}<div class="room-card-body"><div><div class="room-card-title">${roomName}</div><div class="room-card-text"><b>ความจุ:</b> ${data.cap} คน<br>${data.equip}</div></div><button type="button" class="btn btn-main mt-4" onclick="goToBooking('${roomName}')">เลือกจองห้องนี้</button></div></div>`;
@@ -496,6 +487,7 @@
   flatpickr("#endTime", { enableTime: true, noCalendar: true, dateFormat: "H:i", time_24hr: true, locale: "th" });
   flatpickr("#filterDate", { dateFormat: "Y-m-d", locale: "th" });
 
+  // 🔥 ดึงข้อมูลเงียบๆ (Background Sync) ทุุก 15 วินาที 🔥
   window.onload = function() { 
     loadPublicData(); 
     setInterval(() => {
@@ -503,19 +495,28 @@
         fetch(API_URL + "?action=getPublic").then(res => res.json()).then(data => {
             if(JSON.stringify(data) !== JSON.stringify(globalPublicData)) { 
                 globalPublicData = data; 
+                localStorage.setItem('scius_public', JSON.stringify(data));
                 applyFilters(); 
             }
         }).catch(()=>{});
       } else if(document.getElementById('adminDashboard').style.display === 'block') {
         fetch(API_URL + "?action=getAdmin").then(res => res.json()).then(data => {
-            if(JSON.stringify(data) !== JSON.stringify(globalAdminData)) { globalAdminData = data; renderAdminTable(data); }
+            if(JSON.stringify(data) !== JSON.stringify(globalAdminData)) { 
+              globalAdminData = data; 
+              localStorage.setItem('scius_admin', JSON.stringify(data));
+              renderAdminTable(data); 
+            }
         }).catch(()=>{});
       } else if(document.getElementById('staffDashboard').style.display === 'block') {
         fetch(API_URL + "?action=getStaff").then(res => res.json()).then(data => {
-            if(JSON.stringify(data) !== JSON.stringify(globalStaffData)) { globalStaffData = data; renderStaffTable(data); }
+            if(JSON.stringify(data) !== JSON.stringify(globalStaffData)) { 
+              globalStaffData = data; 
+              localStorage.setItem('scius_staff', JSON.stringify(data));
+              renderStaffTable(data); 
+            }
         }).catch(()=>{});
       }
-    }, 8000); 
+    }, 15000); 
   };
 
   function applyFilters() {
@@ -545,7 +546,6 @@
     applyFilters();
   }
 
-  // 🔥 อัปเดตแกลเลอรีในแบบฟอร์มการจองให้สไลด์ได้เช่นกัน 🔥
   function updateRoomInfo() {
     const room = document.getElementById("roomSelect").value;
     const gallery = document.getElementById("roomGallery");
@@ -575,18 +575,14 @@
       document.getElementById("roomEquip").innerText = roomData[room].equip;
       
       let mainGalleryId = 'formSwipeGallery';
-      
       let html = `<div id="${mainGalleryId}" class="swipe-gallery-container" style="height:180px; margin-bottom:10px;">`;
       roomData[room].imgs.forEach(url => { html += `<img src="${url}" onclick="window.open(this.src,'_blank')">`; });
-      html += `</div>`;
-      
-      html += `<div style="display:flex; gap:8px; overflow-x:auto; padding-bottom:5px; scrollbar-width: none;">`;
+      html += `</div><div style="display:flex; gap:8px; overflow-x:auto; padding-bottom:5px; scrollbar-width: none;">`;
       roomData[room].imgs.forEach((url, idx) => { 
         html += `<img src="${url}" style="width:60px; height:60px; border-radius:10px; object-fit:cover; cursor:pointer;" onclick="document.getElementById('${mainGalleryId}').scrollTo({left: document.getElementById('${mainGalleryId}').offsetWidth * ${idx}, behavior: 'smooth'})">`; 
       });
       html += `</div>`;
       gallery.innerHTML = html;
-      
     } else {
       document.getElementById("roomInfoDisplay").style.display = "none";
     }
@@ -595,20 +591,22 @@
   function loadPublicData() { 
     fetch(API_URL + "?action=getPublic").then(res => res.json()).then(data => {
       globalPublicData = data;
+      localStorage.setItem('scius_public', JSON.stringify(data));
       applyFilters(); 
     }).catch(err => {
-      document.getElementById("bookingTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='6' class='text-center py-4 text-danger'>ไม่สามารถโหลดข้อมูลได้ กรุณาลองใหม่</td></tr>";
+      const cached = localStorage.getItem('scius_public');
+      if(!cached) document.getElementById("bookingTable").getElementsByTagName("tbody")[0].innerHTML = "<tr class='loading-row'><td colspan='6' class='text-center py-4 text-danger border-0'>ไม่สามารถโหลดข้อมูลได้ กรุณาลองใหม่</td></tr>";
     });
   }
   
   function renderPublicTable(data) {
     const tbody = document.getElementById("bookingTable").getElementsByTagName("tbody")[0];
-    if(!data || data.length === 0) { tbody.innerHTML = "<tr><td colspan='6' class='text-center py-4 text-muted'>ไม่มีรายการจอง หรือไม่พบข้อมูลที่ค้นหา</td></tr>"; return; }
+    if(!data || data.length === 0) { tbody.innerHTML = "<tr class='loading-row'><td colspan='6' class='text-center py-4 text-muted border-0'>ไม่มีรายการจอง หรือไม่พบข้อมูลที่ค้นหา</td></tr>"; return; }
     let html = "";
     data.forEach(row => {
       let d = new Date(row.startRaw);
       let dateT = d.toLocaleDateString('th-TH', { month: 'short', day: 'numeric' });
-      let timeT = d.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) + " - " + new Date(row.endRaw).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
+      let timeT = d.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) + " - " + new Date(row.endRaw).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) + " น.";
       let badge = row.status === "อนุมัติ" ? "status-ok" : (row.status === "รออนุมัติ" ? "status-wait" : "status-no");
       html += `<tr><td><div class="td-content"><b>${dateT}</b><br><small class="text-muted">${timeT}</small></div></td><td><div class="td-content" style="color:var(--primary-color); font-weight:600;">${row.room}</div></td><td><div class="td-content">${row.title}</div></td><td><div class="td-content">${row.name}</div></td><td><div class="td-content">${row.internalPhone}</div></td><td class="text-center align-middle"><span class="status-pill ${badge}">${row.status}</span></td></tr>`;
     });
@@ -621,7 +619,7 @@
     const dates = document.getElementById("bookingDate").value.split(", ");
     
     btn.disabled = true; 
-    btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status"></span> กำลังส่งข้อมูล...`;
+    btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status"></span> กำลังประมวลผล...`;
     
     const base = {
       title: document.getElementsByName("title")[0].value, room: document.getElementsByName("room")[0].value,
@@ -643,7 +641,7 @@
       document.getElementById("scheduleNote").style.display = "none";
       document.getElementById("roomInfoDisplay").style.display = "none";
       
-      document.getElementById("bookingTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='6' class='text-center py-5'><div class='spinner-border text-primary'></div></td></tr>";
+      document.getElementById("bookingTable").getElementsByTagName("tbody")[0].innerHTML = "<tr class='loading-row'><td colspan='6' class='text-center py-5 border-0'><div class='spinner-border text-primary'></div></td></tr>";
       loadPublicData();
       showSection('schedule');
     } else { showModal("ไม่สำเร็จ", "เกิดข้อผิดพลาดในการจอง กรุณาลองใหม่ หรืออาจติดเวลาตารางเรียน", "error"); }
@@ -674,28 +672,29 @@
       if (document.getElementById("staffPass").value === "staff1234") { 
         document.getElementById("staffLoginCard").style.display = "none";
         document.getElementById("staffDashboard").style.display = "block";
-        document.getElementById("staffTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='4' class='text-center py-5'><div class='spinner-border text-success'></div></td></tr>";
+        const cached = localStorage.getItem('scius_staff');
+        if(cached) { globalStaffData = JSON.parse(cached); renderStaffTable(globalStaffData); }
         loadStaffData();
       } else { showModal("เข้าสู่ระบบไม่สำเร็จ", "รหัสผ่านไม่ถูกต้อง", "error"); }
       btn.disabled = false; btn.innerHTML = "เข้าสู่ระบบ";
-    }, 500);
+    }, 400);
   }
   function logoutStaff() { document.getElementById("staffLoginCard").style.display = "block"; document.getElementById("staffDashboard").style.display = "none"; document.getElementById("staffPass").value = ""; }
   
   function loadStaffData() { 
     fetch(API_URL + "?action=getStaff").then(res => res.json()).then(data => {
-      globalStaffData = data; renderStaffTable(data);
+      globalStaffData = data; 
+      localStorage.setItem('scius_staff', JSON.stringify(data));
+      renderStaffTable(data);
     }); 
   }
   function renderStaffTable(data) {
     const tbody = document.getElementById("staffTable").getElementsByTagName("tbody")[0];
-    if(!data || data.length === 0) { tbody.innerHTML = "<tr><td colspan='4' class='text-center py-4'>ไม่มีข้อมูล</td></tr>"; return; }
+    if(!data || data.length === 0) { tbody.innerHTML = "<tr class='loading-row'><td colspan='4' class='text-center py-4 border-0'>ไม่มีข้อมูล</td></tr>"; return; }
     let html = "";
     data.forEach(row => {
       let d = new Date(row.startRaw);
-      let dateText = d.toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric' });
-      let timeText = d.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) + " - " + new Date(row.endRaw).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
-      html += `<tr><td><div class="td-content"><b>${dateText}</b><br><small class="text-muted">${timeText}</small></div></td><td><b>${row.room}</b></td><td>${row.title}</td><td>${row.name}</td></tr>`;
+      html += `<tr><td><div class="td-content"><b>${d.toLocaleDateString('th-TH')}</b><br><small>${d.toLocaleTimeString('th-TH')} - ${new Date(row.endRaw).toLocaleTimeString('th-TH')}</small></div></td><td><b>${row.room}</b></td><td>${row.title}</td><td>${row.name}</td></tr>`;
     });
     tbody.innerHTML = html;
   }
@@ -708,23 +707,26 @@
       if (document.getElementById("adminUser").value === "admin" && document.getElementById("adminPass").value === "admin1234") {
         document.getElementById("loginCard").style.display = "none";
         document.getElementById("adminDashboard").style.display = "block";
-        document.getElementById("adminTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='6' class='text-center py-5'><div class='spinner-border text-primary'></div></td></tr>";
+        const cached = localStorage.getItem('scius_admin');
+        if(cached) { globalAdminData = JSON.parse(cached); renderAdminTable(globalAdminData); }
         loadAdminData();
       } else { showModal("เข้าสู่ระบบไม่สำเร็จ", "ข้อมูลไม่ถูกต้อง", "error"); }
       btn.disabled = false; btn.innerHTML = "เข้าสู่ระบบ";
-    }, 500);
+    }, 400);
   }
   function logoutAdmin() { document.getElementById("loginCard").style.display = "block"; document.getElementById("adminDashboard").style.display = "none"; document.getElementById("adminUser").value = ""; document.getElementById("adminPass").value = ""; }
   
   function loadAdminData() { 
     fetch(API_URL + "?action=getAdmin").then(res => res.json()).then(data => {
-      globalAdminData = data; renderAdminTable(data);
+      globalAdminData = data; 
+      localStorage.setItem('scius_admin', JSON.stringify(data));
+      renderAdminTable(data);
     }); 
   }
   
   function renderAdminTable(data) {
     const tbody = document.getElementById("adminTable").getElementsByTagName("tbody")[0];
-    if(!data || data.length === 0) { tbody.innerHTML = "<tr><td colspan='6' class='text-center py-4'>ไม่มีข้อมูล</td></tr>"; return; }
+    if(!data || data.length === 0) { tbody.innerHTML = "<tr class='loading-row'><td colspan='6' class='text-center py-4 border-0'>ไม่มีข้อมูล</td></tr>"; return; }
     let html = "";
     data.forEach(row => {
       let d = new Date(row.startRaw);
@@ -778,7 +780,7 @@
       btn.disabled = true;
       btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> รอสักครู่...';
       
-      document.getElementById("adminTable").getElementsByTagName("tbody")[0].innerHTML = "<tr><td colspan='6' class='text-center py-5'><div class='spinner-border text-primary'></div></td></tr>";
+      document.getElementById("adminTable").getElementsByTagName("tbody")[0].innerHTML = "<tr class='loading-row'><td colspan='6' class='text-center py-5 border-0'><div class='spinner-border text-primary'></div></td></tr>";
       
       fetchAPI({ action: "updateStatus", rowIndex: pendingRow, status: pendingStatus }).then(() => { 
         loadAdminData(); 
