@@ -64,7 +64,14 @@
     .list-group-item i { margin-right: 15px; font-size: 1.25rem; }
     
     .mobile-header { display: none !important; }
-    #page-content-wrapper { width: 100%; padding: 15px 20px 20px 5px; transition: 0.3s; }
+    
+    /* 🔥 แก้บั๊กข้อมูลทะลุจอเวลาหน้าต่างแคบ 🔥 */
+    #page-content-wrapper { 
+      width: 100%; 
+      padding: 15px 20px 20px 5px; 
+      transition: 0.3s; 
+      min-width: 0; /* ทำให้ Flexbox หดตัวได้ ไม่ดันข้อมูลให้ล้นจอ */
+    }
     
     .custom-card { background: #FFFFFF; border: none; border-radius: var(--card-radius); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04); padding: 30px; margin-bottom: 30px; }
     .page-title { font-size: 1.6rem; font-weight: 700; color: #1C1C1E; margin-bottom: 25px; border-bottom: 1px solid #E5E5EA; padding-bottom: 12px; letter-spacing: -0.5px;}
@@ -89,8 +96,8 @@
     .room-card-title { font-weight: 700; color: #1C1C1E; margin-bottom: 8px; font-size: 1.3rem; letter-spacing: -0.3px;}
     .room-card-text { font-size: 0.95rem; color: #8E8E93; margin-bottom: 8px; line-height: 1.5; white-space: normal; }
     
-    /* 🔥 CSS สำหรับกล่องแจ้งเตือนสีแดงในข้อมูลห้องเรียน 🔥 */
-    .card-warning-box { background-color: #FFF5F5; border: 1px dashed #FFCDD2; border-radius: 12px; padding: 12px; margin-bottom: 12px; }
+    /* 🔥 CSS สำหรับกล่องแจ้งเตือนสีแดงในข้อมูลห้องเรียน (ปรับให้ไม่ล้นกรอบ) 🔥 */
+    .card-warning-box { background-color: #FFF5F5; border: 1px dashed #FFCDD2; border-radius: 12px; padding: 12px; margin-bottom: 12px; word-wrap: break-word; }
     .card-warning-title { font-size: 0.85rem; font-weight: 700; color: #D32F2F; margin-bottom: 6px; }
     .card-warning-subtitle { font-size: 0.8rem; font-weight: 600; color: #B71C1C; margin-bottom: 4px; }
     .card-warning-list { font-size: 0.8rem; color: #B71C1C; margin: 0 0 8px 0; padding-left: 20px; }
@@ -106,9 +113,10 @@
     .note-box-footer { color: #C62828; font-size: 0.9rem; font-weight: 600; }
 
     /* ==========================================
-       Responsive สำหรับมือถือ
+       Responsive ป้องกันหน้าจอเบียดกัน
+       (แก้จาก 768px เป็น 991px เพื่อให้แท็บเล็ต/ย่อจอคอม ไม่โดนบีบ)
        ========================================== */
-    @media (max-width: 768px) {
+    @media (max-width: 991px) {
       .mobile-header { 
         display: flex !important; position: fixed; top: 0; left: 0; width: 100%; height: 70px; 
         background: rgba(28, 28, 30, 0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -179,7 +187,7 @@
     .status-ok { border: 1px solid #28a745; color: #28a745; } 
     .status-wait { border: 1px solid #fd7e14; color: #fd7e14; } 
     .status-no { border: 1px solid #dc3545; color: #dc3545; }
-    table td { vertical-align: middle; padding: 1rem 0.75rem; }
+    table td { vertical-align: middle; padding: 1rem 0.75rem; word-wrap: break-word; white-space: normal; }
   </style>
 </head>
 <body>
