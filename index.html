@@ -86,8 +86,16 @@
     .room-thumbnail-img:hover { border-color: var(--primary-color); transform: scale(1.05); }
 
     .room-card-body { padding: 15px 20px 20px 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-    .room-card-title { font-weight: 700; color: #1C1C1E; margin-bottom: 10px; font-size: 1.3rem; letter-spacing: -0.3px;}
+    .room-card-title { font-weight: 700; color: #1C1C1E; margin-bottom: 8px; font-size: 1.3rem; letter-spacing: -0.3px;}
     .room-card-text { font-size: 0.95rem; color: #8E8E93; margin-bottom: 8px; line-height: 1.5; white-space: normal; }
+    
+    /* 🔥 CSS สำหรับกล่องแจ้งเตือนสีแดงในข้อมูลห้องเรียน 🔥 */
+    .card-warning-box { background-color: #FFF5F5; border: 1px dashed #FFCDD2; border-radius: 12px; padding: 12px; margin-bottom: 12px; }
+    .card-warning-title { font-size: 0.85rem; font-weight: 700; color: #D32F2F; margin-bottom: 6px; }
+    .card-warning-subtitle { font-size: 0.8rem; font-weight: 600; color: #B71C1C; margin-bottom: 4px; }
+    .card-warning-list { font-size: 0.8rem; color: #B71C1C; margin: 0 0 8px 0; padding-left: 20px; }
+    .card-warning-footer { font-size: 0.75rem; color: #D32F2F; font-weight: 600; }
+
     .room-info-container { background: #F2F2F7; border-radius: 16px; padding: 20px; display: none; margin-bottom: 25px; }
 
     .note-box { background-color: #FCF7D9; border-left: 6px solid #E6C229; color: #5D4037; padding: 18px 22px; border-radius: 14px; margin-bottom: 25px; font-size: 0.95rem; line-height: 1.6; animation: popIn 0.3s ease; }
@@ -462,22 +470,64 @@
     }
   }
 
+  // 🔥 อัปเดตข้อมูลห้องเรียนให้แทรกกล่องแจ้งเตือนสีแดงสวยๆ ไว้ใต้ชื่อห้อง 🔥
   function renderAllRooms() {
     const container = document.getElementById('allRoomsContainer');
     if(container.innerHTML.trim() !== "") return;
+    
     for (const [roomName, data] of Object.entries(roomData)) {
       const col = document.createElement('div');
       col.className = 'col-md-6 col-lg-4 mb-3';
       
       let mainGalleryId = 'cardSwipe-' + roomName.replace(/[\s\(\)-]+/g,'');
       
+      // ส่วนของรูปภาพ
       let imagesHtml = `<div class="room-img-container"><div id="${mainGalleryId}" class="swipe-gallery-container" style="height:210px;">`;
       data.imgs.forEach(url => { imagesHtml += `<img src="${url}" onclick="window.open(this.src, '_blank')">`; });
       imagesHtml += `</div><div class="room-thumbnails mt-2">`;
       data.imgs.forEach((url, idx) => { imagesHtml += `<img src="${url}" class="room-thumbnail-img" onclick="document.getElementById('${mainGalleryId}').scrollTo({left: document.getElementById('${mainGalleryId}').offsetWidth * ${idx}, behavior: 'smooth'})">`; });
       imagesHtml += `</div></div>`;
       
-      col.innerHTML = `<div class="room-card">${imagesHtml}<div class="room-card-body"><div><div class="room-card-title">${roomName}</div><div class="room-card-text"><b>ความจุ:</b> ${data.cap} คน<br>${data.equip}</div></div><button type="button" class="btn btn-main mt-4" onclick="goToBooking('${roomName}')">เลือกจองห้องนี้</button></div></div>`;
+      // ส่วนแจ้งเตือนตารางเรียนเฉพาะห้อง SC1
+      let classNoteHtml = "";
+      if (roomName === "SC1-411") {
+        classNoteHtml = `<li><b>วันอังคาร:</b> 12.35-14.15 น.</li><li><b>วันพฤหัสบดี:</b> 08.20-10.00 น.</li><li><b>วันศุกร์:</b> 08.20-10.00 น.</li>`;
+      } else if (roomName === "SC1-414") {
+        classNoteHtml = `<li><b>วันจันทร์:</b> 12.35-15.10 น.</li><li><b>วันอังคาร:</b> 12.35-14.15 น.</li><li><b>วันพฤหัสบดี:</b> 08.20-10.55 น.</li>`;
+      } else if (roomName === "SC1-415") {
+        classNoteHtml = `<li><b>วันจันทร์:</b> 08.20-15.10 น.</li><li><b>วันอังคาร:</b> 08.20-17.40 น.</li><li><b>วันพุธ:</b> 08.20-11.45 น.</li><li><b>วันพฤหัสบดี:</b> 08.20-17.40 น.</li><li><b>วันศุกร์:</b> 11.45-13.25 น.</li>`;
+      } else if (roomName === "SC1-416") {
+        classNoteHtml = `<li><b>วันจันทร์:</b> 08.20-15.10 น.</li><li><b>วันอังคาร:</b> 08.20-17.40 น.</li><li><b>วันพุธ:</b> 08.20-11.45 น.</li><li><b>วันพฤหัสบดี:</b> 14.20-17.40 น.</li>`;
+      }
+
+      let warningBox = "";
+      if (classNoteHtml !== "") {
+        warningBox = `
+        <div class="card-warning-box">
+          <div class="card-warning-title"><i class="bi bi-exclamation-triangle-fill"></i> หมายเหตุตารางเรียน (18 พ.ค. 69 - 24 ก.ย. 69)</div>
+          <div class="card-warning-subtitle">ห้อง ${roomName} มีเรียนตามเวลาดังนี้:</div>
+          <ul class="card-warning-list">
+            ${classNoteHtml}
+          </ul>
+          <div class="card-warning-footer">*หากเลือกเวลาชนกับตารางเรียน ระบบจะแจ้งเตือนและไม่อนุญาตให้จอง</div>
+        </div>
+        `;
+      }
+
+      // สร้าง Card รวม
+      col.innerHTML = `
+        <div class="room-card">
+          ${imagesHtml}
+          <div class="room-card-body">
+            <div>
+              <div class="room-card-title">${roomName}</div>
+              ${warningBox}
+              <div class="room-card-text"><b>ความจุ:</b> ${data.cap} คน<br>${data.equip}</div>
+            </div>
+            <button type="button" class="btn btn-main mt-4" onclick="goToBooking('${roomName}')">เลือกจองห้องนี้</button>
+          </div>
+        </div>
+      `;
       container.appendChild(col);
     }
   }
@@ -686,6 +736,7 @@
       loadPublicData();
       showSection('schedule');
     } else { 
+      // 🔥 ป๊อปอัปแจ้งเตือนเวลาชนตารางเรียน 🔥
       showModal("ไม่สำเร็จ", "ไม่สามารถจองได้ ติดตารางเรียนของนักเรียนโครงการ วมว.", "error"); 
     }
     
