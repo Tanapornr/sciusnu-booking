@@ -9,9 +9,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   
   <script>
-    // ********* อัปเดต URL ใหม่ล่าสุดเรียบร้อยแล้ว *********
     const API_URL = "https://script.google.com/macros/s/AKfycbxLVTQy3KhhtKWRWgUvtIySctXfK8oRoLugqQnWzYbfpXHVoWiWBZgvz8EnQjtCcFKsGg/exec"; 
-    // ***************************************
   </script>
 
   <style>
@@ -685,7 +683,10 @@
       document.getElementById("bookingTable").getElementsByTagName("tbody")[0].innerHTML = "<tr class='loading-row'><td colspan='6' class='text-center py-5 border-0'><div class='spinner-border text-primary'></div></td></tr>";
       loadPublicData();
       showSection('schedule');
-    } else { showModal("ไม่สำเร็จ", "เกิดข้อผิดพลาดในการจอง กรุณาลองใหม่ หรืออาจติดเวลาตารางเรียน", "error"); }
+    } else { 
+      // 🔥 อัปเดตข้อความเมื่อจองไม่สำเร็จตามที่ต้องการ 🔥
+      showModal("ไม่สำเร็จ", "ไม่สามารถจองได้ ติดตารางเรียนของนักเรียนโครงการ วมว.", "error"); 
+    }
     
     btn.disabled = false; btn.innerHTML = "ยืนยันการจอง";
   }
