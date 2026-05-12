@@ -9,9 +9,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   
   <script>
-    // ********* อัปเดต URL ใหม่เรียบร้อยแล้ว *********
     const API_URL = "https://script.google.com/macros/s/AKfycbwxA6nE2RH023itrF2JEITFTtesf85JJbdAuz0tbFRJ0uvqXLzXUPFTQXi2g-FvLGdALg/exec"; 
-    // ***************************************
   </script>
 
   <style>
@@ -98,7 +96,7 @@
     .note-box-footer { color: #C62828; font-size: 0.9rem; font-weight: 600; }
 
     /* ==========================================
-       Responsive สำหรับมือถือ 
+       Responsive สำหรับมือถือ
        ========================================== */
     @media (max-width: 768px) {
       .mobile-header { 
@@ -209,7 +207,6 @@
   </div>
 
   <div id="page-content-wrapper">
-    <!-- หน้าตาราง -->
     <div id="section-schedule" class="fade-in">
       <div class="custom-card">
         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -281,6 +278,7 @@
             </select>
           </div>
           
+          <!-- กล่องข้อความแจ้งเตือนตารางเรียน -->
           <div id="scheduleNote" class="note-box" style="display:none;"></div>
           
           <div id="roomInfoDisplay" class="room-info-container">
@@ -379,6 +377,7 @@
   </div>
 </div>
 
+<!-- Modal แจ้งเตือน -->
 <div id="customModal" class="modal-overlay">
   <div class="modal-box">
     <div class="modal-content-area">
@@ -392,6 +391,7 @@
   </div>
 </div>
 
+<!-- Modal ยืนยันการจัดการ สำหรับ Admin -->
 <div id="confirmModal" class="modal-overlay">
   <div class="modal-box">
     <button class="modal-close-icon" onclick="closeConfirmModal()"><i class="bi bi-x"></i></button>
@@ -494,9 +494,7 @@
   flatpickr("#endTime", { enableTime: true, noCalendar: true, dateFormat: "H:i", time_24hr: true, locale: "th" });
   flatpickr("#filterDate", { dateFormat: "Y-m-d", locale: "th" });
 
-  // 🔥 โหลด Background เพื่อความเร็ว 🔥
   window.onload = function() { 
-    // โหลดครั้งแรกตอนเปิดเว็บ
     const cached = localStorage.getItem('scius_public');
     if(cached) { globalPublicData = JSON.parse(cached); applyFilters(); } 
     fetch(API_URL + "?action=getPublic").then(res => res.json()).then(data => {
@@ -563,47 +561,48 @@
     applyFilters();
   }
 
-  // 🔥 อัปเดตตารางเวลาในกล่องเหลือง 🔥
+  // 🔥 ฟังก์ชันอัปเดตกล่องแจ้งเตือนตารางเรียนให้ตรงกับข้อมูลใหม่ 🔥
   function updateRoomInfo() {
     const room = document.getElementById("roomSelect").value;
     const gallery = document.getElementById("roomGallery");
     const scheduleNote = document.getElementById("scheduleNote");
 
     let noteText = "";
+    
     if (room === "SC1-411") {
       noteText = `
-        <li><b>พฤหัสบดี:</b> 08.20-10.00 น.</li>
-        <li><b>ศุกร์:</b> 08.20-10.00 น.</li>
+        <li><b>วันพฤหัสบดี:</b> 08.20-10.00 น.</li>
+        <li><b>วันศุกร์:</b> 08.20-10.00 น.</li>
       `;
     } else if (room === "SC1-414") {
       noteText = `
-        <li><b>จันทร์:</b> 12.35-15.10 น.</li>
-        <li><b>อังคาร:</b> 12.35-14.15 น.</li>
-        <li><b>พฤหัสบดี:</b> 08.20-10.55 น.</li>
+        <li><b>วันจันทร์:</b> 12.35-15.10 น.</li>
+        <li><b>วันอังคาร:</b> 12.35-14.15 น.</li>
+        <li><b>วันพฤหัสบดี:</b> 08.20-10.55 น.</li>
       `;
     } else if (room === "SC1-415") {
       noteText = `
-        <li><b>จันทร์:</b> 08.20-15.10 น.</li>
-        <li><b>อังคาร:</b> 08.20-17.40 น.</li>
-        <li><b>พุธ:</b> 08.20-11.45 น.</li>
-        <li><b>พฤหัสบดี:</b> 08.20-17.40 น.</li>
-        <li><b>ศุกร์:</b> 11.45-13.25 น.</li>
+        <li><b>วันจันทร์:</b> 08.20-15.10 น.</li>
+        <li><b>วันอังคาร:</b> 08.20-17.40 น.</li>
+        <li><b>วันพุธ:</b> 08.20-11.45 น.</li>
+        <li><b>วันพฤหัสบดี:</b> 08.20-17.40 น.</li>
+        <li><b>วันศุกร์:</b> 11.45-13.25 น.</li>
       `;
     } else if (room === "SC1-416") {
       noteText = `
-        <li><b>จันทร์:</b> 08.20-15.10 น.</li>
-        <li><b>อังคาร:</b> 08.20-17.40 น.</li>
-        <li><b>พุธ:</b> 08.20-11.45 น.</li>
-        <li><b>พฤหัสบดี:</b> 14.20-17.40 น.</li>
+        <li><b>วันจันทร์:</b> 08.20-15.10 น.</li>
+        <li><b>วันอังคาร:</b> 08.20-17.40 น.</li>
+        <li><b>วันพุธ:</b> 08.20-11.45 น.</li>
+        <li><b>วันพฤหัสบดี:</b> 14.20-17.40 น.</li>
       `;
     }
 
     if (noteText !== "") {
       scheduleNote.innerHTML = `
-        <div class="note-box-title"><i class="bi bi-exclamation-triangle-fill"></i> หมายเหตุตารางเรียน (18 พ.ค. - 24 ก.ย. 69)</div>
-        <div style="margin-bottom: 5px; font-weight: bold; color: #4E342E;">ห้อง ${room} มีเรียนตามเวลาดังนี้:</div>
+        <div class="note-box-title"><i class="bi bi-exclamation-triangle-fill"></i> หมายเหตุตารางเรียน (18 พ.ค. 69 - 24 ก.ย. 69)</div>
+        <div style="margin-bottom: 8px; font-weight: bold; color: #4E342E;">ห้อง ${room} มีเรียนตามเวลาดังนี้:</div>
         <ul>${noteText}</ul>
-        <div class="note-box-footer">*หากเลือกเวลาชนกับตารางเรียน ระบบจะแจ้งเตือนและไม่อนุญาตให้จอง</div>
+        <div class="note-box-footer" style="margin-top: 10px;">*หากเลือกเวลาชนกับตารางเรียน ระบบจะแจ้งเตือนและไม่อนุญาตให้จอง</div>
       `;
       scheduleNote.style.display = "block";
     } else {
