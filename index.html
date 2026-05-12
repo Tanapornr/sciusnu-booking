@@ -9,7 +9,9 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbwxA6nE2RH023itrF2JEITFTtesf85JJbdAuz0tbFRJ0uvqXLzXUPFTQXi2g-FvLGdALg/exec"; 
+    // ********* อัปเดต URL ใหม่เรียบร้อยแล้ว *********
+    const API_URL = "https://script.google.com/macros/s/AKfycbw8eTmhw0pOvBqmE41tLkeemY-OF_kb5uQTpbryp91rKrtuL2sgSWa0gKNaf69coT8QRg/exec"; 
+    // ***************************************
   </script>
 
   <style>
@@ -207,6 +209,7 @@
   </div>
 
   <div id="page-content-wrapper">
+    <!-- หน้าตาราง -->
     <div id="section-schedule" class="fade-in">
       <div class="custom-card">
         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -278,7 +281,6 @@
             </select>
           </div>
           
-          <!-- กล่องข้อความแจ้งเตือนตารางเรียน -->
           <div id="scheduleNote" class="note-box" style="display:none;"></div>
           
           <div id="roomInfoDisplay" class="room-info-container">
@@ -377,7 +379,6 @@
   </div>
 </div>
 
-<!-- Modal แจ้งเตือน -->
 <div id="customModal" class="modal-overlay">
   <div class="modal-box">
     <div class="modal-content-area">
@@ -391,7 +392,6 @@
   </div>
 </div>
 
-<!-- Modal ยืนยันการจัดการ สำหรับ Admin -->
 <div id="confirmModal" class="modal-overlay">
   <div class="modal-box">
     <button class="modal-close-icon" onclick="closeConfirmModal()"><i class="bi bi-x"></i></button>
@@ -561,7 +561,6 @@
     applyFilters();
   }
 
-  // 🔥 ฟังก์ชันอัปเดตกล่องแจ้งเตือนตารางเรียนให้ตรงกับข้อมูลใหม่ 🔥
   function updateRoomInfo() {
     const room = document.getElementById("roomSelect").value;
     const gallery = document.getElementById("roomGallery");
@@ -571,6 +570,7 @@
     
     if (room === "SC1-411") {
       noteText = `
+        <li><b>วันอังคาร:</b> 12.35-14.15 น.</li>
         <li><b>วันพฤหัสบดี:</b> 08.20-10.00 น.</li>
         <li><b>วันศุกร์:</b> 08.20-10.00 น.</li>
       `;
