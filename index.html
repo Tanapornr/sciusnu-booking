@@ -10,7 +10,8 @@
   
   <script>
     // ********* อัปเดต URL ใหม่ล่าสุดเรียบร้อยแล้ว *********
-    const API_URL = "https://script.google.com/macros/s/AKfycbwTgmPkMNOQgek7cmeaAgvHpiQGIyjCGSJrGfk21-NhFEuSQUsxczX4P-cp9hYo99O0Yw/exec"; 
+    const API_URL = "https://script.google.com/macros/s/AKfycbwTgmPkMNOQgek7cmeaAgvHpiQGIyjCGSJrGfk21-NhFEuSQUsxczX4P-cp9hYo99O0Yw/exec";
+    const ADMIN_EMAIL_TOKEN = "sciusnu-booking-admin-2026"; 
     // ***************************************
   </script>
 
@@ -590,7 +591,30 @@
         }).catch(()=>{});
       }
     }, 15000); 
+
+    openAdminFromEmailLink();
   };
+
+  function openAdminFromEmailLink() {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token') || params.get('adminToken');
+    if (params.get('admin') !== '1' || token !== ADMIN_EMAIL_TOKEN) return false;
+
+    const adminButton = Array.from(document.querySelectorAll('.list-group-item')).find(el => el.textContent.includes('ผู้ดูแลระบบ'));
+    const loginCard = document.getElementById('loginCard');
+    const adminDashboard = document.getElementById('adminDashboard');
+
+    if (loginCard) loginCard.style.display = 'none';
+    if (adminDashboard) adminDashboard.style.display = 'block';
+
+    showSection('admin', adminButton || document.querySelectorAll('.list-group-item')[4]);
+    loadAdminData();
+
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState(null, '', window.location.pathname);
+    }
+    return true;
+  }
 
   function applyFilters() {
     if(!globalPublicData) return;
