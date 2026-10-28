@@ -553,20 +553,20 @@
       // ส่วนแจ้งเตือนตารางเรียนเฉพาะห้อง SC1
       let classNoteHtml = "";
       if (roomName === "SC1-411") {
-        classNoteHtml = `<li><b>วันอังคาร:</b> 12.35-14.15 น.</li><li><b>วันพฤหัสบดี:</b> 08.20-10.00 น.</li><li><b>วันศุกร์:</b> 08.20-10.00 น.</li>`;
+        classNoteHtml = `<li><b>วันพฤหัสบดี:</b> 12.35-15.10 น.</li>`;
       } else if (roomName === "SC1-414") {
-        classNoteHtml = `<li><b>วันจันทร์:</b> 12.35-15.10 น.</li><li><b>วันอังคาร:</b> 12.35-14.15 น.</li><li><b>วันพฤหัสบดี:</b> 08.20-10.55 น.</li>`;
+        classNoteHtml = `<li><b>วันจันทร์:</b> 12.35-15.10 น.</li><li><b>วันพฤหัสบดี:</b> 12.35-15.10 น.</li>`;
       } else if (roomName === "SC1-415") {
-        classNoteHtml = `<li><b>วันจันทร์:</b> 08.20-15.10 น.</li><li><b>วันอังคาร:</b> 08.20-17.40 น.</li><li><b>วันพุธ:</b> 08.20-11.45 น.</li><li><b>วันพฤหัสบดี:</b> 08.20-17.40 น.</li><li><b>วันศุกร์:</b> 11.45-13.25 น.</li>`;
+        classNoteHtml = `<li><b>วันจันทร์:</b> 08.20-16.00 น.</li><li><b>วันอังคาร:</b> 08.20-16.00 น.</li><li><b>วันพุธ:</b> 08.20-11.45 น.</li><li><b>วันพฤหัสบดี:</b> 08.20-11.45 น.</li>`;
       } else if (roomName === "SC1-416") {
-        classNoteHtml = `<li><b>วันจันทร์:</b> 08.20-15.10 น.</li><li><b>วันอังคาร:</b> 08.20-17.40 น.</li><li><b>วันพุธ:</b> 08.20-11.45 น.</li><li><b>วันพฤหัสบดี:</b> 14.20-17.40 น.</li>`;
+        classNoteHtml = `<li><b>วันจันทร์:</b> 08.20-11.45 น.</li><li><b>วันอังคาร:</b> 08.20-16.00 น.</li><li><b>วันพุธ:</b> 08.20-11.45 น.</li><li><b>วันพฤหัสบดี:</b> 08.20-16.00 น.</li>`;
       }
 
       let warningBox = "";
       if (classNoteHtml !== "") {
         warningBox = `
         <div class="card-warning-box">
-          <div class="card-warning-title"><i class="bi bi-exclamation-triangle-fill"></i> หมายเหตุตารางเรียน (18 พ.ค. 69 - 24 ก.ย. 69)</div>
+          <div class="card-warning-title"><i class="bi bi-exclamation-triangle-fill"></i> หมายเหตุตารางเรียน (2 พ.ย. 69 - 6 มี.ค. 70)</div>
           <div class="card-warning-subtitle">ห้อง ${roomName} มีเรียนตามเวลาดังนี้:</div>
           <ul class="card-warning-list">
             ${classNoteHtml}
@@ -705,36 +705,32 @@
     
     if (room === "SC1-411") {
       noteText = `
-        <li><b>วันอังคาร:</b> 12.35-14.15 น.</li>
-        <li><b>วันพฤหัสบดี:</b> 08.20-10.00 น.</li>
-        <li><b>วันศุกร์:</b> 08.20-10.00 น.</li>
+        <li><b>วันพฤหัสบดี:</b> 12.35-15.10 น.</li>
       `;
     } else if (room === "SC1-414") {
       noteText = `
         <li><b>วันจันทร์:</b> 12.35-15.10 น.</li>
-        <li><b>วันอังคาร:</b> 12.35-14.15 น.</li>
-        <li><b>วันพฤหัสบดี:</b> 08.20-10.55 น.</li>
+        <li><b>วันพฤหัสบดี:</b> 12.35-15.10 น.</li>
       `;
     } else if (room === "SC1-415") {
       noteText = `
-        <li><b>วันจันทร์:</b> 08.20-15.10 น.</li>
-        <li><b>วันอังคาร:</b> 08.20-17.40 น.</li>
+        <li><b>วันจันทร์:</b> 08.20-16.00 น.</li>
+        <li><b>วันอังคาร:</b> 08.20-16.00 น.</li>
         <li><b>วันพุธ:</b> 08.20-11.45 น.</li>
-        <li><b>วันพฤหัสบดี:</b> 08.20-17.40 น.</li>
-        <li><b>วันศุกร์:</b> 11.45-13.25 น.</li>
+        <li><b>วันพฤหัสบดี:</b> 08.20-11.45 น.</li>
       `;
     } else if (room === "SC1-416") {
       noteText = `
-        <li><b>วันจันทร์:</b> 08.20-15.10 น.</li>
-        <li><b>วันอังคาร:</b> 08.20-17.40 น.</li>
+        <li><b>วันจันทร์:</b> 08.20-11.45 น.</li>
+        <li><b>วันอังคาร:</b> 08.20-16.00 น.</li>
         <li><b>วันพุธ:</b> 08.20-11.45 น.</li>
-        <li><b>วันพฤหัสบดี:</b> 14.20-17.40 น.</li>
+        <li><b>วันพฤหัสบดี:</b> 08.20-16.00 น.</li>
       `;
     }
 
     if (noteText !== "") {
       scheduleNote.innerHTML = `
-        <div class="note-box-title"><i class="bi bi-exclamation-triangle-fill"></i> หมายเหตุตารางเรียน (18 พ.ค. 69 - 24 ก.ย. 69)</div>
+        <div class="note-box-title"><i class="bi bi-exclamation-triangle-fill"></i> หมายเหตุตารางเรียน (2 พ.ย. 69 - 6 มี.ค. 70)</div>
         <div style="margin-bottom: 8px; font-weight: bold; color: #4E342E;">ห้อง ${room} มีเรียนตามเวลาดังนี้:</div>
         <ul>${noteText}</ul>
         <div class="note-box-footer" style="margin-top: 10px;">*หากเลือกเวลาชนกับตารางเรียน ระบบจะแจ้งเตือนและไม่อนุญาตให้จอง</div>
